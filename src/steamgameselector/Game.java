@@ -31,14 +31,14 @@ import java.util.ArrayList;
  */
 public class Game {
     int appid;
-    String name;
+    String title;
     ArrayList categories;
     ArrayList tags;
     
     Game()
     {
         appid=-1;
-        name="";
+        title="";
         categories=new ArrayList();
         tags=new ArrayList();
     }
