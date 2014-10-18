@@ -134,6 +134,9 @@
                   <Dimension value="[100, 23]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAddGameMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnAddAccount">
               <Properties>

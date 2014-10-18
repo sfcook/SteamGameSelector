@@ -23,6 +23,8 @@
  */
 package steamgameselector;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author sfcook
@@ -83,6 +85,11 @@ public class MainWindow extends javax.swing.JFrame {
         btnAddGame.setMaximumSize(new java.awt.Dimension(100, 23));
         btnAddGame.setMinimumSize(new java.awt.Dimension(100, 23));
         btnAddGame.setPreferredSize(new java.awt.Dimension(100, 23));
+        btnAddGame.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddGameMouseClicked(evt);
+            }
+        });
 
         btnAddAccount.setText("Add Account");
         btnAddAccount.setMaximumSize(new java.awt.Dimension(100, 23));
@@ -126,6 +133,12 @@ public class MainWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAddGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddGameMouseClicked
+        AddGameWindow addPanel=new AddGameWindow(); //builds contents of a game obj
+        JOptionPane.showConfirmDialog(null,addPanel,"Add Game",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        //todo: retrive result and do things
+    }//GEN-LAST:event_btnAddGameMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAccount;
