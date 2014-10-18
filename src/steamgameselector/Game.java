@@ -32,14 +32,12 @@ import java.util.ArrayList;
 public class Game {
     int appid;
     String title;
-    ArrayList categories;
     ArrayList tags;
     
     Game()
     {
         appid=-1;
         title="";
-        categories=new ArrayList();
         tags=new ArrayList();
     }
 }
