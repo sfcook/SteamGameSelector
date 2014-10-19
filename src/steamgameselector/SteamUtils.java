@@ -30,6 +30,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  *
@@ -59,4 +61,26 @@ public class SteamUtils {
         }
     }
     
+    public static Set getAppIds(String url)
+    {
+        //get source
+        
+        return getAppIdsBySource("");
+    }
+    
+    public static Set getAppIdsBySource(String source)
+    {
+        Set appids=new HashSet();
+        
+        
+        
+        return appids;
+    }
+    
+    public static Set getTagsByAppId(String id)
+    {
+        Set tags=new HashSet();
+        
+        return tags;
+    }
 }
