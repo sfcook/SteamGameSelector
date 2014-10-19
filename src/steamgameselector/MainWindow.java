@@ -95,6 +95,11 @@ public class MainWindow extends javax.swing.JFrame {
         btnAddAccount.setMaximumSize(new java.awt.Dimension(100, 23));
         btnAddAccount.setMinimumSize(new java.awt.Dimension(100, 23));
         btnAddAccount.setPreferredSize(new java.awt.Dimension(100, 23));
+        btnAddAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddAccountMouseClicked(evt);
+            }
+        });
 
         scrLstAccounts.setPreferredSize(new java.awt.Dimension(150, 130));
 
@@ -139,6 +144,17 @@ public class MainWindow extends javax.swing.JFrame {
         JOptionPane.showConfirmDialog(null,addPanel,"Add Game",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         //todo: retrive result and do things
     }//GEN-LAST:event_btnAddGameMouseClicked
+
+    private void btnAddAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddAccountMouseClicked
+        String url = JOptionPane.showInputDialog(null,"Enter public url","Add Account",JOptionPane.PLAIN_MESSAGE);
+        //validate using SteamUtils
+        // TODO: if not public or not found show detailed window
+        if(url!=null && url.isEmpty())
+        {
+            AddAccountWindow addPanel=new AddAccountWindow();
+            JOptionPane.showConfirmDialog(null,addPanel,"Add Account",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAddAccountMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAccount;

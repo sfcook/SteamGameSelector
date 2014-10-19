@@ -151,6 +151,9 @@
                   <Dimension value="[100, 23]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAddAccountMouseClicked"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="scrLstAccounts">
               <Properties>
