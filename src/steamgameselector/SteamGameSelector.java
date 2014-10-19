@@ -28,12 +28,13 @@ package steamgameselector;
  * @author sfcook
  */
 public class SteamGameSelector {
-
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Create and display the form */
+        SteamUtils.getInstance();
+        /* Create and display the main window */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainWindow().setVisible(true);
