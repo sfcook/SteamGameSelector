@@ -61,21 +61,29 @@ public class SteamUtils {
         }
     }
     
-    public static Set getAppIds(String url)
+    public static Account getAccount(String url)
     {
         //get source
         
-        return getAppIdsBySource("");
+        return getAccountSource("");
     }
     
-    public static Set getAppIdsBySource(String source)
+    public static Account getAccountSource(String source)
     {
+        Account account=new Account();
         Set appids=new HashSet();
         
         Scanner sc=new Scanner(source);
         while(sc.hasNextLine())
         {
             String line=sc.nextLine();
+            //find line containing title
+            String title="<title>Steam Community :: ";
+            String closingTitle = " :: Games</title>";
+            if(line.contains(title))
+            {
+                account.name = line.substring(title.length(),line.length()-closingTitle.length());
+            }
             //find line containing rgGames var
             if(line.length()>32 && line.substring(0, 32).contains("rgGames"))
             {
@@ -90,29 +98,13 @@ public class SteamUtils {
             }
         }
         
-        return appids;
-    }
-    
-    //Note: it may be better to find the name and appids at the same time
-    public static String getNameBySource(String source)
-    {
-        String name="";
-        
-        Scanner sc=new Scanner(source);
-        while(sc.hasNextLine())
+        for(Object obj : appids)
         {
-            String line=sc.nextLine();
-            //find line containing title
-            String title="<title>Steam Community :: ";
-            String closingTitle = " :: Games</title>";
-            if(line.contains(title))
-            {
-                name = line.substring(title.length(),line.length()-closingTitle.length());
-                break;
-            }
+            int id=Integer.parseInt(obj.toString());
+            account.games.add(id);
         }
         
-        return name;
+        return account;
     }
     
     public static Set getTagsByAppId(String id)
