@@ -85,4 +85,32 @@ public class SteamUtilsTest {
         //Garry Newman wrote it so I assume it is on his steam profile
         assertTrue(garry.games.contains(4000));
     }
+    
+    @Test
+    public void testGetGame()
+    {
+        //counter-strike appid is 10
+        Game cs=SteamUtils.getGame(10);
+        
+        assertTrue(cs.title.equals("Counter-Strike"));
+        
+        assertTrue(cs.tags.contains("Action"));
+        assertTrue(cs.tags.contains("FPS"));
+        assertTrue(cs.tags.contains("Multiplayer"));
+        
+        //will require tags being added based on
+        assertTrue(cs.tags.contains("VAC"));
+    }
+    
+    @Test
+    public void testGetGameFeatures()
+    {
+        //counter-strike appid is 10
+        Game cs=SteamUtils.getGame(10);
+        
+        assertTrue(cs.title.equals("Counter-Strike"));
+        
+        //will require tags being added based on feature/category
+        assertTrue(cs.tags.contains("VAC"));
+    }
 }
