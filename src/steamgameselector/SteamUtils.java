@@ -86,6 +86,7 @@ public class SteamUtils {
                 {
                     appids.add(Integer.parseInt(line.substring(m.start()+8,m.end())));
                 }
+                break;
             }
         }
         
