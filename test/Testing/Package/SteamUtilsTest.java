@@ -32,5 +32,11 @@ import static org.junit.Assert.*;
  * @author sfcook
  */
 public class SteamUtilsTest {
+    private SteamUtils sUtils=SteamUtils.getInstance();
     
+    @Test
+    public void testTags()
+    {
+        assertFalse(sUtils.tags.isEmpty());
+    }
 }
