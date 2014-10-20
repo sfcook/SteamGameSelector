@@ -39,7 +39,7 @@ import java.util.regex.Matcher;
  */
 public class SteamUtils {
     private static SteamUtils instance = new SteamUtils();
-    Set tags;
+    public Set tags;
 
     private SteamUtils(){
         tags=new HashSet();
@@ -72,7 +72,22 @@ public class SteamUtils {
     {
         Set appids=new HashSet();
         
-        
+        Scanner sc=new Scanner(source);
+        while(sc.hasNextLine())
+        {
+            String line=sc.nextLine();
+            //find line containing rgGames var
+            if(line.length()>32 && line.substring(0, 32).contains("rgGames"))
+            {
+                //find appids on line
+                Pattern p = Pattern.compile("\"appid\":\\d+");
+                Matcher m = p.matcher(line);
+                while(m.find())
+                {
+                    appids.add(Integer.parseInt(line.substring(m.start()+8,m.end())));
+                }
+            }
+        }
         
         return appids;
     }
