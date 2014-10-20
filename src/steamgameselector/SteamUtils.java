@@ -122,9 +122,28 @@ public class SteamUtils {
         return account;
     }
     
+    //no seperate method for source as there shouldn't be any private game pages
     public static Game getGame(int id)
     {
         Game game=new Game();
+        
+        String source="";
+        try {
+            URL site=new URL("http://store.steampowered.com/app/"+id);
+            source=IOUtils.toString(site);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
+            return new Game();
+        } catch (IOException ex) {
+            Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
+            return new Game();
+        }
+        
+        //tag pattern where TAG is the tag
+        //<a href="http://store.steampowered.com/tag/en/TAG/?snr=1_5_9__409" class="app_tag" style="display: none;">
+        
+        //category pattern where # is the category
+        //category2=#
         
         return game;
     }
