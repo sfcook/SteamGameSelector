@@ -60,4 +60,15 @@ public class SteamUtilsTest {
         
         assertTrue(appids.equals(test));
     }
+    
+    @Test
+    public void testGetNameBySource()
+    {
+        String source="<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"><html><head>\n" +
+"<title>Steam Community :: THE MAGIC NAME :: Games</title>";
+        
+        String name=SteamUtils.getNameBySource(source);
+        
+        assertTrue(name.equals("THE MAGIC NAME"));
+    }
 }
