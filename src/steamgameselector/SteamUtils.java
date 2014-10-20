@@ -92,6 +92,14 @@ public class SteamUtils {
         return appids;
     }
     
+    //Note: it may be better to find the name and appids at the same time
+    public static String getNameBySource(String source)
+    {
+        String name="";
+        
+        return name;
+    }
+    
     public static Set getTagsByAppId(String id)
     {
         Set tags=new HashSet();
