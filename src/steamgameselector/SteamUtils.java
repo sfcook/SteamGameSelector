@@ -25,6 +25,8 @@ package steamgameselector;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -32,6 +34,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.net.URL;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -63,9 +67,20 @@ public class SteamUtils {
     
     public static Account getAccount(String url)
     {
-        //get source
+        url+="/games/?tab=all";
+        String source="";
+        try {
+            URL site=new URL(url);
+            source=IOUtils.toString(site);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
+            return new Account();
+        } catch (IOException ex) {
+            Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
+            return new Account();
+        }
         
-        return getAccountSource("");
+        return getAccountSource(source);
     }
     
     public static Account getAccountSource(String source)
@@ -80,7 +95,7 @@ public class SteamUtils {
             //find line containing title
             String title="<title>Steam Community :: ";
             String closingTitle = " :: Games</title>";
-            if(line.contains(title))
+            if(line.contains(title) && line.length()>title.length())
             {
                 account.name = line.substring(title.length(),line.length()-closingTitle.length());
             }
