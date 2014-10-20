@@ -45,20 +45,16 @@ public class AddAccountWindow extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblName = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
-        lblGames = new javax.swing.JLabel();
-        scrPnlGames = new javax.swing.JScrollPane();
-        txtGames = new javax.swing.JTextArea();
+        lblSource = new javax.swing.JLabel();
+        scrPnlSource = new javax.swing.JScrollPane();
+        txtSource = new javax.swing.JTextArea();
 
-        lblName.setText("Name");
+        lblSource.setText("Source");
 
-        lblGames.setText("Games");
-
-        txtGames.setColumns(20);
-        txtGames.setRows(5);
-        txtGames.setToolTipText("paste source from All Games tab");
-        scrPnlGames.setViewportView(txtGames);
+        txtSource.setColumns(20);
+        txtSource.setRows(5);
+        txtSource.setToolTipText("paste source from All Games tab");
+        scrPnlSource.setViewportView(txtSource);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -66,38 +62,29 @@ public class AddAccountWindow extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblName)
-                    .addComponent(lblGames))
+                .addComponent(lblSource)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrPnlGames, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
-                    .addComponent(txtName))
+                .addComponent(scrPnlSource, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblGames)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(scrPnlGames, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(scrPnlSource, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblSource)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lblGames;
-    private javax.swing.JLabel lblName;
-    private javax.swing.JScrollPane scrPnlGames;
-    private javax.swing.JTextArea txtGames;
-    private javax.swing.JTextField txtName;
+    private javax.swing.JLabel lblSource;
+    private javax.swing.JScrollPane scrPnlSource;
+    private javax.swing.JTextArea txtSource;
     // End of variables declaration//GEN-END:variables
 }
