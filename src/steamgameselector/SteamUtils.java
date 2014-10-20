@@ -122,10 +122,10 @@ public class SteamUtils {
         return account;
     }
     
-    public static Set getTagsByAppId(String id)
+    public static Game getGame(int id)
     {
-        Set tags=new HashSet();
+        Game game=new Game();
         
-        return tags;
+        return game;
     }
 }
