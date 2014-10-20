@@ -30,8 +30,15 @@ import java.util.ArrayList;
  * @author sfcook
  */
 public class Account {
-    String url;
-    String name;
-    ArrayList games;
+    public String url;
+    public String name;
+    public ArrayList games;
+    
+    Account()
+    {
+        url="";
+        name="";
+        games=new ArrayList();
+    }
     
 }
