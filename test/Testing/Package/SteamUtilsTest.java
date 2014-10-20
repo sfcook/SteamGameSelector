@@ -76,8 +76,13 @@ public class SteamUtilsTest {
     }
     
     @Test
-    public void testGetAppIds()
+    public void testGetAccount()
     {
+        //Garry Newman's steam profile
+        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
         
+        //4000 is the appid for gmod
+        //Garry Newman wrote it so I assume it is on his steam profile
+        assertTrue(garry.games.contains(4000));
     }
 }
