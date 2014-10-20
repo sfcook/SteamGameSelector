@@ -26,6 +26,8 @@ package Testing.Package;
 import steamgameselector.SteamUtils;
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
@@ -38,5 +40,24 @@ public class SteamUtilsTest {
     public void testTags()
     {
         assertFalse(sUtils.tags.isEmpty());
+    }
+    
+    @Test
+    public void testGetAppIdsBySource()
+    {
+        String source="var rgGames = [{\"appid\":4000,\"name\":\"Garry's Mod\"},{\"appid\":230410,\"name\":\"Warframe\"},{\"appid\":500,\"name\":\"Left 4 Dead\"},{\"appid\":550,\"name\":\"Left 4 Dead 2\"},{\"appid\":630,\"name\":\"Alien Swarm\"},{\"appid\":271290,\"name\":\"HAWKEN\"},{\"appid\":1250,\"name\":\"Killing Floor\"}";
+        
+        Set appids=SteamUtils.getAppIdsBySource(source);
+        Set test=new HashSet();
+        
+        test.add(4000);
+        test.add(230410);
+        test.add(500);
+        test.add(550);
+        test.add(630);
+        test.add(271290);
+        test.add(1250);
+        
+        assertTrue(appids.equals(test));
     }
 }
