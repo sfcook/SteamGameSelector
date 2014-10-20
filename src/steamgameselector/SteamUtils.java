@@ -98,6 +98,20 @@ public class SteamUtils {
     {
         String name="";
         
+        Scanner sc=new Scanner(source);
+        while(sc.hasNextLine())
+        {
+            String line=sc.nextLine();
+            //find line containing title
+            String title="<title>Steam Community :: ";
+            String closingTitle = " :: Games</title>";
+            if(line.contains(title))
+            {
+                name = line.substring(title.length(),line.length()-closingTitle.length());
+                break;
+            }
+        }
+        
         return name;
     }
     
