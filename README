@@ -1,3 +1,7 @@
 Parses data off the steam store and profile web pages to provide a method of selecting a game to play.
 
 Built using Java.
+
+Requires:
+ JUnit 4.10 for tests
+ commons-io-2.4.jar to build - https://commons.apache.org/proper/commons-io/
