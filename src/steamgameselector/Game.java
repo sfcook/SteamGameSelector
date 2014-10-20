@@ -30,9 +30,9 @@ import java.util.ArrayList;
  * @author sfcook
  */
 public class Game {
-    int appid;
-    String title;
-    ArrayList tags;
+    public int appid;
+    public String title;
+    public ArrayList tags;
     
     Game()
     {
