@@ -48,41 +48,43 @@ public class AddAccountWindow extends javax.swing.JPanel {
         lblSource = new javax.swing.JLabel();
         scrPnlSource = new javax.swing.JScrollPane();
         txtSource = new javax.swing.JTextArea();
+        lblInstructions = new javax.swing.JLabel();
 
         lblSource.setText("Source");
 
         txtSource.setColumns(20);
         txtSource.setRows(5);
-        txtSource.setToolTipText("paste source from All Games tab");
         scrPnlSource.setViewportView(txtSource);
+
+        lblInstructions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblInstructions.setText("Url not vaild or profile is private. You may paste the source from All Games tab below.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(2, 2, 2)
                 .addComponent(lblSource)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(scrPnlSource, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrPnlSource))
+            .addComponent(lblInstructions, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(lblInstructions)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(scrPnlSource, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblSource)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(lblSource)
+                    .addComponent(scrPnlSource, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblInstructions;
     private javax.swing.JLabel lblSource;
     private javax.swing.JScrollPane scrPnlSource;
     private javax.swing.JTextArea txtSource;
