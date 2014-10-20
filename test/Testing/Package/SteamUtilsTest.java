@@ -23,11 +23,11 @@
  */
 package Testing.Package;
 
-import steamgameselector.SteamUtils;
+import steamgameselector.*;
 import org.junit.*;
 import static org.junit.Assert.*;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -47,8 +47,8 @@ public class SteamUtilsTest {
     {
         String source="var rgGames = [{\"appid\":4000,\"name\":\"Garry's Mod\"},{\"appid\":230410,\"name\":\"Warframe\"},{\"appid\":500,\"name\":\"Left 4 Dead\"},{\"appid\":550,\"name\":\"Left 4 Dead 2\"},{\"appid\":630,\"name\":\"Alien Swarm\"},{\"appid\":271290,\"name\":\"HAWKEN\"},{\"appid\":1250,\"name\":\"Killing Floor\"}";
         
-        Set appids=SteamUtils.getAppIdsBySource(source);
-        Set test=new HashSet();
+        Account account=SteamUtils.getAccountSource(source);
+        ArrayList test=new ArrayList();
         
         test.add(4000);
         test.add(230410);
@@ -58,7 +58,10 @@ public class SteamUtilsTest {
         test.add(271290);
         test.add(1250);
         
-        assertTrue(appids.equals(test));
+        Collections.sort(test);
+        Collections.sort(account.games);
+        
+        assertTrue(account.games.equals(test));
     }
     
     @Test
@@ -67,8 +70,14 @@ public class SteamUtilsTest {
         String source="<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"><html><head>\n" +
 "<title>Steam Community :: THE MAGIC NAME :: Games</title>";
         
-        String name=SteamUtils.getNameBySource(source);
+        Account account=SteamUtils.getAccountSource(source);
         
-        assertTrue(name.equals("THE MAGIC NAME"));
+        assertTrue(account.name.equals("THE MAGIC NAME"));
+    }
+    
+    @Test
+    public void testGetAppIds()
+    {
+        
     }
 }
