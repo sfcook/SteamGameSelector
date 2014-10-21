@@ -45,7 +45,7 @@ public class SteamUtilsTest {
     @Test
     public void testGetAppIdsBySource()
     {
-        String source="var rgGames = [{\"appid\":4000,\"name\":\"Garry's Mod\"},{\"appid\":230410,\"name\":\"Warframe\"},{\"appid\":500,\"name\":\"Left 4 Dead\"},{\"appid\":550,\"name\":\"Left 4 Dead 2\"},{\"appid\":630,\"name\":\"Alien Swarm\"},{\"appid\":271290,\"name\":\"HAWKEN\"},{\"appid\":1250,\"name\":\"Killing Floor\"}";
+        String source="\t\t\tvar rgGames = [{\"appid\":4000,\"name\":\"Garry's Mod\"},{\"appid\":230410,\"name\":\"Warframe\"},{\"appid\":500,\"name\":\"Left 4 Dead\"},{\"appid\":550,\"name\":\"Left 4 Dead 2\"},{\"appid\":630,\"name\":\"Alien Swarm\"},{\"appid\":271290,\"name\":\"HAWKEN\"},{\"appid\":1250,\"name\":\"Killing Floor\"}];";
         
         Account account=SteamUtils.getAccountSource(source);
         ArrayList test=new ArrayList();
