@@ -36,6 +36,8 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.net.URL;
 import org.apache.commons.io.IOUtils;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonElement;
 
 /**
  *
@@ -87,6 +89,8 @@ public class SteamUtils {
     {
         Account account=new Account();
         Set appids=new HashSet();
+        JsonParser jsonParser=new JsonParser();
+        
         
         Scanner sc=new Scanner(source);
         while(sc.hasNextLine())
@@ -102,12 +106,15 @@ public class SteamUtils {
             //find line containing rgGames var
             if(line.length()>32 && line.substring(0, 32).contains("rgGames"))
             {
-                //find appids on line
-                Pattern p = Pattern.compile("\"appid\":\\d+");
-                Matcher m = p.matcher(line);
-                while(m.find())
+                line=line.substring(line.indexOf("["), line.lastIndexOf("]")+1);
+                JsonElement json=jsonParser.parse(line);
+                
+                if(json.isJsonArray())
                 {
-                    appids.add(Integer.parseInt(line.substring(m.start()+8,m.end())));
+                    for(JsonElement item : json.getAsJsonArray() )
+                    {
+                        appids.add(item.getAsJsonObject().get("appid"));
+                    }
                 }
                 break;
             }
