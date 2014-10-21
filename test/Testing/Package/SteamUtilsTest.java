@@ -94,6 +94,7 @@ public class SteamUtilsTest {
         
         assertTrue(cs.title.equals("Counter-Strike"));
         
+        //found in category but not tags or genres
         assertTrue(cs.tags.contains("Valve Anti-Cheat"));
     }
     
@@ -115,6 +116,7 @@ public class SteamUtilsTest {
         
         assertTrue(cs.title.equals("Counter-Strike"));
         
+        //FPS is a tag that should persist but not found in categories or genres 
         assertTrue(cs.tags.contains("FPS"));
     }
 }
