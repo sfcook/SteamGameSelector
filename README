@@ -5,3 +5,4 @@ Built using Java.
 Requires:
  JUnit 4.10 for tests
  commons-io-2.4.jar to build - https://commons.apache.org/proper/commons-io/
+ gson-2.3.jar to build - https://code.google.com/p/google-gson/
