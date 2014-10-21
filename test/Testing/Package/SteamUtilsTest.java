@@ -87,30 +87,34 @@ public class SteamUtilsTest {
     }
     
     @Test
-    public void testGetGame()
+    public void testGetGameCategory()
     {
         //counter-strike appid is 10
         Game cs=SteamUtils.getGame(10);
         
         assertTrue(cs.title.equals("Counter-Strike"));
         
-        assertTrue(cs.tags.contains("Action"));
-        assertTrue(cs.tags.contains("FPS"));
-        assertTrue(cs.tags.contains("Multiplayer"));
-        
-        //will require tags being added based on
-        assertTrue(cs.tags.contains("VAC"));
+        assertTrue(cs.tags.contains("Valve Anti-Cheat"));
     }
     
     @Test
-    public void testGetGameFeatures()
+    public void testGetGameGenres()
+    {
+        //Use some early access title 
+        Game cs=SteamUtils.getGame(324390);
+        
+        //early access is found in genres but not tags or categories
+        assertTrue(cs.tags.contains("Early Access"));
+    }
+    
+    @Test
+    public void testGetGameTags()
     {
         //counter-strike appid is 10
         Game cs=SteamUtils.getGame(10);
         
         assertTrue(cs.title.equals("Counter-Strike"));
         
-        //will require tags being added based on feature/category
-        assertTrue(cs.tags.contains("VAC"));
+        assertTrue(cs.tags.contains("FPS"));
     }
 }
