@@ -38,8 +38,6 @@ import java.net.URL;
 import org.apache.commons.io.IOUtils;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 /**
  *

@@ -23,7 +23,8 @@
  */
 package steamgameselector;
 
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
@@ -32,12 +33,12 @@ import java.util.ArrayList;
 public class Game {
     public int appid;
     public String title;
-    public ArrayList tags;
+    public Set tags;
     
     Game()
     {
         appid=-1;
         title="";
-        tags=new ArrayList();
+        tags=new HashSet();
     }
 }
