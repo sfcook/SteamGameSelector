@@ -72,7 +72,7 @@ public class SteamGameSelector {
         return (Game)steamGames.get(appid);
     }
     
-    public ArrayList getSharedGames()
+    public ArrayList<Integer> getSharedGames()
     {
         return sharedGames;
     }
