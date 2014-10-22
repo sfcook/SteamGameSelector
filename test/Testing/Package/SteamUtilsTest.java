@@ -99,12 +99,20 @@ public class SteamUtilsTest {
     }
     
     @Test
-    public void testGetGameCategory()
+    public void testGetGame()
     {
         //counter-strike appid is 10
         Game cs=sUtils.getGame(10);
         
+        assertTrue(cs.appid==10);
         assertTrue(cs.title.equals("Counter-Strike"));
+    }
+    
+    @Test
+    public void testGetGameCategory()
+    {
+        //counter-strike appid is 10
+        Game cs=sUtils.getGame(10);
         
         //found in category but not tags or genres
         assertTrue(cs.tags.contains("Valve Anti-Cheat"));
@@ -125,8 +133,6 @@ public class SteamUtilsTest {
     {
         //counter-strike appid is 10
         Game cs=sUtils.getGame(10);
-        
-        assertTrue(cs.title.equals("Counter-Strike"));
         
         //FPS is a tag that should persist but not found in categories or genres 
         assertTrue(cs.tags.contains("FPS"));
