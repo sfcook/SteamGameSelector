@@ -61,7 +61,7 @@ public class SteamGameSelector {
     //should check if steam game or not
     public void addGame(Game game)
     {
-        
+        steamGames.put(game.appid, game);
     }
     
     public Game getSteamGame(int appid)
