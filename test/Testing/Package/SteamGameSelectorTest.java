@@ -33,12 +33,14 @@ import java.util.ArrayList;
  * @author sfcook
  */
 public class SteamGameSelectorTest {
+    private SteamUtils sUtils;
     private SteamGameSelector selector;
     
     @Before
     public void init()
     {
-        selector=new SteamGameSelector();
+        sUtils=new SteamUtils();
+        selector=new SteamGameSelector(sUtils);
     }
     
     @Test
@@ -67,7 +69,6 @@ public class SteamGameSelectorTest {
     @Test
     public void testAddSteamGame()
     {
-        SteamUtils sUtils=new SteamUtils();
         Game game=sUtils.getGame(10);
         
         selector.addGame(game);
@@ -84,6 +85,19 @@ public class SteamGameSelectorTest {
         
         selector.addGame(game);
         assertTrue(selector.getSteamGame(-1)==null);
+    }
+    
+    @Test
+    public void testLoadGames()
+    {
+        Account wiremod=SteamUtils.getAccount("http://steamcommunity.com/id/wireteam");
+        
+        selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
+        
+        selector.loadGames();
+        
+        //4000 is the appid for gmod
+        assertTrue(selector.getSteamGame(4000).appid>0);
     }
     
     @Test
