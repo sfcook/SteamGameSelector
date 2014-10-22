@@ -39,7 +39,7 @@ public class SteamUtilsTest {
     @Test
     public void testTags()
     {
-        assertFalse(sUtils.tags.isEmpty());
+        assertFalse(SteamUtils.getInstance().getTags().isEmpty());
     }
     
     @Test
@@ -90,7 +90,7 @@ public class SteamUtilsTest {
     public void testGetGameCategory()
     {
         //counter-strike appid is 10
-        Game cs=SteamUtils.getGame(10);
+        Game cs=SteamUtils.getInstance().getGame(10);
         
         assertTrue(cs.title.equals("Counter-Strike"));
         
@@ -102,7 +102,7 @@ public class SteamUtilsTest {
     public void testGetGameGenres()
     {
         //Use some early access title 
-        Game cs=SteamUtils.getGame(324390);
+        Game cs=SteamUtils.getInstance().getGame(324390);
         
         //early access is found in genres but not tags or categories
         assertTrue(cs.tags.contains("Early Access"));
@@ -112,7 +112,7 @@ public class SteamUtilsTest {
     public void testGetGameTags()
     {
         //counter-strike appid is 10
-        Game cs=SteamUtils.getGame(10);
+        Game cs=SteamUtils.getInstance().getGame(10);
         
         assertTrue(cs.title.equals("Counter-Strike"));
         
