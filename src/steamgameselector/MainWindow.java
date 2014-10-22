@@ -24,6 +24,8 @@
 package steamgameselector;
 
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -31,13 +33,39 @@ import javax.swing.JOptionPane;
  */
 public class MainWindow extends javax.swing.JFrame {
     
-    private SteamGameSelector gameSelecter;
+    private SteamGameSelector gameSelector;
+    private SteamUtils sUtils;
     
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
+        sUtils=new SteamUtils();
+        gameSelector=new SteamGameSelector(sUtils);
         initComponents();
+    }
+    
+    private void update()
+    {
+        updateAccounts();
+        updateGames();
+    }
+    
+    private void updateAccounts()
+    {
+        DefaultListModel listModel=new DefaultListModel();
+        
+        for(Account account:gameSelector.getAccounts())
+        {
+            listModel.addElement(account.name);
+        }
+        
+        lstAccounts.setModel(listModel);
+    }
+    
+    private void updateGames()
+    {
+        
     }
 
     /**
@@ -167,7 +195,8 @@ public class MainWindow extends javax.swing.JFrame {
                 return;
         }
         
-        //TODO: do things with account obj
+        gameSelector.addAccount(account);
+        update();
     }//GEN-LAST:event_btnAddAccountMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

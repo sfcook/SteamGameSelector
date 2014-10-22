@@ -58,7 +58,7 @@ public class SteamGameSelector {
         accounts.remove(index);
     }
     
-    public ArrayList getAccounts()
+    public ArrayList<Account> getAccounts()
     {
         return accounts;
     }

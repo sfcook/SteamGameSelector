@@ -33,7 +33,6 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        //SteamUtils sUtils=new SteamUtils();
         /* Create and display the main window */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
