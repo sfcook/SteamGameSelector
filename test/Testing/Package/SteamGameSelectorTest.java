@@ -72,4 +72,16 @@ public class SteamGameSelectorTest {
         selector.addGame(game);
         assertTrue(selector.getSteamGame(10).title.equals("Counter-Strike"));
     }
+    
+    @Test
+    public void testNonSteamGame()
+    {
+        Game game=new Game();
+        game.title="League of Legends";
+        game.tags.add("MOBA");
+        game.tags.add("Non-Steam");
+        
+        selector.addGame(game);
+        assertTrue(selector.getSteamGame(-1)==null);
+    }
 }
