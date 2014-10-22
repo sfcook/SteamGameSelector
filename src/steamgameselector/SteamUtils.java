@@ -38,6 +38,8 @@ import java.net.URL;
 import org.apache.commons.io.IOUtils;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
  *
@@ -171,6 +173,7 @@ public class SteamUtils {
     }
     
     //no seperate method for source as there shouldn't be any private game pages
+    //note: this method is kind of slow these objects should probably be cached
     public Game getGame(int id)
     {
         Game game=new Game();
@@ -206,6 +209,28 @@ public class SteamUtils {
         
         //tag pattern where TAG is the tag
         //<a href="http://store.steampowered.com/tag/en/TAG/?snr=1_5_9__409" class="app_tag" style="display: none;">
+        try {
+            URL site=new URL("http://store.steampowered.com/app/"+id);
+            source=IOUtils.toString(site);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
+            return new Game();
+        } catch (IOException ex) {
+            Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
+            return new Game();
+        }
+        
+        Scanner sc=new Scanner(source);
+        while(sc.hasNextLine())
+        {
+            String line=sc.nextLine();
+            //find line containing rgGames var
+            if(line.contains("\"app_tag\""))
+            {
+                //find tag on line
+                game.tags.add(line.substring(line.indexOf("en/")+3,line.indexOf("/?")));
+            }
+        }
         
         return game;
     }
