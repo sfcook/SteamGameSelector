@@ -84,6 +84,7 @@ public class MainWindow extends javax.swing.JFrame {
         splitPane.setLeftComponent(panelLeft);
 
         btnAddGame.setText("Add Game");
+        btnAddGame.setEnabled(false);
         btnAddGame.setMaximumSize(new java.awt.Dimension(100, 23));
         btnAddGame.setMinimumSize(new java.awt.Dimension(100, 23));
         btnAddGame.setPreferredSize(new java.awt.Dimension(100, 23));
