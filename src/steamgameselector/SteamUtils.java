@@ -123,7 +123,9 @@ public class SteamUtils {
             return new Account();
         }
         
-        return getAccountSource(source);
+        Account account=getAccountSource(source);
+        account.url=url;
+        return account;
     }
     
     public static Account getAccountSource(String source)
