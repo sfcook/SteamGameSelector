@@ -195,13 +195,19 @@ public class SteamUtils {
         {
             json=json.getAsJsonObject().get("data");
             game.title=json.getAsJsonObject().get("name").getAsString();
-            for(JsonElement item : json.getAsJsonObject().get("genres").getAsJsonArray())
+            if(json.getAsJsonObject().get("genres")!=null)
             {
-                game.tags.add(genres.get(item.getAsJsonObject().get("id").getAsInt()));
+                for(JsonElement item : json.getAsJsonObject().get("genres").getAsJsonArray())
+                {
+                    game.tags.add(genres.get(item.getAsJsonObject().get("id").getAsInt()));
+                }
             }
-            for(JsonElement item : json.getAsJsonObject().get("categories").getAsJsonArray())
+            if(json.getAsJsonObject().get("categories")!=null)
             {
-                game.tags.add(categories.get(item.getAsJsonObject().get("id").getAsInt()));
+                for(JsonElement item : json.getAsJsonObject().get("categories").getAsJsonArray())
+                {
+                    game.tags.add(categories.get(item.getAsJsonObject().get("id").getAsInt()));
+                }
             }
         }
         
