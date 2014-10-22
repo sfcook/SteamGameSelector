@@ -45,7 +45,7 @@ public class SteamGameSelector {
     
     public void addAccount(Account account)
     {
-        
+        accounts.add(account);
     }
     
     public void removeAccount(int index)
