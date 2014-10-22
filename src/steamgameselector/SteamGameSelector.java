@@ -32,19 +32,15 @@ import java.util.ArrayList;
  * @author sfcook
  */
 public class SteamGameSelector {
-    private static SteamGameSelector instance = new SteamGameSelector();
     private Map steamGames;
     private ArrayList sharedGames;
     private ArrayList accounts;
     
-    SteamGameSelector()
+    public SteamGameSelector()
     {
         steamGames=new HashMap();
         sharedGames=new ArrayList();
         accounts=new ArrayList();
-    }
-    public static SteamGameSelector getInstance(){
-        return instance;
     }
     
     public void addAccount(Account account)

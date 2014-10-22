@@ -34,22 +34,27 @@ import java.util.HashSet;
  * @author sfcook
  */
 public class SteamUtilsTest {
-    private SteamUtils sUtils=SteamUtils.getInstance();
+    private SteamUtils sUtils;
+    @Before
+    public void init()
+    {
+        sUtils=new SteamUtils();
+    }
     
     @Test
     public void testTags()
     {
-        assertFalse(SteamUtils.getInstance().getTags().isEmpty());
+        assertFalse(sUtils.getTags().isEmpty());
     }
     @Test
     public void testGenres()
     {
-        assertFalse(SteamUtils.getInstance().getGenres().isEmpty());
+        assertFalse(sUtils.getGenres().isEmpty());
     }
     @Test
     public void testCategories()
     {
-        assertFalse(SteamUtils.getInstance().getCategories().isEmpty());
+        assertFalse(sUtils.getCategories().isEmpty());
     }
     
     @Test
@@ -97,7 +102,7 @@ public class SteamUtilsTest {
     public void testGetGameCategory()
     {
         //counter-strike appid is 10
-        Game cs=SteamUtils.getInstance().getGame(10);
+        Game cs=sUtils.getGame(10);
         
         assertTrue(cs.title.equals("Counter-Strike"));
         
@@ -109,7 +114,7 @@ public class SteamUtilsTest {
     public void testGetGameGenres()
     {
         //Use some early access title 
-        Game cs=SteamUtils.getInstance().getGame(324390);
+        Game cs=sUtils.getGame(324390);
         
         //early access is found in genres but not tags or categories
         assertTrue(cs.tags.contains("Early Access"));
@@ -119,7 +124,7 @@ public class SteamUtilsTest {
     public void testGetGameTags()
     {
         //counter-strike appid is 10
-        Game cs=SteamUtils.getInstance().getGame(10);
+        Game cs=sUtils.getGame(10);
         
         assertTrue(cs.title.equals("Counter-Strike"));
         
@@ -130,7 +135,7 @@ public class SteamUtilsTest {
     @Test
     public void testBadGameID()
     {
-        Game bad=SteamUtils.getInstance().getGame(1);
+        Game bad=sUtils.getGame(1);
         
         assertTrue(bad.tags.isEmpty());
     }

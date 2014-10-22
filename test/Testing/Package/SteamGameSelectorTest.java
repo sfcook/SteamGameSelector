@@ -32,5 +32,21 @@ import static org.junit.Assert.*;
  * @author sfcook
  */
 public class SteamGameSelectorTest {
+    private SteamGameSelector selector;
     
+    @Before
+    public void init()
+    {
+        selector=new SteamGameSelector();
+    }
+    
+    @Test
+    public void testAddAccount()
+    {
+        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
+        
+        selector.addAccount(garry);
+        
+        assertFalse(selector.getAccounts().isEmpty());
+    }
 }

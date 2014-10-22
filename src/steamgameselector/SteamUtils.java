@@ -44,12 +44,11 @@ import com.google.gson.JsonElement;
  * @author sfcook
  */
 public class SteamUtils {
-    private static SteamUtils instance = new SteamUtils();
     private Set tags;
     private Map genres;
     private Map categories;
 
-    private SteamUtils(){
+    public SteamUtils(){
         tags=new HashSet();
         genres=new HashMap();
         categories=new HashMap();
@@ -60,9 +59,6 @@ public class SteamUtils {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    public static SteamUtils getInstance(){
-        return instance;
     }
     
     private void populateTags() throws FileNotFoundException{
