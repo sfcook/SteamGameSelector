@@ -30,10 +30,10 @@ import java.net.MalformedURLException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.net.URL;
 import org.apache.commons.io.IOUtils;
 import com.google.gson.JsonParser;
@@ -45,12 +45,18 @@ import com.google.gson.JsonElement;
  */
 public class SteamUtils {
     private static SteamUtils instance = new SteamUtils();
-    public Set tags;
+    private Set tags;
+    private Map genres;
+    private Map categories;
 
     private SteamUtils(){
         tags=new HashSet();
+        genres=new HashMap();
+        categories=new HashMap();
         try {
             populateTags();
+            populateGenres();
+            populateCategories();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,6 +70,41 @@ public class SteamUtils {
         Scanner sc = new Scanner(new File("tags.cfg"));
         while(sc.hasNextLine()){
             tags.add(sc.nextLine());
+        }
+    }
+    public Set getTags(){
+        return tags;
+    }
+    private void populateGenres(){
+        try {
+            populateMap(genres,"genre.cfg");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public Map getGenres(){
+        return genres;
+    }
+    private void populateCategories(){
+        try {
+            populateMap(categories,"category.cfg");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public Map getCategories(){
+        return categories;
+    }
+    private void populateMap(Map map, String file) throws FileNotFoundException{
+        map.clear();
+        Scanner sc = new Scanner(new File(file));
+        while(sc.hasNextInt() && sc.hasNextLine()){
+            int id=sc.nextInt();
+            sc.nextLine();
+            if(sc.hasNextLine())
+            {
+                map.put(id, sc.nextLine());
+            }
         }
     }
     
@@ -130,13 +171,13 @@ public class SteamUtils {
     }
     
     //no seperate method for source as there shouldn't be any private game pages
-    public static Game getGame(int id)
+    public Game getGame(int id)
     {
         Game game=new Game();
         
         String source="";
         try {
-            URL site=new URL("http://store.steampowered.com/app/"+id);
+            URL site=new URL("http://store.steampowered.com/api/appdetails/?appids="+id);
             source=IOUtils.toString(site);
         } catch (MalformedURLException ex) {
             Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,11 +187,25 @@ public class SteamUtils {
             return new Game();
         }
         
+        JsonElement json=new JsonParser().parse(source);
+        json=json.getAsJsonObject().get(Integer.toString(id));
+        
+        if(json.getAsJsonObject().has("data"))
+        {
+            json=json.getAsJsonObject().get("data");
+            game.title=json.getAsJsonObject().get("name").getAsString();
+            for(JsonElement item : json.getAsJsonObject().get("genres").getAsJsonArray())
+            {
+                game.tags.add(genres.get(item.getAsJsonObject().get("id").getAsInt()));
+            }
+            for(JsonElement item : json.getAsJsonObject().get("categories").getAsJsonArray())
+            {
+                game.tags.add(categories.get(item.getAsJsonObject().get("id").getAsInt()));
+            }
+        }
+        
         //tag pattern where TAG is the tag
         //<a href="http://store.steampowered.com/tag/en/TAG/?snr=1_5_9__409" class="app_tag" style="display: none;">
-        
-        //category pattern where # is the category
-        //category2=#
         
         return game;
     }
