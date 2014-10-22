@@ -65,7 +65,15 @@ public class MainWindow extends javax.swing.JFrame {
     
     private void updateGames()
     {
+        DefaultListModel listModel=new DefaultListModel();
         
+        gameSelector.calcSharedGames();
+        for(int appid:gameSelector.getSharedGames())
+        {
+            listModel.addElement(appid);
+        }
+        
+        lstGames.setModel(listModel);
     }
 
     /**
