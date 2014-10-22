@@ -26,6 +26,7 @@ package Testing.Package;
 import steamgameselector.*;
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -98,5 +99,40 @@ public class SteamGameSelectorTest {
         
         //4000 is the appid for gmod
         assertTrue(selector.getSharedGames().get(0)==4000);
+    }
+    
+    @Test
+    public void testGetRandomGame()
+    {
+        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
+        Account wiremod=SteamUtils.getAccount("http://steamcommunity.com/id/wireteam");
+        
+        selector.addAccount(garry); //gmod dev, owns gmod
+        selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
+        
+        selector.calcSharedGames();
+        
+        //4000 is the appid for gmod
+        assertTrue(selector.getRandomGame().appid==4000);
+    }
+    
+    @Test
+    public void testGetRandomGame2()
+    {
+        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
+        
+        selector.addAccount(garry);
+        
+        selector.calcSharedGames();
+        
+        ArrayList<Integer> tests=new ArrayList<Integer>();
+        tests.add(selector.getRandomGame().appid);
+        tests.add(selector.getRandomGame().appid);
+        tests.add(selector.getRandomGame().appid);
+        tests.add(selector.getRandomGame().appid);
+        
+        int test=selector.getRandomGame().appid;
+        
+        assertFalse(tests.contains(test));
     }
 }
