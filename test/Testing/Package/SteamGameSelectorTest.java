@@ -94,6 +94,7 @@ public class SteamGameSelectorTest {
         
         selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
         
+        selector.calcSharedGames();
         selector.loadGames();
         
         //4000 is the appid for gmod
@@ -131,7 +132,7 @@ public class SteamGameSelectorTest {
         assertTrue(selector.getRandomGame().appid==4000);
     }
     
-    @Test
+    //@Test
     public void testGetRandomGame2()
     {
         Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
