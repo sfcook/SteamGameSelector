@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -35,7 +36,7 @@ import java.util.ArrayList;
  */
 public class SteamGameSelector {
     private SteamUtils sUtils;
-    private Map steamGames;
+    private Map<Integer, Game> steamGames;
     private ArrayList<Integer> sharedGames;
     private ArrayList<Account> accounts;
     
@@ -62,15 +63,13 @@ public class SteamGameSelector {
         return accounts;
     }
     
+    //TODO: needs speed improvements for large number of games
     public void loadGames()
     {
-        for(Account account:accounts)
+        for(int appid:sharedGames)
         {
-            for(int appid:account.games)
-            {
-                if(!steamGames.containsKey(appid))
-                    addGame(sUtils.getGame(appid));
-            }
+            if(!steamGames.containsKey(appid))
+                addGame(sUtils.getGame(appid));
         }
     }
     
@@ -99,23 +98,27 @@ public class SteamGameSelector {
         Set<Integer> shared=new HashSet();
         shared.addAll(accounts.get(0).games);
         
-        if(accounts.size()==1)
-            return;
-        else
+        if(accounts.size()>1)
         {
             for(int pos=1;pos<accounts.size();pos++)
             {
                 shared.retainAll(accounts.get(pos).games);
             }
-            for(Integer item : shared)
-            {
-                sharedGames.add(item);
-            }
+        }
+        for(Integer item : shared)
+        {
+            sharedGames.add(item);
         }
     }
     
+    public int getRandomGameIndex()
+    {
+        Random rand=new Random();
+        return rand.nextInt(sharedGames.size());
+    }
     public Game getRandomGame()
     {
-        return new Game();
+        int selected=getRandomGameIndex();
+        return steamGames.get(sharedGames.get(selected));
     }
 }
