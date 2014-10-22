@@ -129,4 +129,26 @@ public class SteamUtilsTest {
         //FPS is a tag that should persist but not found in categories or genres 
         assertTrue(cs.tags.contains("FPS"));
     }
+    
+    @Test
+    public void testBadGameID()
+    {
+        Game bad=SteamUtils.getInstance().getGame(1);
+        
+        assertTrue(bad.tags.isEmpty());
+    }
+    @Test
+    public void testBadUrl()
+    {
+        Account bad=SteamUtils.getAccount("https://www.google.com");
+        
+        assertTrue(bad.games.isEmpty());
+    }
+    @Test
+    public void testBadUrl2()
+    {
+        Account bad=SteamUtils.getAccount("not a url");
+        
+        assertTrue(bad.games.isEmpty());
+    }
 }
