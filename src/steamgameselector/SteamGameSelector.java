@@ -23,10 +23,63 @@
  */
 package steamgameselector;
 
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
+
 /**
  *
  * @author sfcook
  */
 public class SteamGameSelector {
+    private static SteamGameSelector instance = new SteamGameSelector();
+    private Map steamGames;
+    private ArrayList sharedGames;
+    private ArrayList accounts;
     
+    SteamGameSelector()
+    {
+        steamGames=new HashMap();
+        sharedGames=new ArrayList();
+        accounts=new ArrayList();
+    }
+    public static SteamGameSelector getInstance(){
+        return instance;
+    }
+    
+    public void addAccount(Account account)
+    {
+        
+    }
+    
+    public void removeAccount(int index)
+    {
+        
+    }
+    
+    public ArrayList getAccounts()
+    {
+        return accounts;
+    }
+    
+    //should check if steam game or not
+    public void addGame(Game game)
+    {
+        
+    }
+    
+    public Game getSteamGame(int appid)
+    {
+        return (Game)steamGames.get(appid);
+    }
+    
+    public ArrayList getSharedGames()
+    {
+        return sharedGames;
+    }
+    
+    public Game getRandomGame()
+    {
+        return new Game();
+    }
 }
