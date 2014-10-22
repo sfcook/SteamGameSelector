@@ -41,6 +41,16 @@ public class SteamUtilsTest {
     {
         assertFalse(SteamUtils.getInstance().getTags().isEmpty());
     }
+    @Test
+    public void testGenres()
+    {
+        assertFalse(SteamUtils.getInstance().getGenres().isEmpty());
+    }
+    @Test
+    public void testCategories()
+    {
+        assertFalse(SteamUtils.getInstance().getCategories().isEmpty());
+    }
     
     @Test
     public void testGetAppIdsBySource()
