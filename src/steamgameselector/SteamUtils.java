@@ -44,14 +44,14 @@ import com.google.gson.JsonElement;
  * @author sfcook
  */
 public class SteamUtils {
-    private Set tags;
-    private Map genres;
-    private Map categories;
+    private Set<String> tags;
+    private Map<Integer, String> genres;
+    private Map<Integer, String> categories;
 
     public SteamUtils(){
-        tags=new HashSet();
-        genres=new HashMap();
-        categories=new HashMap();
+        tags=new HashSet<String>();
+        genres=new HashMap<Integer, String>();
+        categories=new HashMap<Integer, String>();
         try {
             populateTags();
             populateGenres();

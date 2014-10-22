@@ -33,14 +33,14 @@ import java.util.ArrayList;
  */
 public class SteamGameSelector {
     private Map steamGames;
-    private ArrayList sharedGames;
-    private ArrayList accounts;
+    private ArrayList<Integer> sharedGames;
+    private ArrayList<Account> accounts;
     
     public SteamGameSelector()
     {
         steamGames=new HashMap();
-        sharedGames=new ArrayList();
-        accounts=new ArrayList();
+        sharedGames=new ArrayList<Integer>();
+        accounts=new ArrayList<Account>();
     }
     
     public void addAccount(Account account)

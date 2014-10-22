@@ -33,12 +33,12 @@ import java.util.HashSet;
 public class Game {
     public int appid;
     public String title;
-    public Set tags;
+    public Set<String> tags;
     
     public Game()
     {
         appid=-1;
         title="";
-        tags=new HashSet();
+        tags=new HashSet<String>();
     }
 }

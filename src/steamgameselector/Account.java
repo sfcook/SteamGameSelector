@@ -33,13 +33,13 @@ import java.util.HashSet;
 public class Account {
     public String url;
     public String name;
-    public Set games;
+    public Set<Integer> games;
     
     public Account()
     {
         url="";
         name="";
-        games=new HashSet();
+        games=new HashSet<Integer>();
     }
     
 }
