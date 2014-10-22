@@ -50,7 +50,7 @@ public class SteamGameSelector {
     
     public void removeAccount(int index)
     {
-        
+        accounts.remove(index);
     }
     
     public ArrayList getAccounts()
