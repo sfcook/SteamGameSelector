@@ -25,6 +25,8 @@ package steamgameselector;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.ArrayList;
 
 /**
@@ -73,6 +75,29 @@ public class SteamGameSelector {
     public ArrayList getSharedGames()
     {
         return sharedGames;
+    }
+    
+    public void calcSharedGames()
+    {
+        if(accounts.size()==0)
+            return;
+        
+        Set<Integer> shared=new HashSet();
+        shared.addAll(accounts.get(0).games);
+        
+        if(accounts.size()==1)
+            return;
+        else
+        {
+            for(int pos=1;pos<accounts.size();pos++)
+            {
+                shared.retainAll(accounts.get(pos).games);
+            }
+            for(Integer item : shared)
+            {
+                sharedGames.add(item);
+            }
+        }
     }
     
     public Game getRandomGame()
