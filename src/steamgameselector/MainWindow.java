@@ -24,13 +24,16 @@
 package steamgameselector;
 
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 /**
  *
  * @author sfcook
  */
 public class MainWindow extends javax.swing.JFrame {
-
+    
+    private ArrayList accounts;
+    private ArrayList games;
     /**
      * Creates new form MainWindow
      */
@@ -141,19 +144,30 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void btnAddGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddGameMouseClicked
         AddGameWindow addPanel=new AddGameWindow(); //builds contents of a game obj
-        JOptionPane.showConfirmDialog(null,addPanel,"Add Game",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showConfirmDialog(this,addPanel,"Add Game",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         //todo: retrive result and do things
     }//GEN-LAST:event_btnAddGameMouseClicked
 
     private void btnAddAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddAccountMouseClicked
-        String url = JOptionPane.showInputDialog(null,"Enter public url","Add Account",JOptionPane.PLAIN_MESSAGE);
+        String url = JOptionPane.showInputDialog(this,"Enter public url","Add Account",JOptionPane.PLAIN_MESSAGE);
+        
+        if(url==null)
+            return;
         //validate using SteamUtils
-        // TODO: if not public or not found show detailed window
-        if(url!=null && url.isEmpty())
+        Account account=SteamUtils.getAccount(url);
+        if(account.games.isEmpty())
         {
             AddAccountWindow addPanel=new AddAccountWindow();
-            JOptionPane.showConfirmDialog(null,addPanel,"Add Account",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+            int result=JOptionPane.showConfirmDialog(this,addPanel,"Add Account",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+            if(result==JOptionPane.OK_OPTION)
+            {
+                account=addPanel.getAccount();
+            }
+            else
+                return;
         }
+        
+        //TODO: do things with account obj
     }//GEN-LAST:event_btnAddAccountMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

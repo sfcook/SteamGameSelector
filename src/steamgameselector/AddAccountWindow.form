@@ -57,6 +57,12 @@
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="txtSource.getDocument().addDocumentListener(new DocumentListener(){&#xd;&#xa;    @Override&#xd;&#xa;    public void insertUpdate(DocumentEvent e){&#xd;&#xa;        sourceListener(e);&#xd;&#xa;    }&#xd;&#xa;    @Override&#xd;&#xa;    public void removeUpdate(DocumentEvent e){&#xd;&#xa;        &#xd;&#xa;    }&#xd;&#xa;    @Override&#xd;&#xa;    public void changedUpdate(DocumentEvent e){&#xd;&#xa;        &#xd;&#xa;    }&#xd;&#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="AddAccountWindow_txtSource"/>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

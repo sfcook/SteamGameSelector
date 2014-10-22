@@ -22,6 +22,11 @@
  * THE SOFTWARE.
  */
 package steamgameselector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.event.*;
+import javax.swing.JOptionPane;
+import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -29,11 +34,25 @@ package steamgameselector;
  */
 public class AddAccountWindow extends javax.swing.JPanel {
 
+    private Account account;
     /**
      * Creates new form AddAccountWindow
      */
     public AddAccountWindow() {
         initComponents();
+    }
+    
+    public Account getAccount(){
+        return account;
+    }
+    
+    private void sourceListener(DocumentEvent e)
+    {
+        try {
+            account = SteamUtils.getAccountSource(e.getDocument().getText(0,e.getDocument().getLength()));
+        } catch (BadLocationException ex) {
+            Logger.getLogger(AddAccountWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -47,13 +66,27 @@ public class AddAccountWindow extends javax.swing.JPanel {
 
         lblSource = new javax.swing.JLabel();
         scrPnlSource = new javax.swing.JScrollPane();
-        txtSource = new javax.swing.JTextArea();
+        javax.swing.JTextArea txtSource = new javax.swing.JTextArea();
         lblInstructions = new javax.swing.JLabel();
 
         lblSource.setText("Source");
 
         txtSource.setColumns(20);
         txtSource.setRows(5);
+        txtSource.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e){
+                sourceListener(e);
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e){
+
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e){
+
+            }
+        });
         scrPnlSource.setViewportView(txtSource);
 
         lblInstructions.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -87,6 +120,5 @@ public class AddAccountWindow extends javax.swing.JPanel {
     private javax.swing.JLabel lblInstructions;
     private javax.swing.JLabel lblSource;
     private javax.swing.JScrollPane scrPnlSource;
-    private javax.swing.JTextArea txtSource;
     // End of variables declaration//GEN-END:variables
 }
