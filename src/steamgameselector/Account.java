@@ -35,7 +35,7 @@ public class Account {
     public String name;
     public Set games;
     
-    Account()
+    public Account()
     {
         url="";
         name="";

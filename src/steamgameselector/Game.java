@@ -35,7 +35,7 @@ public class Game {
     public String title;
     public Set tags;
     
-    Game()
+    public Game()
     {
         appid=-1;
         title="";
