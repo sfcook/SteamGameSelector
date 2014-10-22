@@ -27,6 +27,19 @@ package steamgameselector;
  *
  * @author sfcook
  */
-public class SteamGameSelector {
+public class Main {
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        SteamUtils.getInstance();
+        /* Create and display the main window */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainWindow().setVisible(true);
+            }
+        });
+    }
     
 }

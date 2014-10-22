@@ -24,7 +24,6 @@
 package steamgameselector;
 
 import javax.swing.JOptionPane;
-import java.util.ArrayList;
 
 /**
  *
@@ -32,8 +31,8 @@ import java.util.ArrayList;
  */
 public class MainWindow extends javax.swing.JFrame {
     
-    private ArrayList accounts;
-    private ArrayList games;
+    private SteamGameSelector gameSelecter;
+    
     /**
      * Creates new form MainWindow
      */
