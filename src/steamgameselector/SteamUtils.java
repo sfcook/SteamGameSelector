@@ -174,6 +174,8 @@ public class SteamUtils {
     {
         Game game=new Game();
         
+        game.appid=id;
+        
         String source="";
         try {
             URL site=new URL("http://store.steampowered.com/api/appdetails/?appids="+id);
