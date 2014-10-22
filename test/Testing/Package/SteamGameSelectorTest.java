@@ -49,4 +49,17 @@ public class SteamGameSelectorTest {
         
         assertFalse(selector.getAccounts().isEmpty());
     }
+    
+    @Test
+    public void testRemoveAccount()
+    {
+        
+        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
+        
+        selector.addAccount(garry);
+        
+        assertFalse(selector.getAccounts().isEmpty());
+        selector.removeAccount(0);
+        assertTrue(selector.getAccounts().isEmpty());
+    }
 }
