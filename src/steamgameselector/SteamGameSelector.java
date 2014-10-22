@@ -105,6 +105,7 @@ public class SteamGameSelector {
                 shared.retainAll(accounts.get(pos).games);
             }
         }
+        sharedGames.clear();
         for(Integer item : shared)
         {
             sharedGames.add(item);
