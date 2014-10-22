@@ -62,4 +62,14 @@ public class SteamGameSelectorTest {
         selector.removeAccount(0);
         assertTrue(selector.getAccounts().isEmpty());
     }
+    
+    @Test
+    public void testAddSteamGame()
+    {
+        SteamUtils sUtils=new SteamUtils();
+        Game game=sUtils.getGame(10);
+        
+        selector.addGame(game);
+        assertTrue(selector.getSteamGame(10).title.equals("Counter-Strike"));
+    }
 }
