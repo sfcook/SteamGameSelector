@@ -64,7 +64,14 @@ public class SteamGameSelector {
     
     public void loadGames()
     {
-        
+        for(Account account:accounts)
+        {
+            for(int appid:account.games)
+            {
+                if(!steamGames.containsKey(appid))
+                    addGame(sUtils.getGame(appid));
+            }
+        }
     }
     
     //should check if steam game or not
