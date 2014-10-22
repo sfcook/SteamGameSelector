@@ -34,12 +34,14 @@ import java.util.ArrayList;
  * @author sfcook
  */
 public class SteamGameSelector {
+    private SteamUtils sUtils;
     private Map steamGames;
     private ArrayList<Integer> sharedGames;
     private ArrayList<Account> accounts;
     
-    public SteamGameSelector()
+    public SteamGameSelector(SteamUtils instance)
     {
+        sUtils=instance;
         steamGames=new HashMap();
         sharedGames=new ArrayList<Integer>();
         accounts=new ArrayList<Account>();
@@ -58,6 +60,11 @@ public class SteamGameSelector {
     public ArrayList getAccounts()
     {
         return accounts;
+    }
+    
+    public void loadGames()
+    {
+        
     }
     
     //should check if steam game or not
