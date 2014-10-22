@@ -94,7 +94,9 @@ public class SteamGameSelectorTest {
         selector.addAccount(garry); //gmod dev, owns gmod
         selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
         
+        selector.calcSharedGames();
+        
         //4000 is the appid for gmod
-        assertTrue((int)selector.getSharedGames().get(0)==4000);
+        assertTrue(selector.getSharedGames().get(0)==4000);
     }
 }
