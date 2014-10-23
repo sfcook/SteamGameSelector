@@ -106,14 +106,13 @@ public class SteamUtils {
     
     public static Account getAccount(String url)
     {
-        url+="/games/?tab=all";
         String source="";
         try {
-            URL site=new URL(url);
+            URL site=new URL(url+"/games/?tab=all");
             source=IOUtils.toString(site);
         } catch (MalformedURLException ex) {
             Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
-            return new Account();
+            return getAccountSource(url);
         } catch (IOException ex) {
             Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
             return new Account();
