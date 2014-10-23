@@ -88,6 +88,17 @@ public class SteamUtilsTest {
     }
     
     @Test
+    public void testGetNameBySource2()
+    {
+        String source="<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"><html><head>\n" +
+"<title>Steam Community :: THE MAGIC NAME :: Games</title>";
+        
+        Account account=SteamUtils.getAccount(source);
+        
+        assertTrue(account.name.equals("THE MAGIC NAME"));
+    }
+    
+    @Test
     public void testGetAccount()
     {
         //Garry Newman's steam profile
