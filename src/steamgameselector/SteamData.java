@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.sqlite.SQLiteDataSource;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.ArrayHandler;
 
 /**
  *
@@ -67,14 +68,14 @@ public class SteamData {
         //also this was mostly tested using the cmd/shell utility
         
         //appid is the same as the ones used by valve
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Game(appid INT PRIMARY KEY, title TEXT)");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Game(appid INTEGER  PRIMARY KEY, title TEXT)");
         //no idea what valve tag ids are or if they even have one
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Tag(tagid INT PRIMARY KEY, tag TEXT)");
-        queryRunner.update("CREATE TABLE IF NOT EXISTS GameTag(gametagid INT PRIMARY KEY, appid INT, tagid INT, FOREIGN KEY(appid) REFERENCES Game(appid), FOREIGN KEY(tagid) REFERENCES Tag(tagid))");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Tag(tagid INTEGER  PRIMARY KEY AUTOINCREMENT, tag TEXT)");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS GameTag(gametagid INTEGER  PRIMARY KEY, appid INTEGER , tagid INTEGER , FOREIGN KEY(appid) REFERENCES Game(appid), FOREIGN KEY(tagid) REFERENCES Tag(tagid))");
         
         //steamid is the same as the ones used by valve, might break if valve stops using 64-bit signed int
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(steamid INT PRIMARY KEY, name TEXT)");
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountgameid INT PRIMARY KEY, steamid INT, appid INT, FOREIGN KEY(steamid) REFERENCES Account(steamid), FOREIGN KEY(appid) REFERENCES Game(appid))");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(steamid INTEGER  PRIMARY KEY, name TEXT)");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountgameid INTEGER  PRIMARY KEY, steamid INTEGER , appid INTEGER , FOREIGN KEY(steamid) REFERENCES Account(steamid), FOREIGN KEY(appid) REFERENCES Game(appid))");
     }
     
     public ArrayList<String> getTags()
@@ -89,6 +90,46 @@ public class SteamData {
         ArrayList<String> tags=new ArrayList<String>();
         
         return tags;
+    }
+    
+    public int getTagId(String tag)
+    {
+        try {
+            Object[] objs=queryRunner.query("SELECT tagid FROM Tag WHERE tag LIKE ?",new ArrayHandler(),tag);
+            if(objs.length==0)
+                return -1;
+            else
+                return (Integer)objs[0];
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    public int addTag(String tag)
+    {
+        int exist=getTagId(tag);
+        if(exist!=-1)
+            return exist;
+        try {
+            return queryRunner.update("INSERT INTO Tag (tag) Values (?)",tag);
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
+    public String getTag(int tagid)
+    {
+        try {
+            Object[] objs=queryRunner.query("SELECT tag FROM Tag WHERE tagid=?",new ArrayHandler(),tagid);
+            if(objs.length==0)
+                return null;
+            else
+                return (String)objs[0];
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     public ArrayList<Account> getAccounts()
