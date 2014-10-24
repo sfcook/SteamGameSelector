@@ -100,7 +100,13 @@ public class SteamData {
     
     public int addAccount(Account account)
     {
-        return -1;
+        if(account.name.isEmpty() || account.games.isEmpty() || account.steamid==0)
+            return 1;
+        else
+        {
+            //queryRunner.update("INSERT INTO account")
+            return 0;
+        }
     }
     
     public int addAccount(String url)
@@ -108,7 +114,14 @@ public class SteamData {
         return -1;
     }
     
-    public int removeAccount(Account account)
+    public Account getAccount(long steamid)
+    {
+        Account account=new Account();
+        
+        return account;
+    }
+    
+    public int removeAccount(long steamid)
     {
         return -1;
     }
