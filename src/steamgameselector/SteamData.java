@@ -24,16 +24,28 @@
 package steamgameselector;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.sqlite.SQLiteDataSource;
+import org.apache.commons.dbutils.QueryRunner;
 
 /**
  *
  * @author sfcook
  */
 public class SteamData {
+    private SQLiteDataSource datasource;
     
     public SteamData()
     {
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        datasource=new SQLiteDataSource();
+        datasource.setUrl("jdbc:sqlite:steamdata.db");
     }
     
     public ArrayList<String> getTags()
