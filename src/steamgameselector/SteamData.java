@@ -23,10 +23,69 @@
  */
 package steamgameselector;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author sfcook
  */
 public class SteamData {
     
+    public SteamData()
+    {
+        
+    }
+    
+    public ArrayList<String> getTags()
+    {
+        ArrayList<String> tags=new ArrayList<String>();
+        
+        return tags;
+    }
+    
+    public ArrayList<String> getTags(int appid)
+    {
+        ArrayList<String> tags=new ArrayList<String>();
+        
+        return tags;
+    }
+    
+    public ArrayList<Account> getAccounts()
+    {
+        ArrayList<Account> accounts=new ArrayList<Account>();
+        
+        return accounts;
+    }
+    
+    public int addAccount(Account account)
+    {
+        return -1;
+    }
+    
+    public int addAccount(String url)
+    {
+        return -1;
+    }
+    
+    public int removeAccount(Account account)
+    {
+        return -1;
+    }
+    
+    public int addGame(int appid)
+    {
+        return -1;
+    }
+    
+    public int addGame(Game game)
+    {
+        return -1;
+    }
+    
+    public Game getSteamGame(int appid)
+    {
+        Game game=new Game();
+        
+        return game;
+    }
 }
