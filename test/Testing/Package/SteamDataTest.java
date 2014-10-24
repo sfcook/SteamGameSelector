@@ -32,5 +32,19 @@ import static org.junit.Assert.*;
  * @author sfcook
  */
 public class SteamDataTest {
+    private SteamUtils sUtils;
+    private SteamData sdb;
     
+    @Before
+    public void init()
+    {
+        sUtils=new SteamUtils();
+        sdb=new SteamData();
+    }
+    
+    @Test
+    public void testDB()
+    {
+        assertTrue(sdb!=null);
+    }
 }
