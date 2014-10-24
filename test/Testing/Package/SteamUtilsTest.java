@@ -79,6 +79,7 @@ public class SteamUtilsTest {
     @Test
     public void testGetNameBySource()
     {
+        //Gabe's profile
         String source="		var profileLink = \"http://steamcommunity.com/id/gabelogannewell\";";
         
         Account account=SteamUtils.getAccountSource(source);
@@ -89,6 +90,7 @@ public class SteamUtilsTest {
     @Test
     public void testGetNameBySource2()
     {
+        //Gabe's profile
         String source="		var profileLink = \"http://steamcommunity.com/id/gabelogannewell\";";
         
         Account account=SteamUtils.getAccount(source);

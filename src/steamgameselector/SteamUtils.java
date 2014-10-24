@@ -172,7 +172,7 @@ public class SteamUtils {
         {
             String line=sc.nextLine();
             
-            //use g_rgProfileData data to get account info
+            //use profileLine to get g_rgProfileData
             if(line.length()>32 && line.substring(0, 32).contains("profileLink"))
             {
                 account=getAccountInfo(line.substring(line.indexOf("\"")+1, line.lastIndexOf("\"")));
