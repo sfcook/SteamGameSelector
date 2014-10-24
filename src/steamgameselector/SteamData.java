@@ -23,6 +23,7 @@
  */
 package steamgameselector;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +35,8 @@ import org.apache.commons.dbutils.QueryRunner;
  * @author sfcook
  */
 public class SteamData {
-    private SQLiteDataSource datasource;
+    private SQLiteDataSource dataSource;
+    private QueryRunner queryRunner;
     
     public SteamData()
     {
@@ -44,8 +46,35 @@ public class SteamData {
             Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        datasource=new SQLiteDataSource();
-        datasource.setUrl("jdbc:sqlite:steamdata.db");
+        dataSource=new SQLiteDataSource();
+        dataSource.setUrl("jdbc:sqlite:steamdata.db");
+        
+        queryRunner=new QueryRunner(dataSource);
+        
+        try {
+            createTables();
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void createTables() throws SQLException
+    {
+        //WARNING:
+        //DbUtils update() seems to suggest using INSERT, UPDATE, or DELETE only
+        //examples tend to use tables created through scripts not in code
+        //seems to work just fine but might break if DbUtils changes
+        //also this was mostly tested using the cmd/shell utility
+        
+        //appid is the same as the ones used by valve
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Game(appid INT PRIMARY KEY, title TEXT)");
+        //no idea what valve tag ids are or if they even have one
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Tag(tagid INT PRIMARY KEY, tag TEXT)");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS GameTag(gametagid INT PRIMARY KEY, appid INT, tagid INT, FOREIGN KEY(appid) REFERENCES Game(appid), FOREIGN KEY(tagid) REFERENCES Tag(tagid))");
+        
+        //steamid is the same as the ones used by valve, might break if valve stops using 64-bit signed int
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(steamid INT PRIMARY KEY, name TEXT)");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountgameid INT PRIMARY KEY, steamid INT, appid INT, FOREIGN KEY(steamid) REFERENCES Account(steamid), FOREIGN KEY(appid) REFERENCES Game(appid))");
     }
     
     public ArrayList<String> getTags()
