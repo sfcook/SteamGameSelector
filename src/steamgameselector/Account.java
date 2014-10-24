@@ -31,13 +31,13 @@ import java.util.HashSet;
  * @author sfcook
  */
 public class Account {
-    public String url;
+    public String steamid;
     public String name;
     public Set<Integer> games;
     
     public Account()
     {
-        url="";
+        steamid=null;
         name="";
         games=new HashSet<Integer>();
     }

@@ -122,7 +122,7 @@ public class SteamUtils {
         }
         
         Account account=getAccountSource(source);
-        account.url=url;
+        
         return account;
     }
     
