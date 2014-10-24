@@ -26,6 +26,7 @@ package Testing.Package;
 import steamgameselector.*;
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -82,5 +83,40 @@ public class SteamDataTest {
         Account result=sdb.getAccount(1);
         
         assertTrue(result.name.equals(account.name));
+    }
+    
+    //TODO: test for duplicate account attempts
+    
+    @Test
+    public void testTag()
+    {
+        String tag="Next-gen tag all the kids are talking about";
+        int tagid=sdb.addTag(tag);
+        
+        assertTrue(tagid>=0);
+        
+        String result=sdb.getTag(tagid);
+        
+        assertTrue(result.equals(tag));
+    }
+    
+    //TODO: test for duplicate tag attempts
+    
+    @Test
+    public void testGetTagsArray()
+    {
+        String tag1="one";
+        String tag2="two";
+        String tag3="three";
+        
+        sdb.addTag(tag1);
+        sdb.addTag(tag2);
+        sdb.addTag(tag3);
+        
+        ArrayList<String> tags=sdb.getTags();
+        
+        assertTrue(tags.contains(tag1));
+        assertTrue(tags.contains(tag2));
+        assertTrue(tags.contains(tag3));
     }
 }
