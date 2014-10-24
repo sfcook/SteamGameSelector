@@ -53,6 +53,18 @@ public class SteamGameSelector {
         accounts.add(account);
     }
     
+    public int addAccount(String url)
+    {
+        Account account=SteamUtils.getAccount(url);
+        if(account.games.isEmpty())
+            return 1;
+        else
+        {
+            addAccount(account);
+            return 0;
+        }
+    }
+    
     public void removeAccount(int index)
     {
         accounts.remove(index);
