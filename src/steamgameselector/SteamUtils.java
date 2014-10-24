@@ -106,9 +106,23 @@ public class SteamUtils {
     
     public static Account getAccount(String url)
     {
-        /*TODO: transform any steamcommunity.com/id/NAME/* or steamcommunity.com/profile/NAME/*
-        to just the url for the profile
-        */
+        if(url.contains("DOCTYPE"))
+        {
+            return getAccountSource(url);
+        }
+        else
+        {
+            int pos;
+            int count=0;
+            for(pos=0;pos<url.length();pos++)
+            {
+                if(url.charAt(pos)=='/')
+                    count++;
+                if(count>=5)
+                    break;
+            }
+            url=url.substring(0,pos);
+        }
         String source="";
         try {
             URL site=new URL(url+"/games/?tab=all");

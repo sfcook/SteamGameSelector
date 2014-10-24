@@ -170,4 +170,11 @@ public class SteamUtilsTest {
         
         assertTrue(bad.games.isEmpty());
     }
+    @Test
+    public void testOddUrl()
+    {
+        Account odd=SteamUtils.getAccount("http://steamcommunity.com/id/garry/screenshots/");
+        
+        assertTrue(odd.games.contains(4000));
+    }
 }
