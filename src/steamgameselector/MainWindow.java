@@ -199,8 +199,6 @@ public class MainWindow extends javax.swing.JFrame {
     private void btnAddAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddAccountMouseClicked
         String url="";
         String instructions="Enter public url or source from 'All Games' tab.";
-        Account account=new Account();
-        
         
         while(url!=null)
         {
@@ -208,15 +206,12 @@ public class MainWindow extends javax.swing.JFrame {
         
             if(url==null)
                 return;
-            //validate using SteamUtils
-            account=SteamUtils.getAccount(url);
-            if(!account.games.isEmpty())
+            else if(gameSelector.addAccount(url)==0)
                 break;
             else
                 instructions="Input not valid. Enter public url or source from 'All Games' tab.";
         }
         
-        gameSelector.addAccount(account);
         update();
     }//GEN-LAST:event_btnAddAccountMouseClicked
 
