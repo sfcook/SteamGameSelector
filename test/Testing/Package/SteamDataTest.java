@@ -47,4 +47,40 @@ public class SteamDataTest {
     {
         assertTrue(sdb!=null);
     }
+    
+    @Test
+    public void testBadAccount()
+    {
+        Account account1=new Account();
+        Account account2=new Account();
+        Account account3=new Account();
+        
+        account1.name="Frank";
+        account1.games.add(1);
+        
+        account2.name="Frank";
+        account2.steamid=9000;
+        
+        account3.games.add(1);
+        account3.steamid=9000;
+        
+        assertTrue(sdb.addAccount(account1)==1);
+        assertTrue(sdb.addAccount(account2)==1);
+        assertTrue(sdb.addAccount(account3)==1);
+    }
+    
+    @Test
+    public void testAccount()
+    {
+        Account account=new Account();
+        account.name="Frank";
+        account.games.add(10); //appid for CS
+        account.steamid=1; //techincally vaild but doesn't seem to be a real id
+        
+        assertTrue(sdb.addAccount(account)==0);
+        
+        Account result=sdb.getAccount(1);
+        
+        assertTrue(result.name.equals(account.name));
+    }
 }
