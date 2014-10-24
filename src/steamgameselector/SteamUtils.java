@@ -106,7 +106,10 @@ public class SteamUtils {
     
     public static Account getAccount(String url)
     {
-        String source="";
+        /*TODO: transform any steamcommunity.com/id/NAME/* or steamcommunity.com/profile/NAME/*
+        to just the url for the profile
+        */
+                String source="";
         try {
             URL site=new URL(url+"/games/?tab=all");
             source=IOUtils.toString(site);
@@ -134,6 +137,8 @@ public class SteamUtils {
         while(sc.hasNextLine())
         {
             String line=sc.nextLine();
+            
+            //TODO: use g_rgProfileData data to get account info
             //find line containing title
             String title="<title>Steam Community :: ";
             String closingTitle = " :: Games</title>";
