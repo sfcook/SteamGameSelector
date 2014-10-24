@@ -30,6 +30,8 @@ import java.util.logging.Logger;
 import org.sqlite.SQLiteDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayHandler;
+import org.apache.commons.dbutils.handlers.ArrayListHandler;
+import java.util.List;
 
 /**
  *
@@ -81,7 +83,20 @@ public class SteamData {
     public ArrayList<String> getTags()
     {
         ArrayList<String> tags=new ArrayList<String>();
-        
+        try {
+            List<Object[]> objs=queryRunner.query("SELECT tag FROM Tag",new ArrayListHandler());
+            if(objs.size()>0)
+            {
+                for(Object[] item:objs)
+                {
+                    if(item.length>0)
+                        tags.add((String)item[0]);
+                }
+            }
+            return tags;
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return tags;
     }
     
