@@ -197,22 +197,23 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddGameMouseClicked
 
     private void btnAddAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddAccountMouseClicked
-        String url = JOptionPane.showInputDialog(this,"Enter public url","Add Account",JOptionPane.PLAIN_MESSAGE);
+        String url="";
+        String instructions="Enter public url or source from 'All Games' tab.";
+        Account account=new Account();
         
-        if(url==null)
-            return;
-        //validate using SteamUtils
-        Account account=SteamUtils.getAccount(url);
-        if(account.games.isEmpty())
+        
+        while(url!=null)
         {
-            AddAccountWindow addPanel=new AddAccountWindow();
-            int result=JOptionPane.showConfirmDialog(this,addPanel,"Add Account",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
-            if(result==JOptionPane.OK_OPTION)
-            {
-                account=addPanel.getAccount();
-            }
-            else
+            url = JOptionPane.showInputDialog(this,instructions,"Add Account",JOptionPane.PLAIN_MESSAGE);
+        
+            if(url==null)
                 return;
+            //validate using SteamUtils
+            account=SteamUtils.getAccount(url);
+            if(!account.games.isEmpty())
+                break;
+            else
+                instructions="Input not valid. Enter public url or source from 'All Games' tab.";
         }
         
         gameSelector.addAccount(account);
