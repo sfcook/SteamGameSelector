@@ -109,7 +109,7 @@ public class SteamUtils {
         /*TODO: transform any steamcommunity.com/id/NAME/* or steamcommunity.com/profile/NAME/*
         to just the url for the profile
         */
-                String source="";
+        String source="";
         try {
             URL site=new URL(url+"/games/?tab=all");
             source=IOUtils.toString(site);
@@ -126,6 +126,40 @@ public class SteamUtils {
         return account;
     }
     
+    public static Account getAccountInfo(String url)
+    {
+        Account account=new Account();
+        String source="";
+        try {
+            URL site=new URL(url);
+            source=IOUtils.toString(site);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
+            return getAccountSource(url);
+        } catch (IOException ex) {
+            Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
+            return new Account();
+        }
+        
+        JsonParser jsonParser=new JsonParser();
+        Scanner sc=new Scanner(source);
+        while(sc.hasNextLine())
+        {
+            String line=sc.nextLine();
+            
+            //use g_rgProfileData data to get account info
+            if(line.length()>32 && line.substring(0, 32).contains("g_rgProfileData"))
+            {
+                line=line.substring(line.indexOf("{"), line.lastIndexOf("}")+1);
+                JsonElement json=jsonParser.parse(line);
+                
+                account.name=json.getAsJsonObject().get("personaname").getAsString();
+                account.steamid=json.getAsJsonObject().get("steamid").getAsLong();
+                break;
+            }
+        }
+        return account;
+    }
     public static Account getAccountSource(String source)
     {
         Account account=new Account();
@@ -138,13 +172,10 @@ public class SteamUtils {
         {
             String line=sc.nextLine();
             
-            //TODO: use g_rgProfileData data to get account info
-            //find line containing title
-            String title="<title>Steam Community :: ";
-            String closingTitle = " :: Games</title>";
-            if(line.contains(title) && line.length()>title.length())
+            //use g_rgProfileData data to get account info
+            if(line.length()>32 && line.substring(0, 32).contains("profileLink"))
             {
-                account.name = line.substring(title.length(),line.length()-closingTitle.length());
+                account=getAccountInfo(line.substring(line.indexOf("\"")+1, line.lastIndexOf("\"")));
             }
             //find line containing rgGames var
             if(line.length()>32 && line.substring(0, 32).contains("rgGames"))

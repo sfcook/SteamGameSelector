@@ -79,23 +79,21 @@ public class SteamUtilsTest {
     @Test
     public void testGetNameBySource()
     {
-        String source="<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"><html><head>\n" +
-"<title>Steam Community :: THE MAGIC NAME :: Games</title>";
+        String source="		var profileLink = \"http://steamcommunity.com/id/gabelogannewell\";";
         
         Account account=SteamUtils.getAccountSource(source);
         
-        assertTrue(account.name.equals("THE MAGIC NAME"));
+        assertTrue(account.name.equals("Rabscuttle"));
     }
     
     @Test
     public void testGetNameBySource2()
     {
-        String source="<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"><html><head>\n" +
-"<title>Steam Community :: THE MAGIC NAME :: Games</title>";
+        String source="		var profileLink = \"http://steamcommunity.com/id/gabelogannewell\";";
         
         Account account=SteamUtils.getAccount(source);
         
-        assertTrue(account.name.equals("THE MAGIC NAME"));
+        assertTrue(account.name.equals("Rabscuttle"));
     }
     
     @Test
