@@ -94,10 +94,11 @@ public class SteamDataTest {
         int tagid=sdb.addTag(tag);
         
         assertTrue(tagid>=0);
+        assertTrue(tagid==sdb.getTagId(tag));
         
         String result=sdb.getTag(tagid);
         
-        assertTrue(result.equals(tag));
+        assertTrue(result!=null && result.equals(tag));
     }
     
     //TODO: test for duplicate tag attempts
