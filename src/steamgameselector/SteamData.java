@@ -172,6 +172,8 @@ public class SteamData {
     {
         ArrayList<Account> accounts=new ArrayList<Account>();
         
+        //TODO: query
+        
         return accounts;
     }
     
@@ -181,26 +183,23 @@ public class SteamData {
             return 1;
         else
         {
-            //queryRunner.update("INSERT INTO account")
+            //TODO queryRunner.update("INSERT INTO account")
             return 0;
         }
     }
     
     public int addAccount(String url)
     {
+        //TODO
+        
         return -1;
     }
     
     public Account getAccount(long steamid)
     {
         Account account=new Account();
-        
+        //TODO
         return account;
-    }
-    
-    public int removeAccount(long steamid)
-    {
-        return -1;
     }
     
     public int addGame(int appid)
