@@ -31,15 +31,24 @@ import java.util.HashSet;
  * @author sfcook
  */
 public class Account {
-    public long steamid;
+    public int accountid;
+    public String steamid;
     public String name;
     public Set<Integer> games;
     
     public Account()
     {
-        steamid=0;
+        accountid=-1;
+        steamid="";
         name="";
         games=new HashSet<Integer>();
     }
     
+    public boolean equals(Object other){
+        return other!=null && other instanceof Account &&
+                accountid==((Account)other).accountid &&
+                steamid.equals(((Account)other).steamid) &&
+                name.equals(((Account)other).name) &&
+                games.equals(((Account)other).games);
+    }
 }
