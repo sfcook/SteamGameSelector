@@ -125,7 +125,6 @@ public class SteamDataTest {
     public void testGetTagsGameid()
     {
         Game game=new Game();
-        game.appid=0;
         game.tags.add("one");
         game.tags.add("two");
         game.tags.add("three");
@@ -147,7 +146,6 @@ public class SteamDataTest {
     public void testGame()
     {
         Game game=new Game();
-        game.appid=0;
         String title="Fake Game";
         game.title=title;
         
