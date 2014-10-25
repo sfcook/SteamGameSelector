@@ -205,9 +205,14 @@ public class SteamData {
     
     public int addGame(int appid)
     {
-        Game game=sUtils.getGame(appid);
-        
-        return addGame(game);
+        Game game=getSteamGame(appid);
+        if(game!=null)
+            return game.gameid;
+        else
+        {
+            game=sUtils.getGame(appid);
+            return addGame(game);
+        }
     }
     
     public int addGame(Game game)
