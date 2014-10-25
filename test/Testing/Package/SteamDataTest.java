@@ -65,10 +65,10 @@ public class SteamDataTest {
         account1.games.add(1);
         
         account2.name="Frank";
-        account2.steamid=9000;
+        account2.steamid="9000";
         
         account3.games.add(1);
-        account3.steamid=9000;
+        account3.steamid="9000";
         
         assertTrue(sdb.addAccount(account1)==1);
         assertTrue(sdb.addAccount(account2)==1);
@@ -81,7 +81,7 @@ public class SteamDataTest {
         Account account=new Account();
         account.name="Frank";
         account.games.add(10); //appid for CS
-        account.steamid=1; //techincally vaild but doesn't seem to be a real id
+        account.steamid="1"; //techincally vaild but doesn't seem to be a real id
         
         assertTrue(sdb.addAccount(account)==0);
         
@@ -98,16 +98,16 @@ public class SteamDataTest {
         Account account3=new Account();
         
         account1.name="Frank1";
-        account1.steamid=1;
+        account1.steamid="1";
         account1.games.add(10);
         
         account2.name="Frank2";
-        account2.steamid=2;
+        account2.steamid="2";
         account2.games.add(10);
         
         account3.name="Frank3";
         account3.games.add(10);
-        account3.steamid=3;
+        account3.steamid="3";
         
         assertTrue(sdb.addAccount(account1)==0);
         assertTrue(sdb.addAccount(account2)==0);
