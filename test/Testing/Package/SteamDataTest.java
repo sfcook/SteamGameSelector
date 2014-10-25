@@ -23,6 +23,7 @@
  */
 package Testing.Package;
 
+import java.io.File;
 import steamgameselector.*;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -39,6 +40,10 @@ public class SteamDataTest {
     @Before
     public void init()
     {
+        //delete steamdata.db
+        File db=new File("steamdata.db");
+        db.delete();
+        
         sUtils=new SteamUtils();
         sdb=new SteamData(sUtils);
     }
