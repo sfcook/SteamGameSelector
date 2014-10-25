@@ -76,11 +76,11 @@ public class SteamData {
         queryRunner.update("CREATE TABLE IF NOT EXISTS Game(gameid INTEGER PRIMARY KEY AUTOINCREMENT, appid INTEGER, title TEXT)");
         //no idea what valve tag ids are or if they even have one
         queryRunner.update("CREATE TABLE IF NOT EXISTS Tag(tagid INTEGER PRIMARY KEY AUTOINCREMENT, tag TEXT)");
-        queryRunner.update("CREATE TABLE IF NOT EXISTS GameTag(gametagid INTEGER  PRIMARY KEY, gameid INTEGER , tagid INTEGER , FOREIGN KEY(gameid) REFERENCES Game(gameid), FOREIGN KEY(tagid) REFERENCES Tag(tagid))");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS GameTag(gametagid INTEGER PRIMARY KEY AUTOINCREMENT, gameid INTEGER , tagid INTEGER , FOREIGN KEY(gameid) REFERENCES Game(gameid), FOREIGN KEY(tagid) REFERENCES Tag(tagid))");
         
         //steamid is the same as the ones used by valve, might break if valve stops using 64-bit signed int
         queryRunner.update("CREATE TABLE IF NOT EXISTS Account(steamid INTEGER PRIMARY KEY, name TEXT)");
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountgameid INTEGER PRIMARY KEY, steamid INTEGER , gameid INTEGER , FOREIGN KEY(steamid) REFERENCES Account(steamid), FOREIGN KEY(gameid) REFERENCES Game(gameid))");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountgameid INTEGER PRIMARY KEY AUTOINCREMENT, steamid INTEGER , gameid INTEGER , FOREIGN KEY(steamid) REFERENCES Account(steamid), FOREIGN KEY(gameid) REFERENCES Game(gameid))");
     }
     
     public ArrayList<String> getTags()
@@ -108,7 +108,7 @@ public class SteamData {
         ArrayList<String> tags=new ArrayList<>();
         
         try {
-            List<Object[]> objs=queryRunner.query("SELECT tag FROM Tag WHERE gameid=?",new ArrayListHandler(),gameid);
+            List<Object[]> objs=queryRunner.query("SELECT T.tag FROM Tag T, GameTag G WHERE G.tagid=T.tagid AND G.gameid=?",new ArrayListHandler(),gameid);
             if(objs.size()>0)
             {
                 for(Object[] item:objs)
@@ -235,7 +235,13 @@ public class SteamData {
     
     public void addGameTag(int gameid, String tag)
     {
-        
+        int tagid= addTag(tag);
+        try {
+            Object[] objs=queryRunner.insert("INSERT INTO GameTag (gameid,tagid) Values (?,?)",new ArrayHandler(),gameid,tagid);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public Game getGame(int gameid)
