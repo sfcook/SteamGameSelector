@@ -168,7 +168,7 @@ public class SteamUtils {
                 JsonElement json=jsonParser.parse(line);
                 
                 account.name=json.getAsJsonObject().get("personaname").getAsString();
-                account.steamid=json.getAsJsonObject().get("steamid").getAsLong();
+                account.steamid=json.getAsJsonObject().get("steamid").getAsString();
                 break;
             }
         }
