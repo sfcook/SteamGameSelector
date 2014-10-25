@@ -112,6 +112,12 @@ public class SteamDataTest {
         assertTrue(sdb.addAccount(account1)==0);
         assertTrue(sdb.addAccount(account2)==0);
         assertTrue(sdb.addAccount(account3)==0);
+        
+        ArrayList<Account> accounts=sdb.getAccounts();
+        
+        assertTrue(accounts.contains(account1));
+        assertTrue(accounts.contains(account2));
+        assertTrue(accounts.contains(account3));
     }
     
     @Test
