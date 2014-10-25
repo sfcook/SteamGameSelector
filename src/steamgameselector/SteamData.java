@@ -280,7 +280,11 @@ public class SteamData {
             game.appid=(Integer)objs[1];
             game.title=(String)objs[2];
 
-            //TODO: tags
+            ArrayList<String> tags=getTags(game.gameid);
+            for(String tag:tags)
+            {
+                game.tags.add(tag);
+            }
 
             return game;
         }
