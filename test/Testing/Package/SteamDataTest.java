@@ -136,9 +136,9 @@ public class SteamDataTest {
         assertTrue(sdb.getGame(gameid).title.equals(title));
         
         ArrayList<String> tags=sdb.getTags(gameid);
-        for(String tag:tags)
+        for(String tag:game.tags)
         {
-            assertTrue(game.tags.contains(tag));
+            assertTrue(tags.contains(tag));
         }
     }
     
