@@ -40,9 +40,12 @@ import java.util.List;
 public class SteamData {
     private SQLiteDataSource dataSource;
     private QueryRunner queryRunner;
+    private SteamUtils sUtils;
     
-    public SteamData()
+    public SteamData(SteamUtils instance)
     {
+        sUtils=instance;
+        
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException ex) {
@@ -202,13 +205,13 @@ public class SteamData {
     
     public int addGame(int appid)
     {
-        return -1;
+        Game game=sUtils.getGame(appid);
+        
+        return addGame(game);
     }
     
     public int addGame(Game game)
     {
-        if(game.appid>0)
-            return addGame(game.appid);
         try {
             Object[] objs=queryRunner.insert("INSERT INTO Game (appid,title) Values (?,?)",new ArrayHandler(),game.appid,game.title);
             
