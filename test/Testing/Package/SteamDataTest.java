@@ -155,6 +155,27 @@ public class SteamDataTest {
     }
     
     @Test
+    public void testGame2()
+    {
+        Game game=new Game();
+        game.tags.add("one");
+        game.tags.add("two");
+        game.tags.add("three");
+        String title="Fake Game";
+        game.title=title;
+        
+        int gameid=sdb.addGame(game);
+        
+        Game result=sdb.getGame(gameid);
+        assertTrue(result.title.equals(title));
+        
+        for(String tag:game.tags)
+        {
+            assertTrue(result.tags.contains(tag));
+        }
+    }
+    
+    @Test
     public void testAddSteamGame()
     {
         int gameid=sdb.addGame(10);
