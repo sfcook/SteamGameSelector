@@ -70,9 +70,9 @@ public class SteamDataTest {
         account3.games.add(1);
         account3.steamid="9000";
         
-        assertTrue(sdb.addAccount(account1)==1);
-        assertTrue(sdb.addAccount(account2)==1);
-        assertTrue(sdb.addAccount(account3)==1);
+        assertTrue(sdb.addAccount(account1)==-1);
+        assertTrue(sdb.addAccount(account2)==-1);
+        assertTrue(sdb.addAccount(account3)==-1);
     }
     
     @Test
@@ -83,11 +83,19 @@ public class SteamDataTest {
         account.games.add(10); //appid for CS
         account.steamid="1"; //techincally vaild but doesn't seem to be a real id
         
-        assertTrue(sdb.addAccount(account)==0);
+        assertTrue(sdb.addAccount(account)>0);
         
         Account result=sdb.getAccount("1");
         
         assertTrue(result!=null && result.name.equals(account.name));
+    }
+    
+    @Test
+    public void testAccount2()
+    {
+        assertTrue(sdb.addAccount("http://steamcommunity.com/id/wireteam")>0);
+        
+        Account result=sdb.getAccount("1");
     }
     
     @Test
