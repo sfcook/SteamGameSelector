@@ -86,6 +86,30 @@ public class SteamDataTest {
     }
     
     @Test
+    public void testGetAccounts()
+    {
+        Account account1=new Account();
+        Account account2=new Account();
+        Account account3=new Account();
+        
+        account1.name="Frank1";
+        account1.steamid=1;
+        account1.games.add(10);
+        
+        account2.name="Frank2";
+        account2.steamid=2;
+        account2.games.add(10);
+        
+        account3.name="Frank3";
+        account3.games.add(10);
+        account3.steamid=3;
+        
+        assertTrue(sdb.addAccount(account1)==0);
+        assertTrue(sdb.addAccount(account2)==0);
+        assertTrue(sdb.addAccount(account3)==0);
+    }
+    
+    @Test
     public void testTag()
     {
         String tag="Next-gen tag all the kids are talking about";
