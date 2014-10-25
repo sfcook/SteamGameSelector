@@ -120,4 +120,18 @@ public class SteamDataTest {
         assertTrue(tags.contains(tag2));
         assertTrue(tags.contains(tag3));
     }
+    
+    @Test
+    public void testGame()
+    {
+        Game game=new Game();
+        game.appid=0;
+        game.tags=null;
+        String title="Fake Game";
+        game.title=title;
+        
+        sdb.addGame(game);
+        
+        assertTrue(sdb.getSteamGame(game.appid).title.equals(title));
+    }
 }
