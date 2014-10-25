@@ -70,14 +70,14 @@ public class SteamData {
         //also this was mostly tested using the cmd/shell utility
         
         //appid is the same as the ones used by valve
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Game(appid INTEGER  PRIMARY KEY, title TEXT)");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Game(gameid INTEGER PRIMARY KEY AUTOINCREMENT, appid INTEGER, title TEXT)");
         //no idea what valve tag ids are or if they even have one
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Tag(tagid INTEGER  PRIMARY KEY AUTOINCREMENT, tag TEXT)");
-        queryRunner.update("CREATE TABLE IF NOT EXISTS GameTag(gametagid INTEGER  PRIMARY KEY, appid INTEGER , tagid INTEGER , FOREIGN KEY(appid) REFERENCES Game(appid), FOREIGN KEY(tagid) REFERENCES Tag(tagid))");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Tag(tagid INTEGER PRIMARY KEY AUTOINCREMENT, tag TEXT)");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS GameTag(gametagid INTEGER  PRIMARY KEY, gameid INTEGER , tagid INTEGER , FOREIGN KEY(gameid) REFERENCES Game(gameid), FOREIGN KEY(tagid) REFERENCES Tag(tagid))");
         
         //steamid is the same as the ones used by valve, might break if valve stops using 64-bit signed int
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(steamid INTEGER  PRIMARY KEY, name TEXT)");
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountgameid INTEGER  PRIMARY KEY, steamid INTEGER , appid INTEGER , FOREIGN KEY(steamid) REFERENCES Account(steamid), FOREIGN KEY(appid) REFERENCES Game(appid))");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(steamid INTEGER PRIMARY KEY, name TEXT)");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountgameid INTEGER PRIMARY KEY, steamid INTEGER , gameid INTEGER , FOREIGN KEY(steamid) REFERENCES Account(steamid), FOREIGN KEY(gameid) REFERENCES Game(gameid))");
     }
     
     public ArrayList<String> getTags()
@@ -126,7 +126,8 @@ public class SteamData {
         if(exist!=-1)
             return exist;
         try {
-            return queryRunner.update("INSERT INTO Tag (tag) Values (?)",tag);
+            queryRunner.update("INSERT INTO Tag (tag) Values (?)",tag);
+            return getTagId(tag);
         } catch (SQLException ex) {
             Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
         }
