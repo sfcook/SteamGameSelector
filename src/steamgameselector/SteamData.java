@@ -126,8 +126,10 @@ public class SteamData {
         if(exist!=-1)
             return exist;
         try {
-            queryRunner.update("INSERT INTO Tag (tag) Values (?)",tag);
-            return getTagId(tag);
+            if(queryRunner.update("INSERT INTO Tag (tag) Values (?)",tag)==1)
+                return getTagId(tag);
+            else
+                return -1;
         } catch (SQLException ex) {
             Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -190,6 +192,16 @@ public class SteamData {
     
     public int addGame(Game game)
     {
+        if(game.appid>0 && getSteamGame(game.appid)!=null)
+            return 0;
+        try {
+            if(queryRunner.update("INSERT INTO Game (appid,title) Values (?,?)",game.appid,game.title)==1)
+                return 0;
+            else
+                return 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return -1;
     }
     
@@ -197,6 +209,22 @@ public class SteamData {
     {
         Game game=new Game();
         
-        return game;
+        try {
+            Object[] objs=queryRunner.query("SELECT * FROM Game WHERE appid=?",new ArrayHandler(),appid);
+            if(objs.length>0)
+            {
+                game.gameid=(Integer)objs[0];
+                game.appid=(Integer)objs[1];
+                game.title=(String)objs[2];
+                
+                //TODO: tags
+                
+                return game;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
 }
