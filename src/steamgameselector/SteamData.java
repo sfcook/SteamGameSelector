@@ -80,7 +80,7 @@ public class SteamData {
         
         //steamid is the same as the ones used by valve, might break if valve stops using 64-bit signed int
         queryRunner.update("CREATE TABLE IF NOT EXISTS Account(steamid INTEGER PRIMARY KEY, name TEXT)");
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountgameid INTEGER PRIMARY KEY AUTOINCREMENT, steamid INTEGER , gameid INTEGER , FOREIGN KEY(steamid) REFERENCES Account(steamid), FOREIGN KEY(gameid) REFERENCES Game(gameid))");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS AccountGame(accountgameid INTEGER PRIMARY KEY AUTOINCREMENT, steamid INTEGER , gameid INTEGER , FOREIGN KEY(steamid) REFERENCES Account(steamid), FOREIGN KEY(gameid) REFERENCES Game(gameid))");
     }
     
     public ArrayList<String> getTags()
@@ -183,9 +183,44 @@ public class SteamData {
             return 1;
         else
         {
-            //TODO queryRunner.update("INSERT INTO account")
+            try {
+                //TODO: check existince
+                Object[] objs=queryRunner.insert("INSERT INTO Account (steamid,name) Values (?,?)",new ArrayHandler(),account.steamid,account.name);
+                
+                if(objs.length>0)
+                {
+                    for(int appid:account.games)
+                    {
+                        addAccountGame(account.steamid,appid);
+                    }
+                }
+                else
+                    return 1;
+            } catch (SQLException ex) {
+                if(ex.getErrorCode()==org.sqlite.SQLiteErrorCode.SQLITE_CONSTRAINT.code)
+                    return 0;
+                Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+            }
             return 0;
         }
+    }
+    
+    public int addAccountGame(long steamid,int appid)
+    {
+        int gameid=addGame(appid);
+        
+        try {
+            Object[] objs=queryRunner.query("SELECT * FROM AccountGame WHERE steamid=? AND gameid=?",new ArrayHandler(),steamid,gameid);
+            
+            if(objs.length==0)
+                objs=queryRunner.insert("INSERT INTO AccountGame (steamid,gameid) Values (?,?)",new ArrayHandler(),steamid,gameid);
+            if(objs.length>0)
+                return 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return -1;
     }
     
     public int addAccount(String url)
@@ -198,8 +233,26 @@ public class SteamData {
     public Account getAccount(long steamid)
     {
         Account account=new Account();
-        //TODO
-        return account;
+        
+        try {
+            Object[] objs=queryRunner.query("SELECT * FROM Account WHERE steamid=?",new ArrayHandler(),steamid);
+            
+            if(objs.length>0)
+            {
+                account.steamid=(Integer)objs[0];
+                account.name=(String)objs[1];
+                
+                //TODO: account.games=getGames(steamid);
+                
+                return account;
+            }
+            else
+                return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
     
     public int addGame(int appid)
