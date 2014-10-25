@@ -180,7 +180,6 @@ public class SteamUtils {
         Set appids=new HashSet();
         JsonParser jsonParser=new JsonParser();
         
-        
         Scanner sc=new Scanner(source);
         while(sc.hasNextLine())
         {
@@ -189,7 +188,9 @@ public class SteamUtils {
             //use profileLine to get g_rgProfileData
             if(line.length()>32 && line.substring(0, 32).contains("profileLink"))
             {
-                account=getAccountInfo(line.substring(line.indexOf("\"")+1, line.lastIndexOf("\"")));
+                Account accountInfo=getAccountInfo(line.substring(line.indexOf("\"")+1, line.lastIndexOf("\"")));
+                account.name=accountInfo.name;
+                account.steamid=accountInfo.steamid;
             }
             //find line containing rgGames var
             if(line.length()>32 && line.substring(0, 32).contains("rgGames"))
@@ -204,7 +205,6 @@ public class SteamUtils {
                         appids.add(item.getAsJsonObject().get("appid"));
                     }
                 }
-                break;
             }
         }
         
