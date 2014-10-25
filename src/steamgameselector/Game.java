@@ -31,12 +31,14 @@ import java.util.HashSet;
  * @author sfcook
  */
 public class Game {
+    public int gameid;
     public int appid;
     public String title;
     public Set<String> tags;
     
     public Game()
     {
+        gameid=-1;
         appid=-1;
         title="";
         tags=new HashSet<String>();
