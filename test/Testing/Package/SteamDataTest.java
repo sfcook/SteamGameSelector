@@ -153,4 +153,15 @@ public class SteamDataTest {
         
         assertTrue(sdb.getSteamGame(game.appid).title.equals(title));
     }
+    
+    @Test
+    public void testAddSteamGame()
+    {
+        int gameid=sdb.addGame(10);
+        Game cs1=sdb.getSteamGame(10);
+        Game cs2=sdb.getGame(gameid);
+        
+        assertTrue(cs1.title.equals(cs2.title));
+        assertTrue(cs1.title.equals("Counter-Strike"));
+    }
 }
