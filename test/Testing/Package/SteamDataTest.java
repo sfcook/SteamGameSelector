@@ -82,7 +82,7 @@ public class SteamDataTest {
         
         Account result=sdb.getAccount(1);
         
-        assertTrue(result.name.equals(account.name));
+        assertTrue(result!=null && result.name.equals(account.name));
     }
     
     //TODO: test for duplicate account attempts
