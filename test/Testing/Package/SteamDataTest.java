@@ -85,8 +85,6 @@ public class SteamDataTest {
         assertTrue(result!=null && result.name.equals(account.name));
     }
     
-    //TODO: test for duplicate account attempts
-    
     @Test
     public void testTag()
     {
