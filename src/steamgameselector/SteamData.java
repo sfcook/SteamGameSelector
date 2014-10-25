@@ -197,7 +197,8 @@ public class SteamData {
         else
         {
             try {
-                //TODO: check existince
+                if(getAccount(account.steamid)!=null)
+                        return 2;
                 Object[] objs=queryRunner.insert("INSERT INTO Account (steamid,name) Values (?,?)",new ArrayHandler(),account.steamid,account.name);
                 
                 if(objs.length>0)
