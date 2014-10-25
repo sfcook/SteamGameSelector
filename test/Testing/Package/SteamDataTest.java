@@ -40,7 +40,7 @@ public class SteamDataTest {
     public void init()
     {
         sUtils=new SteamUtils();
-        sdb=new SteamData();
+        sdb=new SteamData(sUtils);
     }
     
     @Test
