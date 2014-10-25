@@ -79,8 +79,8 @@ public class SteamData {
         queryRunner.update("CREATE TABLE IF NOT EXISTS GameTag(gametagid INTEGER PRIMARY KEY AUTOINCREMENT, gameid INTEGER , tagid INTEGER , FOREIGN KEY(gameid) REFERENCES Game(gameid), FOREIGN KEY(tagid) REFERENCES Tag(tagid))");
         
         //steamid is the same as the ones used by valve, might break if valve stops using 64-bit signed int
-        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(steamid INTEGER PRIMARY KEY, name TEXT)");
-        queryRunner.update("CREATE TABLE IF NOT EXISTS AccountGame(accountgameid INTEGER PRIMARY KEY AUTOINCREMENT, steamid INTEGER , gameid INTEGER , FOREIGN KEY(steamid) REFERENCES Account(steamid), FOREIGN KEY(gameid) REFERENCES Game(gameid))");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountid INTEGER PRIMARY KEY, steamid TEXT, name TEXT)");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS AccountGame(accountgameid INTEGER PRIMARY KEY AUTOINCREMENT, accountid INTEGER , gameid INTEGER , FOREIGN KEY(accountid) REFERENCES Account(accountid), FOREIGN KEY(gameid) REFERENCES Game(gameid))");
     }
     
     public ArrayList<String> getTags()
@@ -172,14 +172,27 @@ public class SteamData {
     {
         ArrayList<Account> accounts=new ArrayList<Account>();
         
-        //TODO: query
+        try {
+            List<Object[]> objs=queryRunner.query("SELECT steamid FROM Account",new ArrayListHandler());
+            if(objs.size()>0)
+            {
+                for(Object[] item:objs)
+                {
+                    if(item.length>0)
+                        accounts.add(getAccount((String)item[0]));
+                }
+            }
+            return accounts;
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         return accounts;
     }
     
     public int addAccount(Account account)
     {
-        if(account.name.isEmpty() || account.games.isEmpty() || account.steamid==0)
+        if(account.name.isEmpty() || account.games.isEmpty() || account.steamid.isEmpty())
             return 1;
         else
         {
@@ -205,15 +218,15 @@ public class SteamData {
         }
     }
     
-    public int addAccountGame(long steamid,int appid)
+    public int addAccountGame(String steamid,int appid)
     {
         int gameid=addGame(appid);
         
         try {
-            Object[] objs=queryRunner.query("SELECT * FROM AccountGame WHERE steamid=? AND gameid=?",new ArrayHandler(),steamid,gameid);
+            Object[] objs=queryRunner.query("SELECT * FROM AccountGame WHERE accountid=? AND gameid=?",new ArrayHandler(),steamid,gameid);
             
             if(objs.length==0)
-                objs=queryRunner.insert("INSERT INTO AccountGame (steamid,gameid) Values (?,?)",new ArrayHandler(),steamid,gameid);
+                objs=queryRunner.insert("INSERT INTO AccountGame (accountid,gameid) Values (?,?)",new ArrayHandler(),steamid,gameid);
             if(objs.length>0)
                 return 0;
         } catch (SQLException ex) {
@@ -230,7 +243,7 @@ public class SteamData {
         return -1;
     }
     
-    public Account getAccount(long steamid)
+    public Account getAccount(String steamid)
     {
         Account account=new Account();
         
@@ -239,8 +252,9 @@ public class SteamData {
             
             if(objs.length>0)
             {
-                account.steamid=(Integer)objs[0];
-                account.name=(String)objs[1];
+                account.accountid=(Integer)objs[0];
+                account.steamid=(String)objs[1];
+                account.name=(String)objs[2];
                 
                 //TODO: account.games=getGames(steamid);
                 
