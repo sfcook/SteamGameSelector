@@ -220,7 +220,7 @@ public class SteamData {
                     addGameTag(gameid,tag);
                 }
                 
-                return 0;
+                return gameid;
             }
             else
                 return 1;
