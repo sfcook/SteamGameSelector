@@ -198,7 +198,7 @@ public class SteamData {
                     return 1;
             } catch (SQLException ex) {
                 if(ex.getErrorCode()==org.sqlite.SQLiteErrorCode.SQLITE_CONSTRAINT.code)
-                    return 0;
+                    return 2;
                 Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
             }
             return 0;
