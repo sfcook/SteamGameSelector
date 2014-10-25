@@ -207,14 +207,17 @@ public class SteamData {
     
     public int addGame(Game game)
     {
-        if(game.appid>0 && getSteamGame(game.appid)!=null)
-            return 0;
+        if(game.appid>0)
+            return addGame(game.appid);
         try {
-            if(queryRunner.update("INSERT INTO Game (appid,title) Values (?,?)",game.appid,game.title)==1)
+            Object[] objs=queryRunner.insert("INSERT INTO Game (appid,title) Values (?,?)",new ArrayHandler(),game.appid,game.title);
+            
+            if(objs.length>0)
             {
+                int gameid=(Integer)objs[0];
                 for(String tag:game.tags)
                 {
-                    addGameTag(game.gameid,tag);
+                    addGameTag(gameid,tag);
                 }
                 
                 return 0;
