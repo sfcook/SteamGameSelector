@@ -193,41 +193,43 @@ public class SteamData {
     public int addAccount(Account account)
     {
         if(account.name.isEmpty() || account.games.isEmpty() || account.steamid.isEmpty())
-            return 1;
+            return -1;
         else
         {
             try {
                 if(getAccount(account.steamid)!=null)
-                        return 2;
+                        return 0;
                 Object[] objs=queryRunner.insert("INSERT INTO Account (steamid,name) Values (?,?)",new ArrayHandler(),account.steamid,account.name);
                 
                 if(objs.length>0)
                 {
+                    int accountid=(Integer)objs[0];
                     for(int appid:account.games)
                     {
-                        addAccountGame(account.steamid,appid);
+                        addAccountGame(accountid,appid);
                     }
+                    return accountid;
                 }
                 else
-                    return 1;
+                    return -1;
             } catch (SQLException ex) {
                 if(ex.getErrorCode()==org.sqlite.SQLiteErrorCode.SQLITE_CONSTRAINT.code)
-                    return 2;
+                    return -1;
                 Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return 0;
+            return -1;
         }
     }
     
-    public int addAccountGame(String steamid,int appid)
+    public int addAccountGame(int accountid,int appid)
     {
         int gameid=addGame(appid);
         
         try {
-            Object[] objs=queryRunner.query("SELECT * FROM AccountGame WHERE accountid=? AND gameid=?",new ArrayHandler(),steamid,gameid);
+            Object[] objs=queryRunner.query("SELECT * FROM AccountGame WHERE accountid=? AND gameid=?",new ArrayHandler(),accountid,gameid);
             
             if(objs.length==0)
-                objs=queryRunner.insert("INSERT INTO AccountGame (accountid,gameid) Values (?,?)",new ArrayHandler(),steamid,gameid);
+                objs=queryRunner.insert("INSERT INTO AccountGame (accountid,gameid) Values (?,?)",new ArrayHandler(),accountid,gameid);
             if(objs.length>0)
                 return 0;
         } catch (SQLException ex) {
