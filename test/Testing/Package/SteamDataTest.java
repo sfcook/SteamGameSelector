@@ -85,7 +85,7 @@ public class SteamDataTest {
         
         assertTrue(sdb.addAccount(account)==0);
         
-        Account result=sdb.getAccount(1);
+        Account result=sdb.getAccount("1");
         
         assertTrue(result!=null && result.name.equals(account.name));
     }
