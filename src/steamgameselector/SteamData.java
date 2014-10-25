@@ -100,9 +100,24 @@ public class SteamData {
         return tags;
     }
     
-    public ArrayList<String> getTags(int appid)
+    public ArrayList<String> getTags(int gameid)
     {
-        ArrayList<String> tags=new ArrayList<String>();
+        ArrayList<String> tags=new ArrayList<>();
+        
+        try {
+            List<Object[]> objs=queryRunner.query("SELECT tag FROM Tag WHERE gameid=?",new ArrayListHandler(),gameid);
+            if(objs.size()>0)
+            {
+                for(Object[] item:objs)
+                {
+                    if(item.length>0)
+                        tags.add((String)item[0]);
+                }
+            }
+            return tags;
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         return tags;
     }
@@ -196,13 +211,25 @@ public class SteamData {
             return 0;
         try {
             if(queryRunner.update("INSERT INTO Game (appid,title) Values (?,?)",game.appid,game.title)==1)
+            {
+                for(String tag:game.tags)
+                {
+                    addGameTag(game.gameid,tag);
+                }
+                
                 return 0;
+            }
             else
                 return 1;
         } catch (SQLException ex) {
             Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+    
+    public void addGameTag(int gameid, String tag)
+    {
+        
     }
     
     public Game getGame(int gameid)
@@ -220,7 +247,6 @@ public class SteamData {
     
     public Game getSteamGame(int appid)
     {
-        
         try {
             Object[] objs=queryRunner.query("SELECT * FROM Game WHERE appid=?",new ArrayHandler(),appid);
             
