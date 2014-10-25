@@ -99,7 +99,15 @@ public class SteamDataTest {
         assertTrue(result!=null && result.equals(tag));
     }
     
-    //TODO: test for duplicate tag attempts
+    @Test
+    public void testTagDup()
+    {
+        String tag="Next-gen tag all the kids are talking about";
+        int tagid1=sdb.addTag(tag);
+        int tagid2=sdb.addTag(tag);
+        
+        assertTrue(tagid1==tagid2);
+    }
     
     @Test
     public void testGetTagsArray()
