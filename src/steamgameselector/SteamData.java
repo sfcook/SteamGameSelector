@@ -205,26 +205,48 @@ public class SteamData {
         return -1;
     }
     
-    public Game getSteamGame(int appid)
+    public Game getGame(int gameid)
     {
-        Game game=new Game();
-        
         try {
-            Object[] objs=queryRunner.query("SELECT * FROM Game WHERE appid=?",new ArrayHandler(),appid);
-            if(objs.length>0)
-            {
-                game.gameid=(Integer)objs[0];
-                game.appid=(Integer)objs[1];
-                game.title=(String)objs[2];
-                
-                //TODO: tags
-                
-                return game;
-            }
+            Object[] objs=queryRunner.query("SELECT * FROM Game WHERE gameid=?",new ArrayHandler(),gameid);
+            
+            return processGame(objs);
         } catch (SQLException ex) {
             Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;
+    }
+    
+    public Game getSteamGame(int appid)
+    {
+        
+        try {
+            Object[] objs=queryRunner.query("SELECT * FROM Game WHERE appid=?",new ArrayHandler(),appid);
+            
+            return processGame(objs);
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    private Game processGame(Object[] objs)
+    {
+        Game game=new Game();
+        
+        if(objs.length>0)
+        {
+            game.gameid=(Integer)objs[0];
+            game.appid=(Integer)objs[1];
+            game.title=(String)objs[2];
+
+            //TODO: tags
+
+            return game;
+        }
+        else
+            return null;
     }
 }
