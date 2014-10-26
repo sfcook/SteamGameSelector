@@ -62,7 +62,7 @@ public class SteamUtilsTest {
     {
         String source="\t\t\tvar rgGames = [{\"appid\":4000,\"name\":\"Garry's Mod\"},{\"appid\":230410,\"name\":\"Warframe\"},{\"appid\":500,\"name\":\"Left 4 Dead\"},{\"appid\":550,\"name\":\"Left 4 Dead 2\"},{\"appid\":630,\"name\":\"Alien Swarm\"},{\"appid\":271290,\"name\":\"HAWKEN\"},{\"appid\":1250,\"name\":\"Killing Floor\"}];";
         
-        Account account=SteamUtils.getAccountSource(source);
+        Account account=sUtils.getAccountSource(source);
         Set test=new HashSet();
         
         test.add(4000);
@@ -82,7 +82,7 @@ public class SteamUtilsTest {
         //Gabe's profile
         String source="		var profileLink = \"http://steamcommunity.com/id/gabelogannewell\";";
         
-        Account account=SteamUtils.getAccountSource(source);
+        Account account=sUtils.getAccountSource(source);
         
         assertTrue(account.name.equals("Rabscuttle"));
     }
@@ -93,7 +93,7 @@ public class SteamUtilsTest {
         //Gabe's profile
         String source="		var profileLink = \"http://steamcommunity.com/id/gabelogannewell\";";
         
-        Account account=SteamUtils.getAccount(source);
+        Account account=sUtils.getAccount(source);
         
         assertTrue(account.name.equals("Rabscuttle"));
     }
@@ -102,7 +102,7 @@ public class SteamUtilsTest {
     public void testGetAccount()
     {
         //Garry Newman's steam profile
-        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
+        Account garry=sUtils.getAccount("https://steamcommunity.com/id/garry");
         
         //4000 is the appid for gmod
         //Garry Newman wrote it so I assume it is on his steam profile
@@ -159,21 +159,21 @@ public class SteamUtilsTest {
     @Test
     public void testBadUrl()
     {
-        Account bad=SteamUtils.getAccount("https://www.google.com");
+        Account bad=sUtils.getAccount("https://www.google.com");
         
         assertTrue(bad.games.isEmpty());
     }
     @Test
     public void testBadUrl2()
     {
-        Account bad=SteamUtils.getAccount("not a url");
+        Account bad=sUtils.getAccount("not a url");
         
         assertTrue(bad.games.isEmpty());
     }
     @Test
     public void testOddUrl()
     {
-        Account odd=SteamUtils.getAccount("http://steamcommunity.com/id/garry/screenshots/");
+        Account odd=sUtils.getAccount("http://steamcommunity.com/id/garry/screenshots/");
         
         assertTrue(odd.games.contains(4000));
     }
