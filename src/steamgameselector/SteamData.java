@@ -199,21 +199,23 @@ public class SteamData {
         else
         {
             try {
-                if(getAccount(account.steamid)!=null)
-                        return 0;
-                Object[] objs=queryRunner.insert("INSERT INTO Account (steamid,name) Values (?,?)",new ArrayHandler(),account.steamid,account.name);
-                
-                if(objs.length>0)
-                {
-                    int accountid=(Integer)objs[0];
-                    for(int gameid:account.games)
-                    {
-                        addAccountGame(accountid,gameid);
-                    }
-                    return accountid;
-                }
+                Account accountTest=getAccount(account.steamid);
+                int accountid;
+                if(accountTest!=null)
+                        accountid=accountTest.accountid;
                 else
-                    return -1;
+                {
+                    Object[] objs=queryRunner.insert("INSERT INTO Account (steamid,name) Values (?,?)",new ArrayHandler(),account.steamid,account.name);
+                    if(objs.length>0)
+                        accountid=(Integer)objs[0];
+                    else
+                       return -1; 
+                }
+                for(int appid:account.games)
+                {
+                    addAccountGame(accountid,addGame(appid));
+                }
+                return accountid;
             } catch (SQLException ex) {
                 if(ex.getErrorCode()==org.sqlite.SQLiteErrorCode.SQLITE_CONSTRAINT.code)
                     return -1;
@@ -275,7 +277,7 @@ public class SteamData {
         Set<Integer> games=new HashSet();
         
         try {
-            List<Object[]> objs=queryRunner.query("SELECT gameid FROM AccountGame WHERE accountid=?",new ArrayListHandler(),accountid);
+            List<Object[]> objs=queryRunner.query("SELECT appid FROM AccountGame R, Game G WHERE R.gameid=G.gameid AND R.accountid=?",new ArrayListHandler(),accountid);
             if(objs.size()>0)
             {
                 for(Object[] item:objs)
