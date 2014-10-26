@@ -34,13 +34,15 @@ import java.util.ArrayList;
  */
 public class SteamGameSelectorTest {
     private SteamUtils sUtils;
+    private SteamData sdb;
     private SteamGameSelector selector;
     
     @Before
     public void init()
     {
         sUtils=new SteamUtils();
-        selector=new SteamGameSelector(sUtils);
+        sdb=new SteamData(sUtils);
+        selector=new SteamGameSelector(sdb);
     }
     
     @Test
@@ -104,7 +106,6 @@ public class SteamGameSelectorTest {
         selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
         
         selector.calcSharedGames();
-        selector.loadGames();
         
         //4000 is the appid for gmod
         assertTrue(selector.getSteamGame(4000).appid>0);
@@ -167,7 +168,6 @@ public class SteamGameSelectorTest {
         selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
         
         selector.calcSharedGames();
-        selector.loadGames();
         
         //4000 is the appid for gmod
         assertTrue(selector.getRandomGame().appid==4000);
@@ -181,7 +181,6 @@ public class SteamGameSelectorTest {
         selector.addAccount(garry);
         
         selector.calcSharedGames();
-        selector.loadGames();
         
         ArrayList<Integer> tests=new ArrayList<Integer>();
         tests.add(selector.getRandomGame().appid);
