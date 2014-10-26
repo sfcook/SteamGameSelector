@@ -177,7 +177,7 @@ public class SteamUtils {
     public Account getAccountSource(String source)
     {
         Account account=new Account();
-        Set appids=new HashSet();
+        account.games=new HashSet();
         JsonParser jsonParser=new JsonParser();
         
         Scanner sc=new Scanner(source);
@@ -202,16 +202,13 @@ public class SteamUtils {
                 {
                     for(JsonElement item : json.getAsJsonArray() )
                     {
-                        appids.add(item.getAsJsonObject().get("appid"));
+                        Game game=new Game();
+                        game.appid=item.getAsJsonObject().get("appid").getAsInt();
+                        game.title=item.getAsJsonObject().get("name").getAsString();
+                        account.games.add(game);
                     }
                 }
             }
-        }
-        
-        for(Object obj : appids)
-        {
-            int id=Integer.parseInt(obj.toString());
-            account.games.add(id);
         }
         
         return account;
@@ -260,17 +257,25 @@ public class SteamUtils {
             }
         }
         
+        return game;
+    }
+    
+    public Set<String> getGameTags(int appid)
+    {
+        Set<String> tags=new HashSet();
+        String source;
+        
         //tag pattern where TAG is the tag
         //<a href="http://store.steampowered.com/tag/en/TAG/?snr=1_5_9__409" class="app_tag" style="display: none;">
         try {
-            URL site=new URL("http://store.steampowered.com/app/"+id);
+            URL site=new URL("http://store.steampowered.com/app/"+appid);
             source=IOUtils.toString(site);
         } catch (MalformedURLException ex) {
             Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
-            return new Game();
+            return tags;
         } catch (IOException ex) {
             Logger.getLogger(SteamUtils.class.getName()).log(Level.SEVERE, null, ex);
-            return new Game();
+            return tags;
         }
         
         Scanner sc=new Scanner(source);
@@ -281,10 +286,10 @@ public class SteamUtils {
             if(line.contains("\"app_tag\""))
             {
                 //find tag on line
-                game.tags.add(line.substring(line.indexOf("en/")+3,line.indexOf("/?")));
+                tags.add(line.substring(line.indexOf("en/")+3,line.indexOf("/?")));
             }
         }
         
-        return game;
+        return tags;
     }
 }
