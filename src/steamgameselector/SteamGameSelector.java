@@ -23,8 +23,6 @@
  */
 package steamgameselector;
 
-import java.util.Map;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
@@ -37,40 +35,26 @@ import java.util.Random;
 public class SteamGameSelector {
     private SteamData sdb;
     private ArrayList<Integer> sharedGames;
-    private ArrayList<Account> accounts;
     
     public SteamGameSelector(SteamData instance)
     {
         sdb=instance;
         sharedGames=new ArrayList<Integer>();
-        accounts=new ArrayList<Account>();
     }
     
     public void addAccount(Account account)
     {
-        accounts.add(account);
+        sdb.addAccount(account);
     }
     
     public int addAccount(String url)
     {
-        Account account=SteamUtils.getAccount(url);
-        if(account.games.isEmpty())
-            return 1;
-        else
-        {
-            addAccount(account);
-            return 0;
-        }
-    }
-    
-    public void removeAccount(int index)
-    {
-        accounts.remove(index);
+        return sdb.addAccount(url);
     }
     
     public ArrayList<Account> getAccounts()
     {
-        return accounts;
+        return sdb.getAccounts();
     }
     
     //should check if steam game or not
@@ -87,28 +71,6 @@ public class SteamGameSelector {
     public ArrayList<Integer> getSharedGames()
     {
         return sharedGames;
-    }
-    
-    public void calcSharedGames()
-    {
-        if(accounts.size()==0)
-            return;
-        
-        Set<Integer> shared=new HashSet();
-        shared.addAll(accounts.get(0).games);
-        
-        if(accounts.size()>1)
-        {
-            for(int pos=1;pos<accounts.size();pos++)
-            {
-                shared.retainAll(accounts.get(pos).games);
-            }
-        }
-        sharedGames.clear();
-        for(Integer item : shared)
-        {
-            sharedGames.add(item);
-        }
     }
     
     public int getRandomGameIndex()
