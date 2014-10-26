@@ -73,7 +73,7 @@ public class SteamGameSelectorTest {
         selector.addAccount(garry);
         
         assertFalse(selector.getAccounts().isEmpty());
-        selector.removeAccount(0);
+        //selector.removeAccount(0);
         assertTrue(selector.getAccounts().isEmpty());
     }
     
@@ -105,8 +105,6 @@ public class SteamGameSelectorTest {
         
         selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
         
-        selector.calcSharedGames();
-        
         //4000 is the appid for gmod
         assertTrue(selector.getSteamGame(4000).appid>0);
     }
@@ -119,8 +117,6 @@ public class SteamGameSelectorTest {
         
         selector.addAccount(garry); //gmod dev, owns gmod
         selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
-        
-        selector.calcSharedGames();
         
         //4000 is the appid for gmod
         assertTrue(selector.getSharedGames().get(0)==4000);
@@ -143,8 +139,6 @@ public class SteamGameSelectorTest {
         selector.addAccount(account1);
         selector.addAccount(account2);
         
-        selector.calcSharedGames();
-        
         assertTrue(selector.getSharedGames().size()==2);
         
         Account account3=new Account();
@@ -152,8 +146,6 @@ public class SteamGameSelectorTest {
         account3.games.add(6);
         
         selector.addAccount(account3);
-        
-        selector.calcSharedGames();
         
         assertTrue(selector.getSharedGames().size()==1);
     }
@@ -167,8 +159,6 @@ public class SteamGameSelectorTest {
         selector.addAccount(garry); //gmod dev, owns gmod
         selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
         
-        selector.calcSharedGames();
-        
         //4000 is the appid for gmod
         assertTrue(selector.getRandomGame().appid==4000);
     }
@@ -179,8 +169,6 @@ public class SteamGameSelectorTest {
         Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
         
         selector.addAccount(garry);
-        
-        selector.calcSharedGames();
         
         ArrayList<Integer> tests=new ArrayList<Integer>();
         tests.add(selector.getRandomGame().appid);
