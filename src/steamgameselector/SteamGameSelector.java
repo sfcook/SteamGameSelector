@@ -35,15 +35,13 @@ import java.util.Random;
  * @author sfcook
  */
 public class SteamGameSelector {
-    private SteamUtils sUtils;
-    private Map<Integer, Game> steamGames;
+    private SteamData sdb;
     private ArrayList<Integer> sharedGames;
     private ArrayList<Account> accounts;
     
-    public SteamGameSelector(SteamUtils instance)
+    public SteamGameSelector(SteamData instance)
     {
-        sUtils=instance;
-        steamGames=new HashMap();
+        sdb=instance;
         sharedGames=new ArrayList<Integer>();
         accounts=new ArrayList<Account>();
     }
@@ -75,26 +73,15 @@ public class SteamGameSelector {
         return accounts;
     }
     
-    //TODO: needs speed improvements for large number of games
-    public void loadGames()
-    {
-        for(int appid:sharedGames)
-        {
-            if(!steamGames.containsKey(appid))
-                addGame(sUtils.getGame(appid));
-        }
-    }
-    
     //should check if steam game or not
     public void addGame(Game game)
     {
-        if(game.appid>=0)
-            steamGames.put(game.appid, game);
+        sdb.addGame(game);
     }
     
     public Game getSteamGame(int appid)
     {
-        return (Game)steamGames.get(appid);
+        return sdb.getSteamGame(appid);
     }
     
     public ArrayList<Integer> getSharedGames()
@@ -132,6 +119,6 @@ public class SteamGameSelector {
     public Game getRandomGame()
     {
         int selected=getRandomGameIndex();
-        return steamGames.get(sharedGames.get(selected));
+        return sdb.getGame(sharedGames.get(selected));
     }
 }
