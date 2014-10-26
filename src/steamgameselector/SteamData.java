@@ -355,6 +355,8 @@ public class SteamData {
     
     public Game getSteamGame(int appid)
     {
+        if(appid<=0)
+            return null;
         try {
             Object[] objs=queryRunner.query("SELECT * FROM Game WHERE appid=?",new ArrayHandler(),appid);
             
