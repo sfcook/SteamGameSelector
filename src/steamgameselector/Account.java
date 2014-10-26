@@ -34,14 +34,14 @@ public class Account {
     public int accountid;
     public String steamid;
     public String name;
-    public Set<Integer> games;
+    public Set<Game> games;
     
     public Account()
     {
         accountid=-1;
         steamid="";
         name="";
-        games=new HashSet<Integer>();
+        games=new HashSet();
     }
     
     public boolean equals(Object other){
