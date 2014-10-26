@@ -32,6 +32,8 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayHandler;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
@@ -204,9 +206,9 @@ public class SteamData {
                 if(objs.length>0)
                 {
                     int accountid=(Integer)objs[0];
-                    for(int appid:account.games)
+                    for(int gameid:account.games)
                     {
-                        addAccountGame(accountid,appid);
+                        addAccountGame(accountid,gameid);
                     }
                     return accountid;
                 }
@@ -221,10 +223,8 @@ public class SteamData {
         }
     }
     
-    public int addAccountGame(int accountid,int appid)
+    public int addAccountGame(int accountid,int gameid)
     {
-        int gameid=addGame(appid);
-        
         try {
             Object[] objs=queryRunner.query("SELECT * FROM AccountGame WHERE accountid=? AND gameid=?",new ArrayHandler(),accountid,gameid);
             
@@ -241,9 +241,7 @@ public class SteamData {
     
     public int addAccount(String url)
     {
-        //TODO
-        
-        return -1;
+        return addAccount(SteamUtils.getAccount(url));
     }
     
     public Account getAccount(String steamid)
@@ -259,7 +257,7 @@ public class SteamData {
                 account.steamid=(String)objs[1];
                 account.name=(String)objs[2];
                 
-                //TODO: account.games=getGames(steamid);
+                account.games=getGames(account.accountid);
                 
                 return account;
             }
@@ -270,6 +268,28 @@ public class SteamData {
         }
         
         return null;
+    }
+    
+    public Set<Integer> getGames(int accountid)
+    {
+        Set<Integer> games=new HashSet();
+        
+        try {
+            List<Object[]> objs=queryRunner.query("SELECT gameid FROM AccountGame WHERE accountid=?",new ArrayListHandler(),accountid);
+            if(objs.size()>0)
+            {
+                for(Object[] item:objs)
+                {
+                    if(item.length>0)
+                        games.add((Integer)item[0]);
+                }
+            }
+            return games;
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return games;
     }
     
     public int addGame(int appid)
@@ -300,7 +320,7 @@ public class SteamData {
                 return gameid;
             }
             else
-                return 1;
+                return -1;
         } catch (SQLException ex) {
             Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
         }
