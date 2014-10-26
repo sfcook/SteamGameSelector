@@ -107,21 +107,26 @@ public class SteamDataTest {
         
         account1.name="Frank1";
         account1.steamid="1";
-        account1.games.add(10);
+        account1.games.add(sdb.addGame(10));
         
         account2.name="Frank2";
         account2.steamid="2";
-        account2.games.add(10);
+        account2.games.add(sdb.addGame(10));
         
         account3.name="Frank3";
-        account3.games.add(10);
+        account3.games.add(sdb.addGame(10));
         account3.steamid="3";
         
-        assertTrue(sdb.addAccount(account1)==0);
-        assertTrue(sdb.addAccount(account2)==0);
-        assertTrue(sdb.addAccount(account3)==0);
+        assertTrue(sdb.addAccount(account1)>0);
+        assertTrue(sdb.addAccount(account2)>0);
+        assertTrue(sdb.addAccount(account3)>0);
         
         ArrayList<Account> accounts=sdb.getAccounts();
+        
+        for(Account account:accounts)
+        {
+            account.accountid=-1;
+        }
         
         assertTrue(accounts.contains(account1));
         assertTrue(accounts.contains(account2));
