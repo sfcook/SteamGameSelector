@@ -90,7 +90,7 @@ public class SteamGameSelectorTest {
         game.tags.add("Non-Steam");
         
         selector.addGame(game);
-        assertTrue(selector.getSteamGame(-1)==null);
+        assertTrue(sdb.getTags().contains("Non-Steam"));
     }
     
     @Test
