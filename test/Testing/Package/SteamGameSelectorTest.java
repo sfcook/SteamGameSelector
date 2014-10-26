@@ -48,9 +48,7 @@ public class SteamGameSelectorTest {
     @Test
     public void testAddAccount()
     {
-        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
-        
-        selector.addAccount(garry);
+        selector.addAccount("https://steamcommunity.com/id/garry");
         
         assertFalse(selector.getAccounts().isEmpty());
     }
@@ -67,10 +65,7 @@ public class SteamGameSelectorTest {
     @Test
     public void testRemoveAccount()
     {
-        
-        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
-        
-        selector.addAccount(garry);
+        selector.addAccount("https://steamcommunity.com/id/garry");
         
         assertFalse(selector.getAccounts().isEmpty());
         //selector.removeAccount(0);
@@ -101,9 +96,7 @@ public class SteamGameSelectorTest {
     @Test
     public void testLoadGames()
     {
-        Account wiremod=SteamUtils.getAccount("http://steamcommunity.com/id/wireteam");
-        
-        selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
+        selector.addAccount("http://steamcommunity.com/id/wireteam"); //dev account for must have gmod mod, owns gmod
         
         //4000 is the appid for gmod
         assertTrue(selector.getSteamGame(4000).appid>0);
@@ -112,11 +105,8 @@ public class SteamGameSelectorTest {
     @Test
     public void testGetSharedGames()
     {
-        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
-        Account wiremod=SteamUtils.getAccount("http://steamcommunity.com/id/wireteam");
-        
-        selector.addAccount(garry); //gmod dev, owns gmod
-        selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
+        selector.addAccount("https://steamcommunity.com/id/garry"); //gmod dev, owns gmod
+        selector.addAccount("http://steamcommunity.com/id/wireteam"); //dev account for must have gmod mod, owns gmod
         
         //4000 is the appid for gmod
         assertTrue(selector.getSharedGames().get(0)==4000);
@@ -153,11 +143,8 @@ public class SteamGameSelectorTest {
     @Test
     public void testGetRandomGame()
     {
-        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
-        Account wiremod=SteamUtils.getAccount("http://steamcommunity.com/id/wireteam");
-        
-        selector.addAccount(garry); //gmod dev, owns gmod
-        selector.addAccount(wiremod); //dev account for must have gmod mod, owns gmod
+        selector.addAccount("https://steamcommunity.com/id/garry"); //gmod dev, owns gmod
+        selector.addAccount("http://steamcommunity.com/id/wireteam"); //dev account for must have gmod mod, owns gmod
         
         //4000 is the appid for gmod
         assertTrue(selector.getRandomGame().appid==4000);
@@ -166,9 +153,7 @@ public class SteamGameSelectorTest {
     //@Test
     public void testGetRandomGame2()
     {
-        Account garry=SteamUtils.getAccount("https://steamcommunity.com/id/garry");
-        
-        selector.addAccount(garry);
+        selector.addAccount("https://steamcommunity.com/id/garry");
         
         ArrayList<Integer> tests=new ArrayList<Integer>();
         tests.add(selector.getRandomGame().appid);
