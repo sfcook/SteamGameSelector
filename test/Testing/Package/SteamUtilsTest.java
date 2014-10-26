@@ -143,10 +143,10 @@ public class SteamUtilsTest {
     public void testGetGameTags()
     {
         //counter-strike appid is 10
-        Game cs=sUtils.getGame(10);
+        Set<String> cs=sUtils.getGameTags(10);
         
         //FPS is a tag that should persist but not found in categories or genres 
-        assertTrue(cs.tags.contains("FPS"));
+        assertTrue(cs.contains("FPS"));
     }
     
     @Test
