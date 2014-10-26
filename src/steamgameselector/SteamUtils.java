@@ -104,7 +104,7 @@ public class SteamUtils {
         }
     }
     
-    public static Account getAccount(String url)
+    public Account getAccount(String url)
     {
         if(url.contains("DOCTYPE"))
         {
@@ -140,7 +140,7 @@ public class SteamUtils {
         return account;
     }
     
-    public static Account getAccountInfo(String url)
+    public Account getAccountInfo(String url)
     {
         Account account=new Account();
         String source="";
@@ -174,7 +174,7 @@ public class SteamUtils {
         }
         return account;
     }
-    public static Account getAccountSource(String source)
+    public Account getAccountSource(String source)
     {
         Account account=new Account();
         Set appids=new HashSet();
