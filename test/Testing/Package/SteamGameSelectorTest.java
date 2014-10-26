@@ -58,7 +58,7 @@ public class SteamGameSelectorTest {
     {
         int result=selector.addAccount("https://steamcommunity.com/id/garry");
         
-        assertTrue(result==0);
+        assertTrue(result>0);
         assertFalse(selector.getAccounts().isEmpty());
     }
     
