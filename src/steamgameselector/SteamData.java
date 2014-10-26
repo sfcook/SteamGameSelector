@@ -368,6 +368,15 @@ public class SteamData {
         return null;
     }
     
+    public ArrayList<Game> getNonSteamGames()
+    {
+        ArrayList<Game> games=new ArrayList();
+        
+        
+        
+        return games;
+    }
+    
     private Game processGame(Object[] objs)
     {
         Game game=new Game();
