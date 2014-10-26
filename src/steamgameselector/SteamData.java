@@ -243,7 +243,7 @@ public class SteamData {
     
     public int addAccount(String url)
     {
-        return addAccount(SteamUtils.getAccount(url));
+        return addAccount(sUtils.getAccount(url));
     }
     
     public Account getAccount(String steamid)
