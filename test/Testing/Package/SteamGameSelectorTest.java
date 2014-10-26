@@ -113,34 +113,6 @@ public class SteamGameSelectorTest {
     }
     
     @Test
-    public void testCalcSharedGames()
-    {
-        Account account1=new Account();
-        account1.games.add(1);
-        account1.games.add(2);
-        account1.games.add(3);
-        account1.games.add(4);
-        Account account2=new Account();
-        account2.games.add(1);
-        account2.games.add(2);
-        account2.games.add(5);
-        account2.games.add(6);
-        
-        selector.addAccount(account1);
-        selector.addAccount(account2);
-        
-        assertTrue(selector.getSharedGames().size()==2);
-        
-        Account account3=new Account();
-        account3.games.add(2);
-        account3.games.add(6);
-        
-        selector.addAccount(account3);
-        
-        assertTrue(selector.getSharedGames().size()==1);
-    }
-    
-    @Test
     public void testGetRandomGame()
     {
         selector.addAccount("https://steamcommunity.com/id/garry"); //gmod dev, owns gmod
