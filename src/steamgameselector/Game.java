@@ -43,4 +43,12 @@ public class Game {
         title="";
         tags=new HashSet<String>();
     }
+    
+    public boolean equals(Object other){
+        return other!=null && other instanceof Game &&
+                gameid==((Game)other).gameid &&
+                appid==((Game)other).appid &&
+                title.equals(((Game)other).title) &&
+                tags.equals(((Game)other).tags);
+    }
 }
