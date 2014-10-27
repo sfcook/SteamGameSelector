@@ -211,9 +211,9 @@ public class SteamData {
                     else
                        return -1; 
                 }
-                for(int appid:account.games)
+                for(Game game:account.games)
                 {
-                    addAccountGame(accountid,addGame(appid));
+                    addAccountGame(accountid,addGame(game));
                 }
                 return accountid;
             } catch (SQLException ex) {
@@ -272,9 +272,9 @@ public class SteamData {
         return null;
     }
     
-    public Set<Integer> getGames(int accountid)
+    public Set<Game> getGames(int accountid)
     {
-        Set<Integer> games=new HashSet();
+        Set<Game> games=new HashSet();
         
         try {
             List<Object[]> objs=queryRunner.query("SELECT appid FROM AccountGame R, Game G WHERE R.gameid=G.gameid AND R.accountid=?",new ArrayListHandler(),accountid);
@@ -283,7 +283,7 @@ public class SteamData {
                 for(Object[] item:objs)
                 {
                     if(item.length>0)
-                        games.add((Integer)item[0]);
+                        games.add(getSteamGame((Integer)item[0]));
                 }
             }
             return games;
@@ -314,6 +314,8 @@ public class SteamData {
             if(objs.length>0)
             {
                 int gameid=(Integer)objs[0];
+                if(game.tags.isEmpty())
+                    game.tags=sUtils.getGame(game.appid).tags;
                 for(String tag:game.tags)
                 {
                     addGameTag(gameid,tag);
