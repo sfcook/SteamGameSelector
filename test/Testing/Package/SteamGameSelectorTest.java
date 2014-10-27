@@ -100,10 +100,10 @@ public class SteamGameSelectorTest {
         //load gamedata to speed up tests
         getGameData();
         
-        selector.addAccount("https://steamcommunity.com/id/garry");
+        int accountid=selector.addAccount("https://steamcommunity.com/id/garry");
         
         assertFalse(selector.getAccounts().isEmpty());
-        //selector.removeAccount(0);
+        selector.removeAccount(accountid);
         assertTrue(selector.getAccounts().isEmpty());
     }
     
