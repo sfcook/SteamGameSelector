@@ -245,14 +245,22 @@ public class SteamUtils {
             {
                 for(JsonElement item : json.getAsJsonObject().get("genres").getAsJsonArray())
                 {
-                    game.tags.add(genres.get(item.getAsJsonObject().get("id").getAsInt()));
+                    String tag=genres.get(item.getAsJsonObject().get("id").getAsInt());
+                    if(tag!=null)
+                        game.tags.add(tag);
+                    else
+                        game.tags.add(item.getAsJsonObject().get("description").getAsString());
                 }
             }
             if(json.getAsJsonObject().get("categories")!=null)
             {
                 for(JsonElement item : json.getAsJsonObject().get("categories").getAsJsonArray())
                 {
-                    game.tags.add(categories.get(item.getAsJsonObject().get("id").getAsInt()));
+                    String tag=categories.get(item.getAsJsonObject().get("id").getAsInt());
+                    if(tag!=null)
+                        game.tags.add(tag);
+                    else
+                        game.tags.add(item.getAsJsonObject().get("description").getAsString());
                 }
             }
         }
