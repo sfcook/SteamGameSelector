@@ -181,4 +181,18 @@ public class SteamGameSelectorTest {
         
         assertFalse(tests.contains(test));
     }
+    
+    @Test
+    public void testReloadSteamGame()
+    {
+        //load gamedata to speed up tests
+        getGameData();
+        
+        //Frozen Synapse lacks tags in the backed up data
+        selector.reloadSteamGame(98200);
+        
+        Game game=selector.getSteamGame(98200);
+        
+        assertFalse(game.tags.isEmpty());
+    }
 }
