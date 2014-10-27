@@ -309,6 +309,9 @@ public class SteamData {
     public int addGame(Game game)
     {
         try {
+            Game check=getSteamGame(game.appid);
+            if(game.appid>0 && check!=null)
+                return check.gameid;
             Object[] objs=queryRunner.insert("INSERT INTO Game (appid,title) Values (?,?)",new ArrayHandler(),game.appid,game.title);
             
             if(objs.length>0)
