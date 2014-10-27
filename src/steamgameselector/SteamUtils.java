@@ -246,9 +246,9 @@ public class SteamUtils {
                 for(JsonElement item : json.getAsJsonObject().get("genres").getAsJsonArray())
                 {
                     String tag=genres.get(item.getAsJsonObject().get("id").getAsInt());
-                    if(tag!=null)
+                    if(tag!=null && !tag.equals("NULL"))
                         game.tags.add(tag);
-                    else if(!tag.equals("NULL"))
+                    else
                         game.tags.add(item.getAsJsonObject().get("description").getAsString());
                 }
             }
@@ -257,9 +257,9 @@ public class SteamUtils {
                 for(JsonElement item : json.getAsJsonObject().get("categories").getAsJsonArray())
                 {
                     String tag=categories.get(item.getAsJsonObject().get("id").getAsInt());
-                    if(tag!=null)
+                    if(tag!=null && !tag.equals("NULL"))
                         game.tags.add(tag);
-                    else if(!tag.equals("NULL"))
+                    else
                         game.tags.add(item.getAsJsonObject().get("description").getAsString());
                 }
             }
