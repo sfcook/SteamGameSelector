@@ -25,6 +25,7 @@ package steamgameselector;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  *
@@ -44,11 +45,22 @@ public class Game {
         tags=new HashSet<String>();
     }
     
+    @Override
     public boolean equals(Object other){
         return other!=null && other instanceof Game &&
                 gameid==((Game)other).gameid &&
                 appid==((Game)other).appid &&
                 title.equals(((Game)other).title) &&
                 tags.equals(((Game)other).tags);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + this.gameid;
+        hash = 37 * hash + this.appid;
+        hash = 37 * hash + Objects.hashCode(this.title);
+        hash = 37 * hash + Objects.hashCode(this.tags);
+        return hash;
     }
 }

@@ -25,6 +25,7 @@ package steamgameselector;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  *
@@ -44,11 +45,22 @@ public class Account {
         games=new HashSet();
     }
     
+    @Override
     public boolean equals(Object other){
         return other!=null && other instanceof Account &&
                 accountid==((Account)other).accountid &&
                 steamid.equals(((Account)other).steamid) &&
                 name.equals(((Account)other).name) &&
                 games.equals(((Account)other).games);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + this.accountid;
+        hash = 67 * hash + Objects.hashCode(this.steamid);
+        hash = 67 * hash + Objects.hashCode(this.name);
+        hash = 67 * hash + Objects.hashCode(this.games);
+        return hash;
     }
 }
