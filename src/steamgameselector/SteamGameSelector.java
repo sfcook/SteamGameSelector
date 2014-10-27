@@ -57,6 +57,11 @@ public class SteamGameSelector {
         return sdb.getAccounts();
     }
     
+    public void removeAccount(int accountid)
+    {
+        sdb.removeAccount(accountid);
+    }
+    
     //should check if steam game or not
     public void addGame(Game game)
     {

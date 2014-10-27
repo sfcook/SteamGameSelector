@@ -272,6 +272,17 @@ public class SteamData {
         return null;
     }
     
+    public void removeAccount(int accountid)
+    {
+        try {
+            queryRunner.update("DELETE FROM account WHERE accountid=?", accountid);
+            //cascade didn't seem to work right
+            queryRunner.update("DELETE FROM accountgame WHERE accountid=?", accountid);
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public Set<Game> getGames(int accountid)
     {
         Set<Game> games=new HashSet();
