@@ -68,6 +68,11 @@ public class SteamGameSelector {
         return sdb.getSteamGame(appid);
     }
     
+    public void reloadSteamGame(int appid)
+    {
+        sdb.reloadSteamGame(appid);
+    }
+    
     public ArrayList<Integer> getSharedGames()
     {
         return sharedGames;

@@ -373,6 +373,31 @@ public class SteamData {
         return null;
     }
     
+    public void reloadSteamGame(int appid)
+    {
+        Game game=getSteamGame(appid);
+        if(game==null)
+            addGame(appid);
+        else
+        {
+            Game reload=sUtils.getGame(appid);
+            if(reload.title.isEmpty())
+                return;
+            
+            try {
+                queryRunner.update("UPDATE game SET title=? WHERE appid=?", reload.title,appid);
+                
+                for(String tag:reload.tags)
+                {
+                    addGameTag(game.gameid,tag);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }
+    
     public ArrayList<Game> getNonSteamGames()
     {
         ArrayList<Game> games=new ArrayList();
