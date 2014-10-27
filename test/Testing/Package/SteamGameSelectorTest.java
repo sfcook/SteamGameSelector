@@ -23,10 +23,15 @@
  */
 package Testing.Package;
 
+import java.io.File;
+import java.io.IOException;
 import steamgameselector.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -37,9 +42,30 @@ public class SteamGameSelectorTest {
     private SteamData sdb;
     private SteamGameSelector selector;
     
+    public void getGameData()
+    {
+        File db=new File("steamdata.db");
+        //created by
+        //   dropping all tables but game, tag, gametag
+        //   deleteing non-steam game data
+        File dbak=new File("steamdata_gamedata.db");
+        try {
+            FileUtils.copyFile(dbak, db);
+        } catch (IOException ex) {
+            Logger.getLogger(SteamGameSelectorTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        sdb=new SteamData(sUtils);
+        selector=new SteamGameSelector(sdb);
+    }
+    
     @Before
     public void init()
     {
+        //delete steamdata.db
+        File db=new File("steamdata.db");
+        db.delete();
+        
         sUtils=new SteamUtils();
         sdb=new SteamData(sUtils);
         selector=new SteamGameSelector(sdb);
@@ -48,6 +74,9 @@ public class SteamGameSelectorTest {
     @Test
     public void testAddAccount()
     {
+        //load gamedata to speed up tests
+        getGameData();
+        
         selector.addAccount("https://steamcommunity.com/id/garry");
         
         assertFalse(selector.getAccounts().isEmpty());
@@ -56,6 +85,9 @@ public class SteamGameSelectorTest {
     @Test
     public void testAddAccountUrl()
     {
+        //load gamedata to speed up tests
+        getGameData();
+        
         int result=selector.addAccount("https://steamcommunity.com/id/garry");
         
         assertTrue(result>0);
@@ -65,6 +97,9 @@ public class SteamGameSelectorTest {
     @Test
     public void testRemoveAccount()
     {
+        //load gamedata to speed up tests
+        getGameData();
+        
         selector.addAccount("https://steamcommunity.com/id/garry");
         
         assertFalse(selector.getAccounts().isEmpty());
@@ -105,6 +140,9 @@ public class SteamGameSelectorTest {
     @Test
     public void testGetSharedGames()
     {
+        //load gamedata to speed up tests
+        getGameData();
+        
         selector.addAccount("https://steamcommunity.com/id/garry"); //gmod dev, owns gmod
         selector.addAccount("http://steamcommunity.com/id/wireteam"); //dev account for must have gmod mod, owns gmod
         
@@ -115,6 +153,9 @@ public class SteamGameSelectorTest {
     @Test
     public void testGetRandomGame()
     {
+        //load gamedata to speed up tests
+        getGameData();
+        
         selector.addAccount("https://steamcommunity.com/id/garry"); //gmod dev, owns gmod
         selector.addAccount("http://steamcommunity.com/id/wireteam"); //dev account for must have gmod mod, owns gmod
         
@@ -122,9 +163,12 @@ public class SteamGameSelectorTest {
         assertTrue(selector.getRandomGame().appid==4000);
     }
     
-    //@Test
+    @Test
     public void testGetRandomGame2()
     {
+        //load gamedata to speed up tests
+        getGameData();
+        
         selector.addAccount("https://steamcommunity.com/id/garry");
         
         ArrayList<Integer> tests=new ArrayList<Integer>();
