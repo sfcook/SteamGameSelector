@@ -85,7 +85,7 @@ public class SteamDataTest {
     {
         Account account=new Account();
         account.name="Frank";
-        account.games.add(sdb.getSteamGame(10)); //appid for CS
+        account.games.add(sdb.getGame(sdb.addGame(10))); //appid for CS
         account.steamid="1"; //techincally vaild but doesn't seem to be a real id
         
         assertTrue(sdb.addAccount(account)>0);
@@ -112,14 +112,14 @@ public class SteamDataTest {
         
         account1.name="Frank1";
         account1.steamid="1";
-        account1.games.add(sdb.getSteamGame(10));
+        account1.games.add(sdb.getGame(sdb.addGame(10)));
         
         account2.name="Frank2";
         account2.steamid="2";
-        account2.games.add(sdb.getSteamGame(10));
+        account2.games.add(sdb.getGame(sdb.addGame(10)));
         
         account3.name="Frank3";
-        account3.games.add(sdb.getSteamGame(10));
+        account3.games.add(sdb.getGame(sdb.addGame(10)));
         account3.steamid="3";
         
         assertTrue(sdb.addAccount(account1)>0);
@@ -208,9 +208,9 @@ public class SteamDataTest {
         String title="Fake Game";
         game.title=title;
         
-        sdb.addGame(game);
+        int gameid=sdb.addGame(game);
         
-        assertTrue(sdb.getSteamGame(game.appid).title.equals(title));
+        assertTrue(sdb.getGame(gameid).title.equals(title));
     }
     
     @Test
