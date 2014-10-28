@@ -34,12 +34,12 @@ import java.util.Random;
  */
 public class SteamGameSelector {
     private SteamData sdb;
-    private ArrayList<Integer> sharedGames;
+    private ArrayList<Game> sharedGames;
     
     public SteamGameSelector(SteamData instance)
     {
         sdb=instance;
-        sharedGames=new ArrayList<Integer>();
+        sharedGames=new ArrayList();
     }
     
     public void addAccount(Account account)
@@ -78,8 +78,13 @@ public class SteamGameSelector {
         sdb.reloadSteamGame(appid);
     }
     
-    public ArrayList<Integer> getSharedGames()
+    private void updateSharedGames()
     {
+        sharedGames=sdb.getSharedGames();
+    }
+    public ArrayList<Game> getSharedGames()
+    {
+        updateSharedGames();
         return sharedGames;
     }
     
@@ -91,6 +96,6 @@ public class SteamGameSelector {
     public Game getRandomGame()
     {
         int selected=getRandomGameIndex();
-        return sdb.getGame(sharedGames.get(selected));
+        return sharedGames.get(selected);
     }
 }

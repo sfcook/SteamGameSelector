@@ -83,6 +83,11 @@ public class SteamData {
         //steamid is the same as the ones used by valve, might break if valve stops using 64-bit signed int
         queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountid INTEGER PRIMARY KEY, steamid TEXT, name TEXT)");
         queryRunner.update("CREATE TABLE IF NOT EXISTS AccountGame(accountid INTEGER , gameid INTEGER , FOREIGN KEY(accountid) REFERENCES Account(accountid), FOREIGN KEY(gameid) REFERENCES Game(gameid), PRIMARY KEY(accountid,gameid))");
+        
+        queryRunner.update("CREATE VIEW SharedGames AS SELECT g.gameid, g.appid, g.title FROM"
+                + "(SELECT COUNT(*) AS num FROM Account) a,"
+                + "(SELECT gameid, COUNT(gameid) AS num FROM AccountGame GROUP BY gameid) r,"
+                + " game g WHERE a.num=r.num AND r.gameid=g.gameid");
     }
     
     public ArrayList<String> getTags()
@@ -341,8 +346,6 @@ public class SteamData {
                 tagQuery=tagQuery.substring(0,tagQuery.length()-1);
                 if(!game.tags.isEmpty())
                     queryRunner.insert(tagQuery,new ArrayHandler());
-                else
-                    tagQuery=null;
                 
                 return gameid;
             }
@@ -418,6 +421,28 @@ public class SteamData {
         }
     }
     
+    public ArrayList<Game> getSharedGames()
+    {
+        ArrayList<Game> games=new ArrayList();
+        
+        try {
+            List<Object[]> objs=queryRunner.query("SELECT * FROM SharedGames",new ArrayListHandler());
+            if(objs.size()>0)
+            {
+                for(Object[] item:objs)
+                {
+                    if(item.length>0)
+                        games.add(processGame(item));
+                }
+            }
+            return games;
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return games;
+    }
+    //TODO: 
     public ArrayList<Game> getNonSteamGames()
     {
         ArrayList<Game> games=new ArrayList();
