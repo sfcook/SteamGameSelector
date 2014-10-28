@@ -78,11 +78,11 @@ public class SteamData {
         queryRunner.update("CREATE TABLE IF NOT EXISTS Game(gameid INTEGER PRIMARY KEY AUTOINCREMENT, appid INTEGER, title TEXT)");
         //no idea what valve tag ids are or if they even have one
         queryRunner.update("CREATE TABLE IF NOT EXISTS Tag(tagid INTEGER PRIMARY KEY AUTOINCREMENT, tag TEXT)");
-        queryRunner.update("CREATE TABLE IF NOT EXISTS GameTag(gametagid INTEGER PRIMARY KEY AUTOINCREMENT, gameid INTEGER , tagid INTEGER , FOREIGN KEY(gameid) REFERENCES Game(gameid), FOREIGN KEY(tagid) REFERENCES Tag(tagid))");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS GameTag(gameid INTEGER , tagid INTEGER , FOREIGN KEY(gameid) REFERENCES Game(gameid), FOREIGN KEY(tagid) REFERENCES Tag(tagid), PRIMARY KEY(gameid, tagid))");
         
         //steamid is the same as the ones used by valve, might break if valve stops using 64-bit signed int
         queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountid INTEGER PRIMARY KEY, steamid TEXT, name TEXT)");
-        queryRunner.update("CREATE TABLE IF NOT EXISTS AccountGame(accountgameid INTEGER PRIMARY KEY AUTOINCREMENT, accountid INTEGER , gameid INTEGER , FOREIGN KEY(accountid) REFERENCES Account(accountid), FOREIGN KEY(gameid) REFERENCES Game(gameid))");
+        queryRunner.update("CREATE TABLE IF NOT EXISTS AccountGame(accountid INTEGER , gameid INTEGER , FOREIGN KEY(accountid) REFERENCES Account(accountid), FOREIGN KEY(gameid) REFERENCES Game(gameid), PRIMARY KEY(accountid,gameid))");
     }
     
     public ArrayList<String> getTags()
@@ -211,10 +211,13 @@ public class SteamData {
                     else
                        return -1; 
                 }
+                String query="INSERT INTO AccountGame (accountid,gameid) Values";
                 for(Game game:account.games)
                 {
-                    addAccountGame(accountid,addGame(game));
+                    query+=" ("+Integer.toString(accountid)+","+addGame(game)+"),";
                 }
+                query=query.substring(0, query.length()-1);
+                queryRunner.insert(query,new ArrayHandler());
                 return accountid;
             } catch (SQLException ex) {
                 if(ex.getErrorCode()==org.sqlite.SQLiteErrorCode.SQLITE_CONSTRAINT.code)
@@ -330,10 +333,13 @@ public class SteamData {
                 int gameid=(Integer)objs[0];
                 if(game.tags.isEmpty())
                     game.tags=sUtils.getGame(game.appid).tags;
+                String tagQuery="INSERT INTO GameTag (gameid,tagid) Values (?,?)";
                 for(String tag:game.tags)
                 {
-                    addGameTag(gameid,tag);
+                    tagQuery+="("+gameid+","+tag+"),";
                 }
+                tagQuery=tagQuery.substring(0,tagQuery.length()-1);
+                queryRunner.insert(tagQuery,new ArrayHandler());
                 
                 return gameid;
             }
