@@ -69,9 +69,9 @@ public class MainWindow extends javax.swing.JFrame {
     {
         DefaultListModel listModel=new DefaultListModel();
         
-        for(int appid:gameSelector.getSharedGames())
+        for(Game game:gameSelector.getSharedGames())
         {
-            listModel.addElement(appid);
+            listModel.addElement(game.title);
         }
         
         lstGames.setModel(listModel);
@@ -98,13 +98,13 @@ public class MainWindow extends javax.swing.JFrame {
         lstAccounts = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 600));
+        setTitle("SteamGameSelector");
 
         splitPane.setPreferredSize(new java.awt.Dimension(500, 600));
 
-        panelLeft.setPreferredSize(new java.awt.Dimension(250, 600));
+        panelLeft.setPreferredSize(new java.awt.Dimension(300, 600));
 
-        scrLstGames.setPreferredSize(new java.awt.Dimension(150, 600));
+        scrLstGames.setPreferredSize(new java.awt.Dimension(300, 600));
 
         scrLstGames.setViewportView(lstGames);
 
@@ -132,6 +132,8 @@ public class MainWindow extends javax.swing.JFrame {
 
         splitPane.setLeftComponent(panelLeft);
 
+        panelRight.setPreferredSize(new java.awt.Dimension(100, 598));
+
         btnAddGame.setText("Add Game");
         btnAddGame.setEnabled(false);
         btnAddGame.setMaximumSize(new java.awt.Dimension(100, 23));
@@ -153,7 +155,7 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        scrLstAccounts.setPreferredSize(new java.awt.Dimension(150, 130));
+        scrLstAccounts.setPreferredSize(new java.awt.Dimension(100, 130));
 
         scrLstAccounts.setViewportView(lstAccounts);
 
@@ -161,7 +163,7 @@ public class MainWindow extends javax.swing.JFrame {
         panelRight.setLayout(panelRightLayout);
         panelRightLayout.setHorizontalGroup(
             panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrLstAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+            .addComponent(scrLstAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
             .addComponent(btnAddGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnAddAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -181,7 +183,7 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+            .addComponent(splitPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,21 +206,21 @@ public class MainWindow extends javax.swing.JFrame {
         while(url!=null)
         {
             url = JOptionPane.showInputDialog(this,instructions,"Add Account",JOptionPane.PLAIN_MESSAGE);
-        
+            
             if(url==null)
                 return;
             else if(gameSelector.addAccount(url)>0)
                 break;
             else
                 instructions="Input not valid. Enter public url or source from 'All Games' tab.";
-        }
+            }
         
         update();
     }//GEN-LAST:event_btnAddAccountMouseClicked
 
     private void btnRandomGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRandomGameMouseClicked
         int index=gameSelector.getRandomGameIndex();
-        Game game=sUtils.getGame(gameSelector.getSharedGames().get(index));
+        Game game=gameSelector.getSharedGames().get(index);
         JOptionPane.showMessageDialog(this, game.title);
     }//GEN-LAST:event_btnRandomGameMouseClicked
 
