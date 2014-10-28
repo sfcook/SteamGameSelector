@@ -90,6 +90,7 @@ public class SteamGameSelector {
     
     public int getRandomGameIndex()
     {
+        updateSharedGames();
         Random rand=new Random();
         return rand.nextInt(sharedGames.size());
     }
