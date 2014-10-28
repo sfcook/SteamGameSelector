@@ -33,15 +33,17 @@ import javax.swing.DefaultListModel;
  */
 public class MainWindow extends javax.swing.JFrame {
     
-    private SteamGameSelector gameSelector;
     private SteamUtils sUtils;
+    private SteamData sdb;
+    private SteamGameSelector gameSelector;
     
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
         sUtils=new SteamUtils();
-        gameSelector=new SteamGameSelector(sUtils);
+        sdb=new SteamData(sUtils);
+        gameSelector=new SteamGameSelector(sdb);
         initComponents();
     }
     
@@ -67,7 +69,6 @@ public class MainWindow extends javax.swing.JFrame {
     {
         DefaultListModel listModel=new DefaultListModel();
         
-        gameSelector.calcSharedGames();
         for(int appid:gameSelector.getSharedGames())
         {
             listModel.addElement(appid);
@@ -206,7 +207,7 @@ public class MainWindow extends javax.swing.JFrame {
         
             if(url==null)
                 return;
-            else if(gameSelector.addAccount(url)==0)
+            else if(gameSelector.addAccount(url)>0)
                 break;
             else
                 instructions="Input not valid. Enter public url or source from 'All Games' tab.";
