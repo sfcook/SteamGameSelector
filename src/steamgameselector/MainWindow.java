@@ -76,6 +76,11 @@ public class MainWindow extends javax.swing.JFrame {
         }
         
         lstGames.setModel(listModel);
+        
+        if(listModel.isEmpty())
+            btnRandomGame.setEnabled(false);
+        else
+            btnRandomGame.setEnabled(true);
     }
 
     /**
