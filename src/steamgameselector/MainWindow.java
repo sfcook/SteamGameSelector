@@ -45,6 +45,7 @@ public class MainWindow extends javax.swing.JFrame {
         sdb=new SteamData(sUtils);
         gameSelector=new SteamGameSelector(sdb);
         initComponents();
+        update();
     }
     
     private void update()
@@ -91,11 +92,12 @@ public class MainWindow extends javax.swing.JFrame {
         scrLstGames = new javax.swing.JScrollPane();
         lstGames = new javax.swing.JList();
         btnRandomGame = new javax.swing.JButton();
-        panelRight = new javax.swing.JPanel();
         btnAddGame = new javax.swing.JButton();
-        btnAddAccount = new javax.swing.JButton();
+        panelRight = new javax.swing.JPanel();
         scrLstAccounts = new javax.swing.JScrollPane();
         lstAccounts = new javax.swing.JList();
+        btnAddAccount = new javax.swing.JButton();
+        btnRemoveAccount = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SteamGameSelector");
@@ -109,30 +111,14 @@ public class MainWindow extends javax.swing.JFrame {
         scrLstGames.setViewportView(lstGames);
 
         btnRandomGame.setText("Select Random Game");
+        btnRandomGame.setMaximumSize(new java.awt.Dimension(100, 23));
+        btnRandomGame.setMinimumSize(new java.awt.Dimension(100, 23));
+        btnRandomGame.setPreferredSize(new java.awt.Dimension(100, 23));
         btnRandomGame.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRandomGameMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout panelLeftLayout = new javax.swing.GroupLayout(panelLeft);
-        panelLeft.setLayout(panelLeftLayout);
-        panelLeftLayout.setHorizontalGroup(
-            panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnRandomGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(scrLstGames, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-        );
-        panelLeftLayout.setVerticalGroup(
-            panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLeftLayout.createSequentialGroup()
-                .addComponent(scrLstGames, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRandomGame))
-        );
-
-        splitPane.setLeftComponent(panelLeft);
-
-        panelRight.setPreferredSize(new java.awt.Dimension(100, 598));
 
         btnAddGame.setText("Add Game");
         btnAddGame.setEnabled(false);
@@ -145,6 +131,37 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout panelLeftLayout = new javax.swing.GroupLayout(panelLeft);
+        panelLeft.setLayout(panelLeftLayout);
+        panelLeftLayout.setHorizontalGroup(
+            panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnAddGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRandomGame, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(scrLstGames, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panelLeftLayout.setVerticalGroup(
+            panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLeftLayout.createSequentialGroup()
+                .addComponent(scrLstGames, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRandomGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAddGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        splitPane.setLeftComponent(panelLeft);
+
+        panelRight.setPreferredSize(new java.awt.Dimension(100, 600));
+
+        scrLstAccounts.setPreferredSize(new java.awt.Dimension(100, 600));
+
+        lstAccounts.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstAccountsValueChanged(evt);
+            }
+        });
+        scrLstAccounts.setViewportView(lstAccounts);
+
         btnAddAccount.setText("Add Account");
         btnAddAccount.setMaximumSize(new java.awt.Dimension(100, 23));
         btnAddAccount.setMinimumSize(new java.awt.Dimension(100, 23));
@@ -155,26 +172,34 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        scrLstAccounts.setPreferredSize(new java.awt.Dimension(100, 130));
-
-        scrLstAccounts.setViewportView(lstAccounts);
+        btnRemoveAccount.setText("Remove Account");
+        btnRemoveAccount.setToolTipText("select account to enable");
+        btnRemoveAccount.setEnabled(false);
+        btnRemoveAccount.setMaximumSize(new java.awt.Dimension(100, 23));
+        btnRemoveAccount.setMinimumSize(new java.awt.Dimension(100, 23));
+        btnRemoveAccount.setPreferredSize(new java.awt.Dimension(100, 23));
+        btnRemoveAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRemoveAccountMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRightLayout = new javax.swing.GroupLayout(panelRight);
         panelRight.setLayout(panelRightLayout);
         panelRightLayout.setHorizontalGroup(
             panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrLstAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
-            .addComponent(btnAddGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(scrLstAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
             .addComponent(btnAddAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnRemoveAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelRightLayout.setVerticalGroup(
             panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRightLayout.createSequentialGroup()
-                .addComponent(scrLstAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+                .addComponent(scrLstAccounts, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAddAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAddGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnRemoveAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         splitPane.setRightComponent(panelRight);
@@ -224,10 +249,23 @@ public class MainWindow extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, game.title);
     }//GEN-LAST:event_btnRandomGameMouseClicked
 
+    private void btnRemoveAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveAccountMouseClicked
+        gameSelector.removeAccount(gameSelector.getAccounts().get(lstAccounts.getSelectedIndex()).accountid);
+        update();
+        btnRemoveAccount.setEnabled(false);
+        btnRemoveAccount.setToolTipText("select account to enable");
+    }//GEN-LAST:event_btnRemoveAccountMouseClicked
+
+    private void lstAccountsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstAccountsValueChanged
+        btnRemoveAccount.setEnabled(true);
+        btnRemoveAccount.setToolTipText(null);
+    }//GEN-LAST:event_lstAccountsValueChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAccount;
     private javax.swing.JButton btnAddGame;
     private javax.swing.JButton btnRandomGame;
+    private javax.swing.JButton btnRemoveAccount;
     private javax.swing.JList lstAccounts;
     private javax.swing.JList lstGames;
     private javax.swing.JPanel panelLeft;
