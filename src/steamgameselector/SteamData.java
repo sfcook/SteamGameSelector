@@ -333,13 +333,16 @@ public class SteamData {
                 int gameid=(Integer)objs[0];
                 if(game.tags.isEmpty())
                     game.tags=sUtils.getGame(game.appid).tags;
-                String tagQuery="INSERT INTO GameTag (gameid,tagid) Values (?,?)";
+                String tagQuery="INSERT INTO GameTag (gameid,tagid) Values ";
                 for(String tag:game.tags)
                 {
-                    tagQuery+="("+gameid+","+tag+"),";
+                    tagQuery+="("+gameid+","+addTag(tag)+"),";
                 }
                 tagQuery=tagQuery.substring(0,tagQuery.length()-1);
-                queryRunner.insert(tagQuery,new ArrayHandler());
+                if(!game.tags.isEmpty())
+                    queryRunner.insert(tagQuery,new ArrayHandler());
+                else
+                    tagQuery=null;
                 
                 return gameid;
             }
