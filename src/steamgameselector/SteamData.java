@@ -84,7 +84,7 @@ public class SteamData {
         queryRunner.update("CREATE TABLE IF NOT EXISTS Account(accountid INTEGER PRIMARY KEY, steamid TEXT, name TEXT)");
         queryRunner.update("CREATE TABLE IF NOT EXISTS AccountGame(accountid INTEGER , gameid INTEGER , FOREIGN KEY(accountid) REFERENCES Account(accountid), FOREIGN KEY(gameid) REFERENCES Game(gameid), PRIMARY KEY(accountid,gameid))");
         
-        queryRunner.update("CREATE VIEW SharedGames AS SELECT g.gameid, g.appid, g.title FROM"
+        queryRunner.update("CREATE VIEW IF NOT EXISTS SharedGames AS SELECT g.gameid, g.appid, g.title FROM"
                 + "(SELECT COUNT(*) AS num FROM Account) a,"
                 + "(SELECT gameid, COUNT(gameid) AS num FROM AccountGame GROUP BY gameid) r,"
                 + " game g WHERE a.num=r.num AND r.gameid=g.gameid");
