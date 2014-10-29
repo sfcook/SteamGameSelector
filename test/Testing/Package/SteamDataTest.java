@@ -28,6 +28,8 @@ import steamgameselector.*;
 import org.junit.*;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
@@ -100,7 +102,9 @@ public class SteamDataTest {
     {
         assertTrue(sdb.addAccount("http://steamcommunity.com/id/wireteam")>0);
         
-        Account result=sdb.getAccount("1");
+        Account result=sdb.getAccounts().get(0);
+        
+        assertFalse(result.steamid.isEmpty());
     }
     
     @Test
@@ -243,5 +247,79 @@ public class SteamDataTest {
         
         assertTrue(cs1.title.equals(cs2.title));
         assertTrue(cs1.title.equals("Counter-Strike"));
+    }
+    
+    private void buildTestAccount()
+    {
+        Account account=new Account();
+        account.steamid="0";
+        account.name="Fake Account";
+        
+        ArrayList<Integer> games=new ArrayList();
+        games.add(10); //counter-strike
+        games.add(20); //team fortress classic
+        games.add(70); //half-life
+        games.add(220); //half-life 2
+        games.add(240); //counter-strike: source
+        games.add(400); //portal
+        games.add(440); //teaam fortress 2
+        games.add(550); //left 4 dead 2
+        games.add(630); //alien swarm
+        games.add(570); //dota 2
+        games.add(730); //counter-strike: global offensive
+        games.add(1250); //killing floor
+        
+        for(Integer appid:games)
+        {
+            sdb.addGame(appid);
+            account.games.add(sdb.getSteamGame(appid));
+        }
+        
+        sdb.addAccount(account);
+    }
+    @Test
+    public void testAndFilter()
+    {
+        buildTestAccount();
+        
+        Set<Integer> tags=new HashSet();
+        tags.add(sdb.getTagId("Steam Trading Cards"));
+        tags.add(sdb.getTagId("Co-op"));
+        ArrayList<Game> filtered=sdb.getFilteredGames(tags, null, null);
+        
+        assertTrue(filtered.size()==3);
+        assertTrue(filtered.contains(sdb.getSteamGame(550)));
+        assertTrue(filtered.contains(sdb.getSteamGame(570)));
+        assertTrue(filtered.contains(sdb.getSteamGame(1250)));
+    }
+    @Test
+    public void testOrFilter()
+    {
+        buildTestAccount();
+        
+        Set<Integer> tags=new HashSet();
+        tags.add(sdb.getTagId("Free to Play"));
+        tags.add(sdb.getTagId("Co-op"));
+        ArrayList<Game> filtered=sdb.getFilteredGames(null, tags, null);
+        
+        assertTrue(filtered.size()==5);
+        assertTrue(filtered.contains(sdb.getSteamGame(440)));
+        assertTrue(filtered.contains(sdb.getSteamGame(550)));
+        assertTrue(filtered.contains(sdb.getSteamGame(570)));
+        assertTrue(filtered.contains(sdb.getSteamGame(630)));
+        assertTrue(filtered.contains(sdb.getSteamGame(1250)));
+    }
+    @Test
+    public void testNotFilter()
+    {
+        buildTestAccount();
+        
+        Set<Integer> tags=new HashSet();
+        tags.add(sdb.getTagId("Free to Play"));
+        ArrayList<Game> filtered=sdb.getFilteredGames(null, null, tags);
+        
+        assertTrue(filtered.size()==10);
+        assertFalse(filtered.contains(sdb.getSteamGame(440)));
+        assertFalse(filtered.contains(sdb.getSteamGame(570)));
     }
 }
