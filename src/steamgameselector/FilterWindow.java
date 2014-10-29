@@ -22,8 +22,7 @@
  * THE SOFTWARE.
  */
 package steamgameselector;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,12 +33,12 @@ import java.util.Collections;
  */
 public class FilterWindow extends javax.swing.JPanel {
     SteamGameSelector gameSelector;
-    public Set<Tag> tags;
+    public Map<String,Tag> tags;
 
     /**
      * Creates new form FilterWindow
      */
-    public FilterWindow(Set<Tag> tags) {
+    public FilterWindow(Map<String,Tag> tags) {
         this.tags=tags;
         initComponents();
         initTags();
@@ -48,7 +47,13 @@ public class FilterWindow extends javax.swing.JPanel {
     private void initTags()
     {
         DefaultTableModel model=(DefaultTableModel)tblTags.getModel();
-        ArrayList<Tag> tagArray=new ArrayList(tags);
+        
+        ArrayList<Tag> tagArray=new ArrayList();
+        
+        for(Map.Entry entry:this.tags.entrySet())
+        {
+            tagArray.add((Tag)entry.getValue());
+        }
         Collections.sort(tagArray);
         for(Tag tag:tagArray)
         {
@@ -57,7 +62,7 @@ public class FilterWindow extends javax.swing.JPanel {
         tblTags.setModel(model);
     }
     
-    public Set<Tag> getTags()
+    public Map<String,Tag> getTags()
     {
         return tags;
     }
@@ -97,6 +102,11 @@ public class FilterWindow extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tblTags.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tblTagsPropertyChange(evt);
+            }
+        });
         scrTblTags.setViewportView(tblTags);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -110,6 +120,33 @@ public class FilterWindow extends javax.swing.JPanel {
             .addComponent(scrTblTags, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblTagsPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblTagsPropertyChange
+        int selectedRow=tblTags.getSelectedRow();
+        int selectedCol=tblTags.getSelectedColumn();
+        
+        if(selectedCol>0)
+            return;
+        
+        DefaultTableModel model=(DefaultTableModel)tblTags.getModel();
+        
+        boolean check=(Boolean)model.getValueAt(selectedCol, selectedRow);
+        
+        switch(selectedCol)
+        {
+            case 1:
+                
+                break;
+            case 2:
+                
+                break;
+            case 3:
+                
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_tblTagsPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
