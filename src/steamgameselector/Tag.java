@@ -60,8 +60,12 @@ public class Tag {
     //booleans are not involved in compares
     @Override
     public boolean equals(Object other){
-        return other!=null && other instanceof Tag &&
-                tag.equals(((Tag)other).tag);
+        if(other==null)
+            return false;
+        else if(other instanceof Tag && tag.equals(((Tag)other).tag))
+            return true;
+        else
+            return other instanceof String && tag.equals((String)other);
     }
 
     @Override
