@@ -442,6 +442,69 @@ public class SteamData {
         
         return games;
     }
+    
+    public ArrayList<Game> getFilteredGames(Set<Integer> andList, Set<Integer> orList, Set<Integer> notList)
+    {
+        if((andList==null || andList.isEmpty()) &&
+                (orList==null || orList.isEmpty()) &&
+                (notList==null || notList.isEmpty()))
+            return getSharedGames();
+        
+        String query="SELECT g.gameid, g.appid, g.title FROM SharedGames g,";
+        String queryTail=" WHERE ";
+        if(andList!=null && !andList.isEmpty())
+        {
+            query+=" (SELECT DISTINCT gameid FROM gametag WHERE (tagid IN ("+
+                    setToString(andList)+")) GROUP BY gameid HAVING COUNT(gameid)="+andList.size()+") p,";
+            queryTail+="g.gameid=p.gameid AND";
+        }
+        if(orList!=null && !orList.isEmpty())
+        {
+            query+=" (SELECT DISTINCT gameid FROM gametag WHERE (tagid IN ("+
+                    setToString(orList)+")) GROUP BY gameid) o,";
+            queryTail+="g.gameid=o.gameid AND";
+        }
+        if(notList!=null && !notList.isEmpty())
+        {
+            query+=" (SELECT a.gameid FROM game a LEFT OUTER JOIN (SELECT DISTINCT gameid FROM gametag WHERE tagid IN ("+
+                    setToString(notList)+")) b ON a.gameid=b.gameid WHERE b.gameid IS NULL) n,";
+            queryTail+="g.gameid=n.gameid AND";
+        }
+        queryTail=queryTail.substring(0, queryTail.length()-4);
+        query=query.substring(0, query.length()-1);
+        
+        ArrayList<Game> games=new ArrayList();
+        
+        try {
+            List<Object[]> objs=queryRunner.query(query+queryTail,
+                new ArrayListHandler());
+            if(objs.size()>0)
+            {
+                for(Object[] item:objs)
+                {
+                    if(item.length>0)
+                        games.add(processGame(item));
+                }
+            }
+            return games;
+        } catch (SQLException ex) {
+            Logger.getLogger(SteamData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return games;
+    }
+    private String setToString(Set<Integer> set)
+    {
+        String list="";
+        
+        for(Integer item:set)
+        {
+            list+=" "+item+",";
+        }
+        
+        return list.substring(0,list.length()-1);
+    }
+    
     //TODO: 
     public ArrayList<Game> getNonSteamGames()
     {
