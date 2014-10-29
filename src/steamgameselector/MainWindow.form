@@ -58,15 +58,15 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnRandomGame" alignment="0" max="32767" attributes="0"/>
+                  <Component id="scrLstGames" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnAddGame" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btnRandomGame" alignment="1" max="32767" attributes="0"/>
-                  <Component id="scrLstGames" alignment="1" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="scrLstGames" min="-2" pref="540" max="-2" attributes="0"/>
+                      <Component id="scrLstGames" pref="629" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnRandomGame" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -152,12 +152,15 @@
                   <Component id="scrLstAccounts" alignment="0" pref="193" max="32767" attributes="0"/>
                   <Component id="btnAddAccount" alignment="1" max="32767" attributes="0"/>
                   <Component id="btnRemoveAccount" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnFilters" alignment="1" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="scrLstAccounts" min="-2" pref="540" max="-2" attributes="0"/>
+                      <Component id="scrLstAccounts" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnFilters" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnAddAccount" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -225,6 +228,17 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRemoveAccountMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnFilters">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Filters"/>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[100, 23]"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnFiltersMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>
