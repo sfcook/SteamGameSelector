@@ -29,7 +29,7 @@ import java.util.Objects;
  *
  * @author sfcook
  */
-public class Tag {
+public class Tag implements Comparable{
     public String tag;
     public boolean and;
     public boolean or;
@@ -71,5 +71,10 @@ public class Tag {
     @Override
     public int hashCode() {
         return tag.hashCode();
+    }
+
+    @Override
+    public int compareTo(Object t) {
+        return tag.compareTo(((Tag)t).tag);
     }
 }
