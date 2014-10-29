@@ -229,5 +229,12 @@ public class SteamGameSelectorTest {
         {
             assertFalse(item.and);
         }
+        
+        selector.setTags(selectorTags);
+        selectorTags2=selector.getTags();
+        for(Tag item:selectorTags2)
+        {
+            assertTrue(item.and);
+        }
     }
 }
