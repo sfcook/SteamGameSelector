@@ -32,7 +32,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
-import java.util.Set;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  *
@@ -215,25 +216,28 @@ public class SteamGameSelectorTest {
         ArrayList<String> dbTags=sdb.getTags();
         dbTags=sdb.getTags(); //testing adding dups
         
-        Set<Tag> selectorTags=selector.getTags();
+        Map<String,Tag> selectorTags=selector.getTags();
         
         assertTrue(dbTags.size()==selectorTags.size());
-        for(Tag item:selectorTags)
+        for(Map.Entry entry:selectorTags.entrySet())
         {
+            Tag item=(Tag)entry.getValue();
             item.and=true;
             assertTrue(dbTags.contains(item));
         }
         
-        Set<Tag> selectorTags2=selector.getTags();
-        for(Tag item:selectorTags2)
+        Map<String,Tag> selectorTags2=selector.getTags();
+        for(Map.Entry entry:selectorTags2.entrySet())
         {
+            Tag item=(Tag)entry.getValue();
             assertFalse(item.and);
         }
         
         selector.setTags(selectorTags);
         selectorTags2=selector.getTags();
-        for(Tag item:selectorTags2)
+        for(Map.Entry entry:selectorTags2.entrySet())
         {
+            Tag item=(Tag)entry.getValue();
             assertTrue(item.and);
         }
     }
