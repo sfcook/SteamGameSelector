@@ -236,7 +236,7 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddGameMouseClicked
-        AddGameWindow addPanel=new AddGameWindow(); //builds contents of a game obj
+        NonSteamWindow addPanel=new NonSteamWindow(); //builds contents of a game obj
         JOptionPane.showConfirmDialog(this,addPanel,"Add Game",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         //todo: retrive result and do things
     }//GEN-LAST:event_btnAddGameMouseClicked

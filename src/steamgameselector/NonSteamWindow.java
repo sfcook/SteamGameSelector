@@ -27,12 +27,12 @@ package steamgameselector;
  *
  * @author sfcook
  */
-public class AddGameWindow extends javax.swing.JPanel {
+public class NonSteamWindow extends javax.swing.JPanel {
 
     /**
      * Creates new form AddGame
      */
-    public AddGameWindow() {
+    public NonSteamWindow() {
         initComponents();
     }
 
