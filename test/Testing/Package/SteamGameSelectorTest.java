@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
+import java.util.Set;
 
 /**
  *
@@ -194,5 +195,39 @@ public class SteamGameSelectorTest {
         Game game=selector.getSteamGame(98200);
         
         assertFalse(game.tags.isEmpty());
+    }
+    
+    @Test
+    public void testTags()
+    {
+        sdb.addGame(10); //counter-strike
+        sdb.addGame(20); //team fortress classic
+        sdb.addGame(70); //half-life
+        sdb.addGame(220); //half-life 2
+        sdb.addGame(240); //counter-strike: source
+        sdb.addGame(400); //portal
+        sdb.addGame(440); //teaam fortress 2
+        sdb.addGame(550); //left 4 dead 2
+        sdb.addGame(630); //alien swarm
+        sdb.addGame(570); //dota 2
+        sdb.addGame(730); //counter-strike: global offensive
+        sdb.addGame(1250); //killing floor
+        ArrayList<String> dbTags=sdb.getTags();
+        dbTags=sdb.getTags(); //testing adding dups
+        
+        Set<Tag> selectorTags=selector.getTags();
+        
+        assertTrue(dbTags.size()==selectorTags.size());
+        for(Tag item:selectorTags)
+        {
+            item.and=true;
+            assertTrue(dbTags.contains(item));
+        }
+        
+        Set<Tag> selectorTags2=selector.getTags();
+        for(Tag item:selectorTags2)
+        {
+            assertFalse(item.and);
+        }
     }
 }
