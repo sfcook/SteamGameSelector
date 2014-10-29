@@ -125,27 +125,42 @@ public class FilterWindow extends javax.swing.JPanel {
         int selectedRow=tblTags.getSelectedRow();
         int selectedCol=tblTags.getSelectedColumn();
         
-        if(selectedCol>0)
-            return;
-        
         DefaultTableModel model=(DefaultTableModel)tblTags.getModel();
         
-        boolean check=(Boolean)model.getValueAt(selectedCol, selectedRow);
+        if(selectedCol<=0 || selectedRow<0)
+            return;
+        boolean check=(Boolean)model.getValueAt(selectedRow, selectedCol);
         
-        switch(selectedCol)
+        if(selectedRow==0)
         {
-            case 1:
-                
-                break;
-            case 2:
-                
-                break;
-            case 3:
-                
-                break;
-            default:
-                break;
+            for(int pos=1;pos<model.getRowCount();pos++)
+            {
+                Object obj=model.getValueAt(pos, 0);
+                Tag item=tags.get((String)obj);
+                Tag tag=new Tag(item.tag,item.and,item.or,item.not);;
+                if(selectedCol==1)
+                    tag=new Tag(item.tag,check,item.or,item.not);
+                else if(selectedCol==2)
+                    tag=new Tag(item.tag,item.and,check,item.not);
+                else if(selectedCol==3)
+                    tag=new Tag(item.tag,item.and,item.or,check);
+                tags.put(item.tag,tag);
+                model.setValueAt(check, pos, selectedCol);
+            }
+            
+            tblTags.setModel(model);
+            return;
         }
+        
+        String tag=(String)model.getValueAt(selectedRow, 0);
+        Tag tagObj=tags.get(tag);
+        if(selectedCol==1)
+            tagObj.and=check;
+        else if(selectedCol==2)
+            tagObj.or=check;
+        else if(selectedCol==3)
+            tagObj.not=check;
+        tags.put(tag,tagObj);
     }//GEN-LAST:event_tblTagsPropertyChange
 
 
