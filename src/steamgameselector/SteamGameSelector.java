@@ -35,13 +35,39 @@ import java.util.Random;
 public class SteamGameSelector {
     private SteamData sdb;
     private ArrayList<Game> sharedGames;
+    private Set<Tag> tags;
     
     public SteamGameSelector(SteamData instance)
     {
         sdb=instance;
         sharedGames=new ArrayList();
+        tags=new HashSet();
     }
     
+    public Set<Tag> getTags()
+    {
+        ArrayList<String> tags=sdb.getTags();
+        
+        for(String tag:tags)
+        {
+            this.tags.add(new Tag(tag));
+        }
+        
+        Set<Tag> newTags=new HashSet();
+        
+        for(Tag item:this.tags)
+        {
+            Tag tag=new Tag(item.tag,item.and,item.or,item.not);
+            newTags.add(tag);
+        }
+        
+        return newTags;
+    }
+    
+    public void setTags(Set<Tag> tags)
+    {
+        this.tags=new HashSet(tags);
+    }
     public void addAccount(Account account)
     {
         sdb.addAccount(account);
@@ -62,7 +88,7 @@ public class SteamGameSelector {
         sdb.removeAccount(accountid);
     }
     
-    //should check if steam game or not
+    //TODO: should check if steam game or not
     public void addGame(Game game)
     {
         sdb.addGame(game);
