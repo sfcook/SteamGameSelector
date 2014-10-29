@@ -103,6 +103,7 @@ public class MainWindow extends javax.swing.JFrame {
         lstAccounts = new javax.swing.JList();
         btnAddAccount = new javax.swing.JButton();
         btnRemoveAccount = new javax.swing.JButton();
+        btnFilters = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SteamGameSelector");
@@ -140,14 +141,14 @@ public class MainWindow extends javax.swing.JFrame {
         panelLeft.setLayout(panelLeftLayout);
         panelLeftLayout.setHorizontalGroup(
             panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnRandomGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(scrLstGames, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnAddGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnRandomGame, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(scrLstGames, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelLeftLayout.setVerticalGroup(
             panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLeftLayout.createSequentialGroup()
-                .addComponent(scrLstGames, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrLstGames, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRandomGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -189,6 +190,14 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        btnFilters.setText("Filters");
+        btnFilters.setPreferredSize(new java.awt.Dimension(100, 23));
+        btnFilters.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFiltersMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelRightLayout = new javax.swing.GroupLayout(panelRight);
         panelRight.setLayout(panelRightLayout);
         panelRightLayout.setHorizontalGroup(
@@ -196,11 +205,14 @@ public class MainWindow extends javax.swing.JFrame {
             .addComponent(scrLstAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
             .addComponent(btnAddAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnRemoveAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnFilters, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelRightLayout.setVerticalGroup(
             panelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRightLayout.createSequentialGroup()
-                .addComponent(scrLstAccounts, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrLstAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFilters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAddAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -233,7 +245,7 @@ public class MainWindow extends javax.swing.JFrame {
         String url="";
         String instructions="Enter public url or source from 'All Games' tab.";
         
-        while(url!=null)
+        while(url!=null) //netbeans says url is never null, this is a lie
         {
             url = JOptionPane.showInputDialog(this,instructions,"Add Account",JOptionPane.PLAIN_MESSAGE);
             
@@ -266,9 +278,20 @@ public class MainWindow extends javax.swing.JFrame {
         btnRemoveAccount.setToolTipText(null);
     }//GEN-LAST:event_lstAccountsValueChanged
 
+    private void btnFiltersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFiltersMouseClicked
+        FilterWindow addPanel=new FilterWindow(gameSelector.getTags());
+        int result=JOptionPane.showConfirmDialog(this,addPanel,"Filters",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+        if(result==JOptionPane.OK_OPTION)
+        {
+            gameSelector.setTags(addPanel.getTags());
+        }
+        update();
+    }//GEN-LAST:event_btnFiltersMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAccount;
     private javax.swing.JButton btnAddGame;
+    private javax.swing.JButton btnFilters;
     private javax.swing.JButton btnRandomGame;
     private javax.swing.JButton btnRemoveAccount;
     private javax.swing.JList lstAccounts;
