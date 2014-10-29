@@ -24,6 +24,9 @@
 package steamgameselector;
 import java.util.Set;
 import java.util.HashSet;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -37,8 +40,21 @@ public class FilterWindow extends javax.swing.JPanel {
      * Creates new form FilterWindow
      */
     public FilterWindow(Set<Tag> tags) {
-        tags=new HashSet(tags);
+        this.tags=tags;
         initComponents();
+        initTags();
+    }
+    
+    private void initTags()
+    {
+        DefaultTableModel model=(DefaultTableModel)tblTags.getModel();
+        ArrayList<Tag> tagArray=new ArrayList(tags);
+        Collections.sort(tagArray);
+        for(Tag tag:tagArray)
+        {
+            model.addRow(new Object[]{tag.tag,tag.and,tag.or,tag.not});
+        }
+        tblTags.setModel(model);
     }
     
     public Set<Tag> getTags()
