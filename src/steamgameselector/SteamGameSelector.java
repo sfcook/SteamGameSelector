@@ -23,10 +23,11 @@
  */
 package steamgameselector;
 
-import java.util.Set;
-import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Map.Entry;
 
 /**
  *
@@ -35,38 +36,39 @@ import java.util.Random;
 public class SteamGameSelector {
     private SteamData sdb;
     private ArrayList<Game> sharedGames;
-    private Set<Tag> tags;
+    private Map<String,Tag> tags;
     
     public SteamGameSelector(SteamData instance)
     {
         sdb=instance;
         sharedGames=new ArrayList();
-        tags=new HashSet();
+        tags=new HashMap();
     }
     
-    public Set<Tag> getTags()
+    public Map<String,Tag> getTags()
     {
         ArrayList<String> tags=sdb.getTags();
         
         for(String tag:tags)
         {
-            this.tags.add(new Tag(tag));
+            this.tags.put(tag,new Tag(tag));
         }
         
-        Set<Tag> newTags=new HashSet();
+        Map<String,Tag> newTags=new HashMap();
         
-        for(Tag item:this.tags)
+        for(Entry entry:this.tags.entrySet())
         {
+            Tag item=(Tag)entry.getValue();
             Tag tag=new Tag(item.tag,item.and,item.or,item.not);
-            newTags.add(tag);
+            newTags.put(item.tag,tag);
         }
         
         return newTags;
     }
     
-    public void setTags(Set<Tag> tags)
+    public void setTags(Map<String,Tag> tags)
     {
-        this.tags=new HashSet(tags);
+        this.tags=new HashMap(tags);
     }
     public void addAccount(Account account)
     {
