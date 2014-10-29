@@ -22,6 +22,8 @@
  * THE SOFTWARE.
  */
 package steamgameselector;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
@@ -29,13 +31,19 @@ package steamgameselector;
  */
 public class FilterWindow extends javax.swing.JPanel {
     SteamGameSelector gameSelector;
+    public Set<Tag> tags;
 
     /**
      * Creates new form FilterWindow
      */
-    public FilterWindow(SteamGameSelector instance) {
-        gameSelector=instance;
+    public FilterWindow(Set<Tag> tags) {
+        tags=new HashSet(tags);
         initComponents();
+    }
+    
+    public Set<Tag> getTags()
+    {
+        return tags;
     }
 
     /**
