@@ -47,16 +47,17 @@ public class SteamGameSelector {
     
     public Map<String,Tag> getTags()
     {
-        ArrayList<String> tags=sdb.getTags();
+        ArrayList<String> tagArray=sdb.getTags();
         
-        for(String tag:tags)
+        for(String item:tagArray)
         {
-            this.tags.put(tag,new Tag(tag));
+            if(tags.get(item)==null)
+                tags.put(item,new Tag(item));
         }
         
         Map<String,Tag> newTags=new HashMap();
         
-        for(Entry entry:this.tags.entrySet())
+        for(Entry entry:tags.entrySet())
         {
             Tag item=(Tag)entry.getValue();
             Tag tag=new Tag(item.tag,item.and,item.or,item.not);
@@ -66,9 +67,13 @@ public class SteamGameSelector {
         return newTags;
     }
     
-    public void setTags(Map<String,Tag> tags)
+    public void setTags(Map<String,Tag> tag)
     {
-        this.tags=new HashMap(tags);
+        for(Entry entry:tag.entrySet())
+        {
+            Tag item=(Tag)entry.getValue();
+            tags.put(item.tag,item);
+        }
     }
     public void addAccount(Account account)
     {
