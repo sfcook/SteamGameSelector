@@ -27,7 +27,8 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Map.Entry;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
@@ -57,7 +58,7 @@ public class SteamGameSelector {
         
         Map<String,Tag> newTags=new HashMap();
         
-        for(Entry entry:tags.entrySet())
+        for(Map.Entry entry:tags.entrySet())
         {
             Tag item=(Tag)entry.getValue();
             Tag tag=new Tag(item.tag,item.and,item.or,item.not);
@@ -69,7 +70,7 @@ public class SteamGameSelector {
     
     public void setTags(Map<String,Tag> tag)
     {
-        for(Entry entry:tag.entrySet())
+        for(Map.Entry entry:tag.entrySet())
         {
             Tag item=(Tag)entry.getValue();
             tags.put(item.tag,item);
@@ -113,7 +114,20 @@ public class SteamGameSelector {
     
     private void updateSharedGames()
     {
-        sharedGames=sdb.getSharedGames();
+        Set<Integer> andList=new HashSet();
+        Set<Integer> orList=new HashSet();
+        Set<Integer> notList=new HashSet();
+        for(String strTag:sdb.getTags())
+        {
+            Tag tag=tags.get(strTag);
+            if(tag!=null && tag.and)
+                andList.add(sdb.getTagId(strTag));
+            if(tag!=null && tag.or)
+                orList.add(sdb.getTagId(strTag));
+            if(tag!=null && tag.not)
+                notList.add(sdb.getTagId(strTag));
+        }
+        sharedGames=sdb.getFilteredGames(andList,orList,notList);
     }
     public ArrayList<Game> getSharedGames()
     {
