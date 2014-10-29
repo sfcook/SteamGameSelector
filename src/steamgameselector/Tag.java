@@ -35,15 +35,15 @@ public class Tag {
     public boolean or;
     public boolean not;
     
-    Tag()
+    public Tag()
     {
         init(null,false,false,false);
     }
-    Tag(String tag)
+    public Tag(String tag)
     {
         init(tag,false,false,false);
     }
-    Tag(String tag, boolean and, boolean or, boolean not)
+    public Tag(String tag, boolean and, boolean or, boolean not)
     {
         init(tag,and,or,not);
     }
@@ -70,8 +70,6 @@ public class Tag {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.tag);
-        return hash;
+        return tag.hashCode();
     }
 }
