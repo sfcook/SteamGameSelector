@@ -60,7 +60,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnRandomGame" alignment="0" max="32767" attributes="0"/>
                   <Component id="scrLstGames" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btnAddGame" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnNonSteam" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -70,7 +70,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnRandomGame" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnAddGame" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnNonSteam" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -114,9 +114,9 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRandomGameMouseClicked"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnAddGame">
+            <Component class="javax.swing.JButton" name="btnNonSteam">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Add Game"/>
+                <Property name="text" type="java.lang.String" value="Add Non-Steam Game"/>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[100, 23]"/>
@@ -129,7 +129,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAddGameMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnNonSteamMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>
