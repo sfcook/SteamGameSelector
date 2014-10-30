@@ -97,7 +97,7 @@ public class MainWindow extends javax.swing.JFrame {
         scrLstGames = new javax.swing.JScrollPane();
         lstGames = new javax.swing.JList();
         btnRandomGame = new javax.swing.JButton();
-        btnAddGame = new javax.swing.JButton();
+        btnNonSteam = new javax.swing.JButton();
         panelRight = new javax.swing.JPanel();
         scrLstAccounts = new javax.swing.JScrollPane();
         lstAccounts = new javax.swing.JList();
@@ -126,14 +126,14 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        btnAddGame.setText("Add Game");
-        btnAddGame.setEnabled(false);
-        btnAddGame.setMaximumSize(new java.awt.Dimension(100, 23));
-        btnAddGame.setMinimumSize(new java.awt.Dimension(100, 23));
-        btnAddGame.setPreferredSize(new java.awt.Dimension(100, 23));
-        btnAddGame.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNonSteam.setText("Add Non-Steam Game");
+        btnNonSteam.setEnabled(false);
+        btnNonSteam.setMaximumSize(new java.awt.Dimension(100, 23));
+        btnNonSteam.setMinimumSize(new java.awt.Dimension(100, 23));
+        btnNonSteam.setPreferredSize(new java.awt.Dimension(100, 23));
+        btnNonSteam.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAddGameMouseClicked(evt);
+                btnNonSteamMouseClicked(evt);
             }
         });
 
@@ -143,7 +143,7 @@ public class MainWindow extends javax.swing.JFrame {
             panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnRandomGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(scrLstGames, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnAddGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnNonSteam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelLeftLayout.setVerticalGroup(
             panelLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,7 +152,7 @@ public class MainWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRandomGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAddGame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnNonSteam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         splitPane.setLeftComponent(panelLeft);
@@ -235,11 +235,11 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddGameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddGameMouseClicked
+    private void btnNonSteamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNonSteamMouseClicked
         NonSteamWindow addPanel=new NonSteamWindow(); //builds contents of a game obj
         JOptionPane.showConfirmDialog(this,addPanel,"Add Game",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
         //todo: retrive result and do things
-    }//GEN-LAST:event_btnAddGameMouseClicked
+    }//GEN-LAST:event_btnNonSteamMouseClicked
 
     private void btnAddAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddAccountMouseClicked
         String url="";
@@ -290,8 +290,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddAccount;
-    private javax.swing.JButton btnAddGame;
     private javax.swing.JButton btnFilters;
+    private javax.swing.JButton btnNonSteam;
     private javax.swing.JButton btnRandomGame;
     private javax.swing.JButton btnRemoveAccount;
     private javax.swing.JList lstAccounts;
