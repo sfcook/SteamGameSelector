@@ -69,7 +69,6 @@ public class AddAccountWindow extends javax.swing.JPanel {
 
         txtUrl.setColumns(20);
         txtUrl.setRows(5);
-        txtUrl.setText("Test\nTest");
         jScrollPane1.setViewportView(txtUrl);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
