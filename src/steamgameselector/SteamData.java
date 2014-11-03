@@ -207,7 +207,7 @@ public class SteamData {
                 Account accountTest=getAccount(account.steamid);
                 int accountid;
                 if(accountTest!=null)
-                        accountid=accountTest.accountid;
+                    return accountid=accountTest.accountid;
                 else
                 {
                     Object[] objs=queryRunner.insert("INSERT INTO Account (steamid,name) Values (?,?)",new ArrayHandler(),account.steamid,account.name);
