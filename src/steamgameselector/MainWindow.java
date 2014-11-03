@@ -244,17 +244,23 @@ public class MainWindow extends javax.swing.JFrame {
     private void btnAddAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddAccountMouseClicked
         String url="";
         String instructions="Enter public url or source from 'All Games' tab.";
+        int result;
+        
+        AddAccountWindow addPanel=new AddAccountWindow();
+        addPanel.setInstructions(instructions);
         
         while(url!=null) //netbeans says url is never null, this is a lie
         {
-            url = JOptionPane.showInputDialog(this,instructions,"Add Account",JOptionPane.PLAIN_MESSAGE);
+            result = JOptionPane.showConfirmDialog(this,addPanel,"Add Account",JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
             
-            if(url==null)
+            url = addPanel.getUrl();
+            
+            if(result!=JOptionPane.OK_OPTION)
                 return;
             else if(gameSelector.addAccount(url)>0)
                 break;
             else
-                instructions="Input not valid. Enter public url or source from 'All Games' tab.";
+                addPanel.setInstructions("Input not valid. Enter public url or source from 'All Games' tab.");
             }
         
         update();
