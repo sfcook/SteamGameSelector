@@ -451,24 +451,24 @@ public class SteamData {
             return getSharedGames();
         
         String query="SELECT g.gameid, g.appid, g.title FROM SharedGames g,";
-        String queryTail=" WHERE ";
+        String queryTail=" WHERE";
         if(andList!=null && !andList.isEmpty())
         {
             query+=" (SELECT DISTINCT gameid FROM gametag WHERE (tagid IN ("+
                     setToString(andList)+")) GROUP BY gameid HAVING COUNT(gameid)="+andList.size()+") p,";
-            queryTail+="g.gameid=p.gameid AND";
+            queryTail+=" g.gameid=p.gameid AND";
         }
         if(orList!=null && !orList.isEmpty())
         {
             query+=" (SELECT DISTINCT gameid FROM gametag WHERE (tagid IN ("+
                     setToString(orList)+")) GROUP BY gameid) o,";
-            queryTail+="g.gameid=o.gameid AND";
+            queryTail+=" g.gameid=o.gameid AND";
         }
         if(notList!=null && !notList.isEmpty())
         {
             query+=" (SELECT a.gameid FROM game a LEFT OUTER JOIN (SELECT DISTINCT gameid FROM gametag WHERE tagid IN ("+
                     setToString(notList)+")) b ON a.gameid=b.gameid WHERE b.gameid IS NULL) n,";
-            queryTail+="g.gameid=n.gameid AND";
+            queryTail+=" g.gameid=n.gameid AND";
         }
         queryTail=queryTail.substring(0, queryTail.length()-4);
         query=query.substring(0, query.length()-1);
